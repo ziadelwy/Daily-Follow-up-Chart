@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Daily Follow-up Chart Application
 
 تطبيق لعرض ومتابعة البيانات اليومية باستخدام Firebase.
@@ -18,3 +19,6 @@ npm start
 
 ## الوصول للتطبيق
 افتح المتصفح على العنوان: `http://localhost:3000` 
+=======
+# Daily-Follow-up-Chart
+>>>>>>> 2566325f098004a83d40fec8c7bd99401ea9b244
