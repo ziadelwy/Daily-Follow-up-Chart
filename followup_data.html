@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بيانات المتابعة اليومية</title>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script src="database.js"></script>
+    <style>
+        /* إعدادات عامة للصفحة */
+        body {
+            font-family: 'Tajawal', 'Arial', sans-serif;
+            background-color: #f5f7fa;
+            direction: rtl;
+            text-align: right;
+            margin: 0;
+            padding: 5mm;
+            color: #333;
+            font-size: 10pt;
+        }
+
+        /* رأس الصفحة */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: #34495e;
+            color: white;
+            padding: 5mm 10mm;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 18pt;
+            font-weight: bold;
+        }
+
+        /* حاوية الجدول */
+        .table-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 5mm auto;
+            overflow-x: auto;
+            padding: 5px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* الجدول */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            table-layout: fixed;
+            border-spacing: 0;
+        }
+
+        /* الرؤوس والخلايا */
+        th, td {
+            padding: 2mm;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            font-size: 10pt;
+            font-weight: bold; /* جعل النصوص غامقة */
+            color: #222;
+            transition: background-color 0.2s;
+        }
+
+        /* تنسيق رؤوس الأعمدة */
+        th {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 3mm;
+        }
+
+        /* تنسيق الخلايا */
+        td {
+            background-color: #fafafa;
+        }
+
+        td:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* تقليل الحشوة والعرض لـ input داخل الجدول */
+        #followupTable td input {
+            width: 90%;
+            padding: 1mm;
+            text-align: center;
+            font-size: 10pt;
+            font-weight: bold; /* جعل النصوص غامقة داخل الـ input */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #fff;
+            transition: border-color 0.3s;
+            max-width: 250px;
+        }
+
+        #followupTable td input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* تخصيص حقل "اسم الأم" */
+        #followupTable td:nth-child(2) input {
+            max-width: 300px;
+        }
+
+        /* تنسيق أزرار الإجراءات */
+        #followupTable td button {
+            width: 35px;
+            height: 25px;
+            padding: 0;
+            font-size: 8pt;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #followupTable td .print-btn {
+            background-color: #2196F3;
+            margin-left: 2px;
+        }
+
+        #followupTable td .print-btn:hover {
+            background-color: #1976D2;
+        }
+
+        #followupTable td .delete-btn {
+            background-color: #f44336;
+        }
+
+        #followupTable td .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        /* توزيع الأعمدة بنسب مئوية (5 أعمدة) */
+        #followupTable th:nth-child(1),
+        #followupTable td:nth-child(1) {
+            width: 10%; /* صغر عرض عمود رقم الملف */
+        }
+
+        #followupTable th:nth-child(2),
+        #followupTable td:nth-child(2) {
+            width: 40%; /* كبر عرض عمود اسم الأم */
+        }
+
+        #followupTable th:nth-child(3),
+        #followupTable td:nth-child(3) {
+            width: 10%; /* صغر عرض عمود نوع الطفل */
+        }
+
+        #followupTable th:nth-child(4),
+        #followupTable td:nth-child(4) {
+            width: 20%; /* عرض تاريخ التخزين */
+        }
+
+        #followupTable th:nth-child(5),
+        #followupTable td:nth-child(5) {
+            width: 20%; /* عرض إجراءات */
+        }
+
+        /* التصفية */
+        .filter {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .filter input {
+            padding: 5px;
+            width: 200px;
+            margin: 5px;
+        }
+
+        /* أزرار التحكم */
+        .buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .add-btn {
+            background-color: #28a745;
+        }
+
+        .add-btn:hover {
+            background-color: #218838;
+        }
+
+        
+        /* التوافق مع الشاشات الصغيرة */
+        @media screen and (max-width: 600px) {
+            .header {
+                padding: 3mm;
+            }
+
+            .table-container {
+                width: 100%;
+                padding: 0;
+            }
+
+            table {
+                font-size: 8pt;
+                border-spacing: 0;
+            }
+
+            th, td {
+                padding: 1mm;
+                line-height: 1.2;
+                font-weight: bold; /* جعل النصوص غامقة */
+                font-size: 8pt;
+            }
+
+            #followupTable td input {
+                width: 90%;
+                padding: 0.5mm;
+                font-size: 8pt;
+                font-weight: bold; /* جعل النصوص غامقة */
+                max-width: 200px;
+            }
+
+            #followupTable td:nth-child(2) input {
+                max-width: 250px;
+            }
+
+            #followupTable td button {
+                width: 30px;
+                height: 20px;
+                font-size: 7pt;
+            }
+
+            .filter input {
+                width: 150px;
+            }
+
+            button {
+                width: 100%;
+                margin: 2px 0;
+            }
+        }
+
+        @media print {
+            @page {
+                size: A4;
+                margin: 1.2cm;
+            }
+            
+            body { 
+                background: #fff !important;
+                margin: 0;
+                padding: 0;
+                font-size: 12pt;
+                line-height: 1.4;
+            }
+
+            .print-btn { 
+                display: none !important; 
+            }
+
+            .sheet { 
+                box-shadow: none !important;
+                margin: 0 auto 10px auto;
+                padding: 16px;
+                border: 2px solid #34495e !important;
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .header { 
+                color: #fff !important;
+                background: #34495e !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .nursery-title, .hospital-title {
+                font-size: 16pt;
+                font-weight: bold;
+                margin: 0;
+            }
+
+            .header h1 {
+                font-size: 24pt;
+                margin: 10px 0;
+            }
+
+            .section {
+                margin-bottom: 20px;
+                page-break-inside: avoid;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 15px;
+            }
+
+            .row {
+                page-break-inside: avoid;
+                display: flex;
+                gap: 15px;
+                margin-bottom: 12px;
+            }
+
+            .cell {
+                flex: 1;
+                min-width: 150px;
+            }
+
+            .cell label {
+                font-weight: bold;
+                color: #34495e !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                font-size: 11pt;
+                margin-bottom: 4px;
+                display: block;
+            }
+
+            input, textarea {
+                border: 1px solid #ccc !important;
+                background: #fff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                padding: 6px;
+                font-size: 11pt;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .custom-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 10px 0 0 0;
+                page-break-inside: avoid;
+            }
+
+            .custom-table th {
+                background-color: #34495e !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                padding: 8px;
+                font-size: 11pt;
+                border: 1px solid #2c3e50;
+            }
+
+            .custom-table td {
+                padding: 6px;
+                border: 1px solid #ddd;
+                font-size: 11pt;
+                text-align: center;
+            }
+
+            .custom-table tr:nth-child(even) {
+                background-color: #f9f9f9 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            textarea {
+                min-height: 60px;
+                resize: none;
+            }
+
+            /* تحسين مظهر التواريخ والأرقام */
+            input[type="text"][readonly],
+            input[type="number"][readonly] {
+                background-color: #f8f9fa !important;
+                color: #2c3e50 !important;
+                font-weight: 500;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>بيانات المتابعة اليومية</h1>
+    </div>
+
+    <div class="filter">
+        <label>تصفية حسب رقم الملف: </label>
+        <input type="text" id="fileNoFilter" oninput="filterFollowupData()" placeholder="أدخل رقم الملف">
+        <label>تصفية حسب التاريخ (من): </label>
+        <input type="date" id="dateFromFilter" onchange="filterFollowupData()">
+        <label>إلى: </label>
+        <input type="date" id="dateToFilter" onchange="filterFollowupData()">
+        <button class="add-btn" onclick="window.location.href='dashboard.html'">🏠 Dashboard</button>
+    </div>
+
+    <div class="table-container">
+        <table id="followupTable">
+            <thead>
+                <tr>
+                    <th>رقم الملف</th>
+                    <th>اسم الأم</th>
+                    <th>نوع الطفل</th>
+                    <th>تاريخ التخزين</th>
+                    <th>إجراءات</th>
+                </tr>
+            </thead>
+            <tbody id="followupTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="buttons">
+        <button onclick="archiveOldRecords()">📥 أرشفة السجلات القديمة</button>
+        <input type="number" id="archiveDays" min="1" value="30" style="width: 60px; padding: 5px;" placeholder="عدد الأيام">
+    </div>
+
+    <script>
+        let currentFilteredData = [];
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                const today = new Date();
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(today.getDate() - 30);
+                
+                document.getElementById('dateFromFilter').value = thirtyDaysAgo.toISOString().split('T')[0];
+                document.getElementById('dateToFilter').value = today.toISOString().split('T')[0];
+                
+                await filterFollowupData();
+                
+                document.getElementById('fileNoFilter').addEventListener('input', filterFollowupData);
+                document.getElementById('dateFromFilter').addEventListener('change', filterFollowupData);
+                document.getElementById('dateToFilter').addEventListener('change', filterFollowupData);
+            } catch (error) {
+                console.error('Error initializing page:', error);
+                alert('حدث خطأ أثناء تحميل الصفحة');
+            }
+        });
+
+        async function filterFollowupData() {
+            const fileNoFilter = document.getElementById("fileNoFilter").value.trim().toLowerCase();
+            const dateFromFilter = document.getElementById("dateFromFilter").value;
+            const dateToFilter = document.getElementById("dateToFilter").value;
+            const tbody = document.getElementById("followupTableBody");
+
+            tbody.innerHTML = "";
+
+            try {
+                const followupData = await db.getAllFollowupData();
+                const children = await db.getChildren();
+
+                let filteredData = Object.entries(followupData || {}).map(([fileNo, data]) => ({
+                    fileNo,
+                    ...data
+                }));
+
+                if (fileNoFilter) {
+                    filteredData = filteredData.filter(data => data.fileNo.toLowerCase().includes(fileNoFilter));
+                }
+
+                if (dateFromFilter) {
+                    const fromDate = new Date(dateFromFilter);
+                    filteredData = filteredData.filter(data => new Date(data.timestamp) >= fromDate);
+                }
+
+                if (dateToFilter) {
+                    const toDate = new Date(dateToFilter);
+                    toDate.setHours(23, 59, 59, 999); 
+                    filteredData = filteredData.filter(data => new Date(data.timestamp) <= toDate);
+                }
+
+                filteredData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+                console.log('filteredData:', filteredData);
+
+                if (filteredData.length === 0) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `<td colspan="5">لا توجد بيانات للعرض</td>`;
+                    tbody.appendChild(row);
+                    return;
+                }
+
+                filteredData.forEach(data => {
+                    const child = Object.values(children).find(c => c.fileNo == data.fileNo);
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${data.fileNo}</td>
+                        <td>${child ? child.motherName : ''}</td>
+                        <td>${child ? child.childType : ''}</td>
+                        <td>${new Date(data.timestamp).toLocaleDateString('ar-EG')}</td>
+                        <td>
+                            <div style="display: flex; gap: 6px; justify-content: center; align-items: center;">
+                                <button class="delete-btn" onclick="deleteRecord('${data.fileNo}', '${data.timestamp}')">حذف</button>
+                                <button class="print-btn" onclick="viewHistory('${data.fileNo}')">عرض السجل التاريخي</button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                currentFilteredData = filteredData;
+            } catch (error) {
+                console.error('Error filtering followup data:', error);
+                alert('حدث خطأ أثناء تحميل البيانات');
+            }
+        }
+
+        async function deleteRecord(fileNo, timestamp) {
+            if (!confirm(`هل أنت متأكد من حذف سجل ${fileNo} بتاريخ ${new Date(timestamp).toLocaleString("ar-EG")}؟`)) return;
+
+            try {
+                await db.deleteFollowupRecord(fileNo);
+                alert("تم الحذف بنجاح!");
+                filterFollowupData();
+            } catch (error) {
+                console.error('Error deleting record:', error);
+                alert('حدث خطأ أثناء حذف السجل');
+            }
+        }
+
+        async function archiveOldRecords() {
+            const days = parseInt(document.getElementById("archiveDays").value) || 30;
+            const cutoffDate = new Date();
+            cutoffDate.setDate(cutoffDate.getDate() - days);
+
+            try {
+                const followupData = await db.getAllFollowupData();
+                const oldRecords = Object.entries(followupData)
+                    .filter(([_, data]) => new Date(data.timestamp) < cutoffDate)
+                    .map(([fileNo, data]) => ({ fileNo, ...data }));
+
+                if (oldRecords.length === 0) {
+                    alert(`لا توجد سجلات أقدم من ${days} يومًا للأرشفة!`);
+                    return;
+                }
+
+                const jsonData = JSON.stringify(oldRecords, null, 2);
+                const blob = new Blob([jsonData], { type: "application/json" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `archived_followup_data_${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                for (const record of oldRecords) {
+                    await db.deleteFollowupRecord(record.fileNo);
+                }
+
+                alert(`تم أرشفة ${oldRecords.length} سجل قديم بنجاح!`);
+                filterFollowupData();
+            } catch (error) {
+                console.error('Error archiving records:', error);
+                alert('حدث خطأ أثناء أرشفة السجلات');
+            }
+        }
+
+        async function viewHistory(fileNo) {
+            try {
+                const history = await db.getHistoryForFileNo(fileNo);
+                if (!history.length) {
+                    alert('لا يوجد سجل تاريخي لهذا الملف');
+                return;
+            }
+                const win = window.open('', '_blank', 'width=900,height=700');
+                win.document.write(`
+                    <html lang="ar">
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>السجل التاريخي لرقم الملف ${fileNo}</title>
+                        <link rel="stylesheet" href="index.css">
+                    </head>
+                    <body style="background: white;">
+                        <div class="header">
+                            <div class="nursery-title">وحدة حضانات الأطفال</div>
+                            <h1>Daily Follow-up Chart</h1>
+                            <div class="hospital-title">مستشفى نبض الحياة</div>
+                            <div class="buttons">
+                                <button class="print-btn" onclick="window.print()">🖨️ طباعة</button>
+                            </div>
+                        </div>
+                `);
+                history.forEach((rec, idx) => {
+                    let milkTypeText = '';
+                    switch (rec.milkType) {
+                        case '1': milkTypeText = 'لبن ناقص النمو'; break;
+                        case '2': milkTypeText = 'لبن نيوكيت'; break;
+                        case '3': milkTypeText = 'لبن FEH'; break;
+                        case '4': milkTypeText = 'ماء مقطر'; break;
+                        case '5': milkTypeText = 'لبن AR'; break;
+                        case '6': milkTypeText = 'لبن كامل النمو'; break;
+                        default: milkTypeText = rec.milkType || ''; break;
+                    }
+                    win.document.write(`
+                        <div class="grid-container">
+                            <div class="row">
+                                <div class="cell"><label>File NO</label><input type="text" value="${rec.fileNo || ''}" readonly></div>
+                                <div class="cell"><label>الاسم</label><input type="text" value="${rec.childName || ''}" readonly></div>
+                                <div class="cell"><label>النوع</label><input type="text" value="${rec.childType || ''}" readonly></div>
+                                <div class="cell"><label>العمر الرحمي بالأسابيع</label><input type="text" value="${rec.gestationalAge || ''}" readonly></div>
+                                <div class="cell"><label>التاريخ📅</label><input type="text" value="${rec.dateBox ? rec.dateBox : (rec.timestamp ? new Date(rec.timestamp).toLocaleDateString('ar-EG') : '')}" readonly></div>
+                            </div>
+                            <div class="row">
+                                <div class="cell"><label>Age</label><input type="text" value="${rec.age || ''}" readonly></div>
+                                <div class="cell"><label>Days</label><input type="text" value="${rec.days || ''}" readonly></div>
+                                <div class="cell"><label>الوزن</label><input type="text" value="${rec.weight || ''}" readonly></div>
+                                <div class="cell"><label>آخر المعامل</label><input type="text" value="${rec.lastLab || ''}" readonly></div>
+                                <div class="cell"><label>Referred</label><input type="text" value="${rec.referred || ''}" readonly></div>
+                            </div>
+                            <div class="row">
+                                <div class="cell"><label>Diagnosis</label><input type="text" value="${rec.feedingAmount2 || ''}" readonly></div>
+                                <div class="cell"><label>Problem List</label><input type="text" value="${rec.problemText || ''}" readonly></div>
+                                <div class="cell"><label>Other Notes</label><input type="text" value="${rec.otherNotes || ''}" readonly></div>
+                            </div>
+                            <div class="row">
+                                <div class="cell"><label>Oxygen</label><input type="text" value="${rec.oxygenList || ''}" readonly></div>
+                                <div class="cell"><label>Sessions</label><input type="text" value="${rec.sessionsList || ''}" readonly></div>
+                                <div class="cell"><label>Phototherapy</label><input type="text" value="${rec.phototherapyList || ''}" readonly></div>
+                        </div>
+                            <div class="row">
+                                <div class="cell"><label>ML/KG</label><input type="text" value="${rec.mlPerKg || ''}" readonly></div>
+                                <div class="cell"><label>نوع المحاليل</label><input type="text" value="${rec.fluidType || ''}" readonly></div>
+                                <div class="cell"><label>المعدل /س</label><input type="text" value="${rec.ratePerHour || ''}" readonly></div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="cell"><label>الرضاعة/سم</label><input type="text" value="${rec.feedingAmount || ''}" readonly></div>
+                                <div class="cell"><label>نوع اللبن</label><input type="text" value="${milkTypeText}" readonly></div>
+                                <div class="cell"><label>التوقيت/س</label><input type="text" value="${rec.feedingTime || ''}" readonly></div>
+                                <div class="cell"><label>النوع</label><input type="text" value="${rec.feedingMethod || ''}" readonly></div>
+                                <div class="cell"><label>ملاحظات</label><input type="text" value="${rec.extraOption || ''}" readonly></div>
+                            </div>
+                            <div class="row">
+                                <div class="cell"><label>PTN.A</label><input type="text" value="${rec.ptnAValue || ''}" readonly></div>
+                                <div class="cell"><label>GIR</label><input type="text" value="${rec.girValue || ''}" readonly></div>
+                                <div class="cell"><label>TCI</label><input type="text" value="${rec.tciValue || ''}" readonly></div>
+                                <div class="cell"><label>PTN.M</label><input type="text" value="${rec.ptnMValue || ''}" readonly></div>
+                                <div class="cell"><label>R.FL</label><input type="text" value="${rec.rflValue || ''}" readonly></div>
+                                <div class="cell"><label>DR</label><input type="text" value="${rec.drRemainingFl || ''}" readonly></div>
+                                <div class="cell"><label>MILK</label><input type="text" value="${rec.milkValue || ''}" readonly></div>
+                                <div class="cell"><label>TF</label><input type="text" value="${rec.tfValue || ''}" readonly></div>
+                            </div>
+                            
+                            
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>م</th>
+                                        <th>الدواء</th>
+                                        <th>التركيز/مل</th>
+                                        <th>التخفيف</th>
+                                        <th>الجرعة</th>
+                                        <th>الجرعة النهائية</th>
+                                        <th>التوقيت</th>
+                                        <th>الطريقة</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${(rec.medicines ? rec.medicines.map((med, index) => `
+                                        <tr>
+                                            <td>${index + 1}</td>
+                                            <td>${med.medicineName || ''}</td>
+                                            <td>${med.serialNumber || ''}</td>
+                                            <td>${med.concentrationInMl || ''}</td>
+                                            <td>${med.finalDilution || ''}</td>
+                                            <td>${med.dosage || ''}</td>
+                                            <td>${med.finalDosage || ''}</td>
+                                            <td>${med.timing || ''}</td>
+                                            <td>${med.method || ''}</td>
+                                        </tr>
+                                    `).join('') : '')}
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <div class="cell" style="flex: 3 1 70%;"><label>Daily Notes</label><textarea readonly>${rec.dailyNotes || ''}</textarea></div>
+                                <div class="cell" style="flex: 1 1 30%;"><label>Physician</label><input type="text" value="${rec.physician || ''}" readonly></div>
+                            </div>
+                            
+                    </div>
+                `);
+            });
+                win.document.write('</body></html>');
+                win.document.close();
+            } catch (error) {
+                alert('حدث خطأ أثناء جلب السجل التاريخي');
+            }
+        }
+    </script>
+</body>
+</html>

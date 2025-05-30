@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدخال بيانات الأدوية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Tajawal', 'Arial', sans-serif;
+            background-color: #f5f7fa;
+            direction: rtl;
+            text-align: right;
+            margin: 0;
+            padding: 5mm;
+            color: #333;
+            font-size: 10pt;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #34495e;
+            color: white;
+            padding: 5mm 10mm;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 5mm;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .nursery-title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-right: 10mm;
+            white-space: nowrap;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 18pt;
+            font-weight: bold;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .hospital-title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-left: 10mm;
+            white-space: nowrap;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 5mm;
+            align-items: center;
+        }
+
+        button {
+            background-color: #f39c12;
+            color: white;
+            border: none;
+            padding: 3mm 8mm;
+            cursor: pointer;
+            font-size: 10pt;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            margin: 0 2mm;
+        }
+
+        button:hover {
+            background-color: #b47715;
+        }
+
+        .add-btn {
+            background-color: #28a745;
+        }
+
+        .add-btn:hover {
+            background-color: #218838;
+        }
+
+        .back-btn {
+            background-color: #e74c3c;
+        }
+
+        .back-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .save-btn {
+            background-color: #2ecc71;
+        }
+
+        .save-btn:hover {
+            background-color: #27ae60;
+        }
+
+        .excel-btn {
+            background-color: #f39c12;
+        }
+
+        .excel-btn:hover {
+            background-color: #e67e22;
+        }
+
+        .view-data-btn {
+            background-color: #007bff;
+        }
+
+        .view-data-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .small-btn {
+            padding: 1mm 3mm;
+            font-size: 10pt;
+        }
+
+        .form-container {
+            background: white;
+            padding: 3mm;
+            width: 300px;
+            margin: 5mm auto;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin: 2mm 0 0.5mm;
+            font-size: 10pt;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 1.5mm;
+            margin-bottom: 2mm;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 9pt;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3mm;
+            flex-wrap: wrap;
+            gap: 2mm;
+        }
+
+        @media screen and (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                padding: 3mm;
+            }
+
+            .nursery-title {
+                margin-right: 0;
+                margin-bottom: 2mm;
+            }
+
+            .hospital-title {
+                margin-left: 0;
+                margin-bottom: 2mm;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 1.5mm;
+            }
+
+            button {
+                width: 100%;
+                margin: 0;
+            }
+
+            .form-container {
+                width: 100%;
+                margin: 5mm 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>إدخال بيانات الأدوية</h1>
+        <div class="buttons">
+            <button class="back-btn" onclick="window.location.href='index.html'">⬅ العودة للمتابعة</button>
+            <button class="add-btn" onclick="window.location.href='dashboard.html'">🏠  Dashboard </button>
+        </div>
+    </div>
+
+    <div class="form-container" id="medicineForm">
+        <div class="form-group">
+            <label>رقم التسلسلي:</label>
+            <input type="number" id="serialNumber" required>
+        </div>
+
+        <div class="form-group">
+            <label>اسم الدواء:</label>
+            <input type="text" id="medicineName" required>
+        </div>
+
+        <div class="form-group">
+            <label>التركيز (mg):</label>
+            <input type="number" id="concentration" required>
+        </div>
+
+        <div class="form-group">
+            <label>تخفيف الأمبول:</label>
+            <input type="number" id="dilution" required>
+        </div>
+
+        <div class="form-group">
+            <label>التركيز في (ml):</label>
+            <input type="number" id="concentrationInMl" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>التخفيف:</label>
+            <input type="text" id="finalDilution" required>
+        </div>
+
+        <div class="form-group">
+            <label>الجرعة (mg):</label>
+            <input type="number" id="dosage" required>
+        </div>
+
+        <div class="form-group">
+            <label>التوقيت:</label>
+            <input type="text" id="timing" required>
+        </div>
+
+        <div class="form-group">
+            <label>الطريقة:</label>
+            <input type="text" id="method" required>
+        </div>
+
+        <div class="button-group">
+            <button class="save-btn" type="button" onclick="saveMedicine()">💾 حفظ</button>
+        </div>
+    </div>
+
+    <div class="buttons" style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+        <button class="view-data-btn" onclick="window.location.href='drug_data.html'">📋 عرض الأدوية</button>
+        <button class="import-btn" onclick="importData()">⬆️ استيراد من Excel</button>
+        <button class="export-btn" onclick="exportData()">📥 حفظ البيانات في Excel</button>
+        <button class="template-btn" onclick="downloadTemplate()">📋 تحميل القالب Excel</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script src="database.js"></script>
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script>
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        async function prefillMedicineFormForEdit() {
+            const medId = getQueryParam('id');
+            if (!medId) return;
+            try {
+                const medicinesData = await db.getMedicines();
+                const med = medicinesData[medId];
+                if (!med) return;
+                document.getElementById('serialNumber').value = med.serialNumber || '';
+                document.getElementById('medicineName').value = med.medicineName || '';
+                document.getElementById('concentration').value = med.concentration || '';
+                document.getElementById('dilution').value = med.dilution || '';
+                document.getElementById('concentrationInMl').value = med.concentrationInMl || '';
+                document.getElementById('finalDilution').value = med.finalDilution || '';
+                document.getElementById('dosage').value = med.dosage || '';
+                document.getElementById('timing').value = med.timing || '';
+                document.getElementById('method').value = med.method || '';
+                const saveBtn = document.querySelector('.save-btn');
+                if (saveBtn) saveBtn.textContent = 'تحديث الدواء';
+            } catch (error) {
+                console.error('Error pre-filling medicine form:', error);
+            }
+        }
+
+        async function saveMedicine() {
+            const medId = getQueryParam('id');
+            const serialNumber = document.getElementById("serialNumber").value.trim();
+            const medicineName = document.getElementById("medicineName").value.trim();
+            const concentration = document.getElementById("concentration").value.trim();
+            const dilution = document.getElementById("dilution").value.trim();
+            const concentrationInMl = document.getElementById("concentrationInMl").value.trim();
+            const finalDilution = document.getElementById("finalDilution").value.trim();
+            const dosage = document.getElementById("dosage").value.trim();
+            const timing = document.getElementById("timing").value.trim();
+            const method = document.getElementById("method").value.trim();
+
+            if (!serialNumber || !medicineName || !concentration || !dilution || !dosage || !timing || !method) {
+                alert("الرجاء ملء جميع الحقول المطلوبة!");
+                return;
+            }
+
+            let newMedicine = {
+                serialNumber,
+                medicineName,
+                concentration,
+                dilution,
+                concentrationInMl,
+                finalDilution,
+                dosage,
+                timing,
+                method
+            };
+
+            try {
+                if (medId) {
+                    await db.updateMedicine(medId, newMedicine);
+                    alert('تم تحديث الدواء بنجاح!');
+                } else {
+                    await db.saveMedicine(newMedicine);
+                    alert('تم حفظ الدواء بنجاح!');
+                }
+                window.location.href = 'drug_data.html';
+            } catch (error) {
+                alert('حدث خطأ أثناء حفظ الدواء: ' + (error.message || error));
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const concentrationInput = document.getElementById("concentration");
+            const dilutionInput = document.getElementById("dilution");
+            const resultInput = document.getElementById("concentrationInMl");
+
+            function calculateConcentration() {
+                const concentrationMg = parseFloat(concentrationInput.value);
+                const dilutionAmp = parseFloat(dilutionInput.value);
+
+                if (!isNaN(concentrationMg) && !isNaN(dilutionAmp) && dilutionAmp !== 0) {
+                    resultInput.value = (concentrationMg / dilutionAmp).toFixed(2);
+                } else {
+                    resultInput.value = "";
+                }
+            }
+
+            concentrationInput.addEventListener("input", calculateConcentration);
+            dilutionInput.addEventListener("input", calculateConcentration);
+
+            prefillMedicineFormForEdit();
+        });
+
+        function fixMojibake(str) {
+            if (typeof str === "string" && /[ÙØ]/.test(str)) {
+                try {
+                    return decodeURIComponent(escape(str));
+                } catch (e) {
+                    return str;
+                }
+            }
+            return str;
+        }
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.xlsx';
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = async function (evt) {
+                        const data = new Uint8Array(evt.target.result);
+                        const workbook = XLSX.read(data, { type: 'array' });
+                        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                        const jsonData = XLSX.utils.sheet_to_json(firstSheet, { defval: '' });
+
+                        let successCount = 0;
+                        let skippedCount = 0;
+                        for (const row of jsonData) {
+                            row['اسم الدواء'] = fixMojibake(row['اسم الدواء']);
+                            row['الطريقة'] = fixMojibake(row['الطريقة']);
+                            row['التوقيت'] = fixMojibake(row['التوقيت']);
+                            if (
+                                row['رقم التسلسلي'] === undefined ||
+                                row['اسم الدواء'] === undefined ||
+                                row['التركيز (mg)'] === undefined ||
+                                row['تخفيف الأمبول'] === undefined ||
+                                row['الجرعة (mg)'] === undefined ||
+                                row['التوقيت'] === undefined ||
+                                row['الطريقة'] === undefined
+                            ) {
+                                skippedCount++;
+                                continue;
+                            }
+                            try {
+                                await db.saveMedicine({
+                                    serialNumber: row['رقم التسلسلي'],
+                                    medicineName: row['اسم الدواء'],
+                                    concentration: row['التركيز (mg)'],
+                                    dilution: row['تخفيف الأمبول'],
+                                    concentrationInMl: row['التركيز في (ml)'],
+                                    finalDilution: row['التخفيف'],
+                                    dosage: row['الجرعة (mg)'],
+                                    timing: row['التوقيت'],
+                                    method: row['الطريقة']
+                                });
+                                successCount++;
+                            } catch (err) {
+                            }
+                        }
+                        alert(`تم استيراد ${successCount} دواء بنجاح! تم تخطي ${skippedCount} صفوف.`);
+                    };
+                    reader.readAsArrayBuffer(file);
+                }
+            };
+            input.click();
+        }
+
+        async function exportData() {
+            try {
+                const medicinesData = await db.getMedicines();
+                const dataArr = Object.values(medicinesData || {});
+                if (dataArr.length === 0) {
+                    alert('لا توجد بيانات لتصديرها.');
+                    return;
+                }
+                const ws = XLSX.utils.json_to_sheet(dataArr);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, 'Medicines');
+                XLSX.writeFile(wb, 'exported_drugs.xlsx');
+            } catch (error) {
+                alert('حدث خطأ أثناء تصدير البيانات.');
+                console.error(error);
+            }
+        }
+
+        function downloadTemplate() {
+            const link = document.createElement('a');
+            link.href = 'drugs_template.xlsx';
+            link.download = 'drugs_template.xlsx';
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>

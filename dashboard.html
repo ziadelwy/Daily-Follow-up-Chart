@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عيادات نبض الحياة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f0f4f8;
+            direction: rtl;
+            text-align: right;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .dashboard-container {
+            background: white;
+            padding: 15mm;
+            width: 260px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .logo-container {
+            margin-bottom: 10mm;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo {
+            max-width: 160px;
+            height: auto;
+            margin-bottom: 5mm;
+        }
+
+        .logo-container h1 {
+            font-size: 12pt;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 0;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6mm;
+        }
+
+        .dashboard-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 5mm 10mm;
+            cursor: pointer;
+            font-size: 10pt;
+            border-radius: 4px;
+            width: 100%;
+            transition: background-color 0.3s, transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .dashboard-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .dashboard-btn i {
+            font-size: 12pt;
+        }
+
+        @media screen and (max-width: 400px) {
+            .dashboard-container {
+                width: 90%;
+                padding: 12mm;
+            }
+
+            .logo {
+                max-width: 140px;
+            }
+
+            .logo-container h1 {
+                font-size: 10pt;
+            }
+
+            .dashboard-btn {
+                padding: 4mm 8mm;
+                font-size: 9pt;
+            }
+
+            .dashboard-btn i {
+                font-size: 10pt;
+            }
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="logo-container">
+            <img src="nabd.png" alt="شعار مستشفى نبض الحياة" class="logo">
+            <h1>وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا</h1>
+        </div>
+        <div class="buttons-container">
+            <button class="dashboard-btn" onclick="window.location.href='index.html'">
+                <i class="fas fa-heartbeat"></i> المتابعة
+            </button>
+            <button class="dashboard-btn" onclick="window.location.href='add_child.html'">
+                <i class="fas fa-baby"></i> إضافة طفل جديد
+            </button>
+            <button class="dashboard-btn" onclick="window.location.href='blood_request.html'">
+                <i class="fas fa-heartbeat"></i> طلب نقل دم
+            </button>
+            <button class="dashboard-btn" onclick="window.location.href='add_drug.html'">
+                <i class="fas fa-capsules"></i> إضافة دواء جديد
+            </button>
+            <button class="dashboard-btn" onclick="window.location.href='children_data.html'">
+                <i class="fas fa-users"></i> عرض بيانات الأطفال
+            </button>
+            <button class="dashboard-btn" onclick="window.location.href='drug_data.html'">
+                <i class="fas fa-warehouse"></i> عرض الأدوية المخزنة
+            </button>
+            <button class="dashboard-btn" onclick="window.location.href='followup_data.html'">
+                <i class="fas fa-clipboard-check"></i> عرض بيانات المتابعة
+            </button>
+        </div>
+    </div>
+</body>
+</html>

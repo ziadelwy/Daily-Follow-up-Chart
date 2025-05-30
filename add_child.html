@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة طفل جديد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script src="database.js"></script>
+    <script src="script.js"></script>
+    <style>
+        body {
+            font-family: 'Tajawal', 'Arial', sans-serif;
+            background-color: #f5f7fa;
+            direction: rtl;
+            text-align: right;
+            margin: 0;
+            padding: 5mm;
+            color: #333;
+            font-size: 10pt;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #34495e;
+            color: white;
+            padding: 5mm 10mm;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 5mm;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .nursery-title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-right: 10mm;
+            white-space: nowrap;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 18pt;
+            font-weight: bold;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .hospital-title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-left: 10mm;
+            white-space: nowrap;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 5mm;
+            align-items: center;
+        }
+
+        button {
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            padding: 3mm 8mm;
+            cursor: pointer;
+            font-size: 10pt;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            margin: 0 2mm;
+        }
+
+        button:hover {
+            background-color: #1c86ee;
+        }
+
+        .add-btn {
+            background-color: #28a745;
+        }
+
+        .add-btn:hover {
+            background-color: #218838;
+        }
+
+        .back-btn {
+            background-color: #e74c3c;
+        }
+
+        .back-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .save-btn {
+            background-color: #2ecc71;
+        }
+
+        .save-btn:hover {
+            background-color: #27ae60;
+        }
+
+        .excel-btn {
+            background-color: #f39c12;
+        }
+
+        .excel-btn:hover {
+            background-color: #e67e22;
+        }
+
+        .view-data-btn {
+            background-color: #007bff;
+        }
+
+        .view-data-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .small-btn {
+            padding: 1mm 3mm;
+            font-size: 10pt;
+        }
+
+        .form-container {
+            background: white;
+            padding: 3mm;
+            width: 300px;
+            margin: 5mm auto;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin: 2mm 0 0.5mm;
+            font-size: 10pt;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 1.5mm;
+            margin-bottom: 2mm;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 9pt;
+        }
+
+        .birth-place-container {
+            display: flex;
+            gap: 2mm;
+            margin-bottom: 2mm;
+        }
+
+        .birth-place-container input {
+            flex-grow: 1;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3mm;
+            flex-wrap: wrap;
+            gap: 2mm;
+        }
+
+        @media screen and (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                padding: 3mm;
+            }
+
+            .nursery-title {
+                margin-right: 0;
+                margin-bottom: 2mm;
+            }
+
+            .hospital-title {
+                margin-left: 0;
+                margin-bottom: 2mm;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 1.5mm;
+            }
+
+            button {
+                width: 100%;
+                margin: 0;
+            }
+
+            .form-container {
+                width: 100%;
+                margin: 5mm 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>إضافة بيانات الطفل</h1>
+        <button class="back-btn" onclick="window.location.href='index.html'">⬅ العودة للمتابعة</button>
+        <button class="add-btn" onclick="window.location.href='dashboard.html'">🏠  Dashboard </button>
+    </div>
+
+    <div class="form-container">
+        <div class="form-group">
+            <label>رقم الملف (الرقم التسلسلي)</label>
+            <input type="text" id="fileNo" placeholder="أدخل رقم الملف">
+        </div>
+
+        <div class="form-group">
+            <label>اسم الأم</label>
+            <input type="text" id="motherName" placeholder="أدخل اسم الأم">
+        </div>
+
+        <div class="form-group">
+            <label>نوع الطفل</label>
+            <select id="childType">
+                <option value="ابن">ابن</option>
+                <option value="بنت">بنت</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>تاريخ الميلاد</label>
+            <input type="date" id="birthDate">
+        </div>
+
+        <div class="form-group">
+            <label>تاريخ الدخول</label>
+            <input type="date" id="entryDate">
+        </div>
+
+        <div class="form-group">
+            <label>العمر الرحمي (بالأسابيع)</label>
+            <input type="number" id="gestationalAge" placeholder="أدخل العمر الرحمي">
+        </div>
+
+        <div class="form-group">
+            <label>مكان الولادة</label>
+            <div class="birth-place-container">
+                <select id="birthPlace"></select>
+                <input type="text" id="newBirthPlace" placeholder="إضافة مكان جديد">
+                <button class="add-btn small-btn" onclick="addBirthPlace()">➕</button>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="save-btn" onclick="saveChildData()">💾 حفظ البيانات</button>
+        </div>
+    </div>
+
+    <button class="view-data-btn" onclick="window.location.href='children_data.html'">📋 عرض بيانات الأطفال</button>
+    <button class="excel-btn" onclick="document.getElementById('importExcelInput').click()">⬆️ استيراد من Excel</button>
+
+    <button class="excel-btn" onclick="exportToExcel()">📥 حفظ البيانات في Excel</button>
+    <button class="excel-btn" onclick="downloadChildrenTemplate()">📋 تحميل القالب Excel</button>
+    <input type="file" id="importExcelInput" accept=".xlsx, .xls" style="display:none" onchange="importFromExcel(event)">
+    <script>
+    function downloadChildrenTemplate() {
+        const headers = [
+            "fileNo", "motherName", "childType", "birthDate", "entryDate", "gestationalAge", "birthPlaceId", "birthPlace", "createdAt"
+        ];
+        const worksheet = XLSX.utils.aoa_to_sheet([headers]);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Children Data");
+        XLSX.writeFile(workbook, "children_template.xlsx");
+    }
+    </script>
+</body>
+</html>

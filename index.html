@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تشييت</title>
+    <link rel="stylesheet" href="index.css">
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+    </script>
+    <script type="module" src="database.js"></script>
+</head>
+<body>
+
+<div class="header">
+    <div class="nursery-title">وحدة حضانات الأطفال</div>
+    <h1>Daily Follow-up Chart</h1>
+    <div class="hospital-title">مستشفى نبض الحياة</div>
+    <div class="buttons">
+        <button onclick="window.print()">🖨️ طباعة الصفحة</button>
+        <button class="add-btn" onclick="window.location.href='dashboard.html'">🏠  Dashboard </button>
+
+    </div>
+</div>
+
+<div class="grid-container">
+    <div class="row">
+        <div class="cell"><label>File NO</label><input type="text" id="fileNo"></div>
+        <div class="cell"><label>الاسم</label><input type="text" id="childName" readonly></div>
+        <div class="cell"><label>النوع</label><input type="text" id="childType" readonly></div>
+        <div class="cell"><label>العمر الرحمي</label><input type="text" id="gestationalAge" readonly></div>
+        <div class="cell"><label>التاريخ📅</label><input type="text" id="dateBox" readonly></div>
+    </div>
+
+    <div class="row">
+        <div class="cell"><label>Age</label><input type="text" id="age" readonly></div>
+        <div class="cell"><label>Days</label><input type="text" id="days" readonly></div>
+        <div class="cell"><label>الوزن</label><input type="text" id="weight"></div>
+        <div class="cell"><label>آخر المعامل</label><input type="text" id="lastLab"></div>
+        <div class="cell"><label>Referred</label><input type="text" id="referred" readonly></div>
+    </div>
+</div>
+
+<div class="diagnosis-problem-container">
+    <div class="diagnosis-container">
+        <label>Diagnosis</label>
+        <input type="text" id="feedingAmount2" list="feedingOptions2" placeholder="اختر التشخيص أو اكتبه">
+        <datalist id="feedingOptions2">
+            <option value="Female, FT , 37 w' , NJ"></option>
+            <option value="Female, FT , 38 w' , RD"></option>
+            <option value="Female, FT , 38 w' , RD"></option>
+            <option value="Female, FT , 38 w' , RD"></option>
+            <option value="Female, PT , 35 w' , RD"></option>
+            <option value="Female, PT , 35 w' , RD"></option>
+            <option value="Female, PT , 33 w' , RD"></option>
+            <option value="Female, PT , 33 w' , RD"></option>
+            <option value="Male, FT , 38 w' , RD"></option>
+            <option value="Male, FT , 37 w' , NJ"></option>
+            <option value="Male, FT , 37 w' , RD"></option>
+            <option value="Male, NT , 36 w' , RD"></option>
+            <option value="Male, NT , 36 w' , RD"></option>
+            <option value="Male, NT , 36 w' , RD"></option>
+            <option value="Male, PT , 33 w' , RD"></option>
+            <option value="Male, PT , 32 w' , RD"></option>
+            <option value="Male, PT , 34 w' , RD"></option>
+            <option value="Male, PT , 31 w' , RD"></option>
+        </datalist>
+    </div>
+
+    <div class="problem-container">
+        <label for="problemText">Problem List</label>
+        <input type="text" id="problemText" list="problemOptions" autocomplete="off" placeholder="أدخل المشكلة يدويًا أو اختر">        <datalist id="problemOptions">
+            <option value="NJ➡️➡️Phototherapy"></option>
+            <option value="RD➡️➡️MV"></option>
+            <option value="RD➡️➡️MV➡️➡️NIMV"></option>
+            <option value="RD➡️➡️MV➡️➡️NIMV➡️➡️HFNC➡️➡️IO2➡️➡️OFF"></option>
+            <option value="RD➡️➡️MV➡️➡️NIMV➡️➡️NCMV➡️➡️HFNC"></option>
+            <option value="RD➡️➡️NIMV"></option>
+            <option value="RD➡️➡️NIMV➡️➡️MV"></option>
+            <option value="RD➡️➡️NIMV➡️➡️NCMV"></option>
+            <option value="RD➡️➡️NIMV➡️➡️HFNC"></option>
+            <option value="RD➡️➡️HFNC"></option>
+            <option value="RD➡️➡️HFNC➡️➡️HB"></option>
+            <option value="RD➡️➡️HFNC➡️➡️HB➡️➡️IO2➡️➡️OFF"></option>
+            <option value="RD➡️➡️HFNC➡️➡️NIMV➡️➡️MV"></option>
+            <option value="RD➡️➡️-MV➡️➡️HFO"></option>
+            <option value="RD➡️➡️NC"></option>
+            <option value="RD➡️➡️NC➡️➡️IO2➡️➡️OFF"></option>
+        </datalist>
+    </div>
+    <div class="notes-container" style="min-width:200px;">
+        <label for="otherNotes">Other Notes</label>
+        <textarea id="otherNotes" class="wide-textbox" placeholder="أدخل ملاحظات إضافية"></textarea>
+    </div>
+</div>
+
+<div class="flex-row">
+    <div class="cell">
+        <label>الأكسجين</label>
+        <select id="oxygenList" class="wide-dropdown">
+            <option value="OFF">OFF</option>
+            <option value="MV">MV</option>
+            <option value="HFO">HFO</option>
+            <option value="NI MV">NI MV</option>
+            <option value="NC MV">NC MV</option>
+            <option value="HF NC">HF NC</option>
+            <option value="NC">NC</option>
+            <option value="HB">HB</option>
+            <option value="IO2">IO2</option>
+            <option value="يسحب تدريجيا IO2">يسحب تدريجيا IO2</option>
+        </select>
+    </div>
+
+    
+    <div class="cell">
+            <label>الجلسات</label>
+            <input type="text" id="sessionsList" class="wide-dropdown" list="sessionsOptions" placeholder="اختر أو اكتب الجلسات">
+            <datalist id="sessionsOptions">
+                <option value="OFF"></option>
+                <option value="م.ملح \6 س - ديكسا \12 س"></option>
+                <option value="م.ملح \6 س"></option>
+                <option value="م.ملح مستمرة - ديكسا \12س"></option>
+                <option value="م.ملح \3 س - اتروفنت /6س - ديكسا \12 س"></option>
+                <option value="م.ملح \3 س - اتروفنت /6س - ديكسا \12 س - ادرينالين/12س"></option>
+            </datalist>
+    </div>
+    
+
+    <div class="cell">
+        <label>العلاج الضوئي</label>
+        <select id="phototherapyList" class="wide-dropdown">
+            <option value="OFF">OFF</option>
+            <option value="فردى">فردى</option>
+            <option value="زوجي">زوجي</option>
+            <option value="ثلاثي">ثلاثي</option>
+        </select>
+    </div>
+</div>
+
+<div class="feeding-row">
+    <div class="cell">
+        <label>ML/KG</label>
+        <input type="number" id="mlPerKg" placeholder="أدخل القيمة">
+        <div id="mlPerKgWarning" class="warning-message" style="display: none; color: #ff0000; font-size: 0.9em; margin-top: 5px;"></div>
+    </div>
+
+    <div class="cell">
+        <label>نوع المحاليل</label>
+        <select id="fluidType">
+            <option value="-- اختر --">-- اختر --</option>
+            <option value="نيومنت">نيومنت</option>
+            <option value="جلوكوز 10%">جلوكوز 10%</option>
+            <option value="كوكتيل 8%">كوكتيل 8%</option>
+            <option value="كوكتيل 10%">كوكتيل 10%</option>
+            <option value="كوكتيل 12%">كوكتيل 12%</option>
+        </select>
+    </div>
+    
+    <div class="cell">
+        <label>المعدل /س</label>
+        <input type="number" id="ratePerHour" placeholder="سيتم الحساب تلقائيًا و يمكن التعديل علية" oninput="handleRatePerHourChange()">
+    </div>
+
+    <div class="cell">
+        <label>مراعاة</label>
+        <input type="text" id="feedingAmount3" list="feedingOptions3" placeholder="اختر الملحوظة أو اكتبها">
+        <datalist id="feedingOptions3">
+            <option value="وريدى"></option>
+            <option value="بدون بوتاسيوم"></option>
+            <option value="يستبدل نيومنت الساعة"></option>
+            <option value="25 شرطة هيبارين لكل سرنجة 50 مل"></option>
+            <option value="25 شرطة بوتاسيوم لكل سرنجة 50 مل"></option>
+        </datalist>
+    </div>
+</div>
+
+<div class="feeding-row">
+    <div class="cell">
+        <label>الرضاعة/سم</label>
+        <input type="text" id="feedingAmount" list="feedingOptions" placeholder="أدخل رقم أو NPO + OR">
+        <datalist id="feedingOptions">
+            <option value="NPO + OR"></option>
+            <option value="حسب الرغبة"></option>
+        </datalist>
+    </div>
+
+    <div class="cell">
+        <label>نوع اللبن</label>
+        <select id="milkType">
+            <option value="">-- اختر --</option>
+            <option value="6">لبن كامل النمو</option>
+            <option value="1">لبن ناقص النمو</option>
+            <option value="2">لبن نيوكيت</option>
+            <option value="3">لبن FEH</option>
+            <option value="4">ماء مقطر</option>
+            <option value="5">لبن AR</option>
+        </select>
+    </div>
+
+    <div class="cell">
+        <label>التوقيت/س</label>
+        <select id="feedingTime">
+            <option value="">-- اختر --</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="6">6</option>
+        </select>
+    </div>
+
+    <div class="cell">
+        <label>النوع</label>
+        <select id="feedingMethod">
+            <option value="">-- اختر --</option>
+            <option value="رايل">رايل</option>
+            <option value="بالفم">بالفم</option>
+            <option value="بالفم و يستكمل رايل">بالفم و يستكمل رايل</option>
+        </select>
+    </div>
+
+    <div class="cell">
+        <label>ملاحظات</label>
+        <select id="extraOption">
+            <option value="">-- اختر --</option>
+            <option value="يزيد 5 سم/ 12س">يزيد 5 سم/ 12س</option>
+            <option value="يزيد 2 سم/ 12س">يزيد 2 سم/ 12س</option>
+            <option value="يزيد 2 سم/ 6 س">يزيد 2 سم/ 6 س</option>
+            <option value="ثابت">ثابت</option>
+        </select>
+    </div>
+
+    <div class="cell">
+        <label>مراعاة إضافية</label>
+        <input type="text" id="extraConsiderations" list="extraConsiderationsList" placeholder="اختر الملحوظة أو اكتبها">
+        <datalist id="extraConsiderationsList">
+            <option value="فتح الرايل ق الرضاعه نصف س"></option>
+            <option value="فتح الرايل ق الرضاعه نصف س"></option>
+            <option value="فتح الرايل ق الرضاعه نصف س"></option>
+            <option value="بحيث لا يقل عن    سم\ رضعه"></option>
+            <option value="ملاحظة حدوث ترجيع"></option>
+        </datalist>
+    </div>
+</div>
+
+<div class="row seven-fields">
+    <div class="cell small-cell">
+        <label>PTN.A</label>
+        <input type="number" id="ptnAValue" readonly>
+    </div>
+    <div class="cell small-cell">
+        <label>GIR</label>
+        <input type="number" id="girValue" readonly>
+    </div>
+    <div class="cell small-cell">
+        <label for="tciValue">TCI</label>
+        <input type="number" id="tciValue" readonly>
+    </div>
+    <div class="cell small-cell">
+        <label>PTN.M</label>
+        <input type="number" id="ptnMValue" readonly>
+    </div>
+    <div class="cell small-cell">
+        <label>R.FL</label>
+        <input type="number" id="rflValue" readonly>
+        <div id="rflWarning" class="warning-message" style="display: none; color: #ff0000; font-size: 0.9em; margin-top: 5px;"></div>
+    </div>
+    <div class="cell small-cell">
+        <label>DR</label>
+        <input type="number" id="drRemainingFl" readonly>
+    </div>
+    <div class="cell small-cell">
+        <label>MILK</label>
+        <input type="number" id="milkValue" readonly>
+    </div>
+    <div class="cell small-cell">
+        <label>TF</label>
+        <input type="number" id="tfValue" readonly>
+    </div>
+</div>
+
+<table class="custom-table">
+    <thead>
+        <tr>
+            <th>م</th>
+            <th>الدواء</th>
+            <th>التركيز/مل</th>
+            <th>التخفيف</th>
+            <th>الجرعة</th>
+            <th>الجرعة النهائية</th>
+            <th>التوقيت</th>
+            <th>الطريقة</th>
+            <th>إجراءات</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td><select onchange="fetchMedicineData(this)"><option value="">-- اختر دواء --</option></select></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" readonly></td>
+            <td><input type="number" oninput="updateDR(); updateRFL();"></td>
+            <td><input type="text"></td>
+            <td><button class="delete-btn" onclick="deleteMedicineRow(this)">🗑</button></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><select onchange="fetchMedicineData(this)"><option value="">-- اختر دواء --</option></select></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" readonly></td>
+            <td><input type="number" oninput="updateDR(); updateRFL();"></td>
+            <td><input type="text"></td>
+            <td><button class="delete-btn" onclick="deleteMedicineRow(this)">🗑</button></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><select onchange="fetchMedicineData(this)"><option value="">-- اختر دواء --</option></select></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" readonly></td>
+            <td><input type="number" oninput="updateDR(); updateRFL();"></td>
+            <td><input type="text"></td>
+            <td><button class="delete-btn" onclick="deleteMedicineRow(this)">🗑</button></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td><select onchange="fetchMedicineData(this)"><option value="">-- اختر دواء --</option></select></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" readonly></td>
+            <td><input type="number" oninput="updateDR(); updateRFL();"></td>
+            <td><input type="text"></td>
+            <td><button class="delete-btn" onclick="deleteMedicineRow(this)">🗑</button></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td><select onchange="fetchMedicineData(this)"><option value="">-- اختر دواء --</option></select></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" readonly></td>
+            <td><input type="number" oninput="updateDR(); updateRFL();"></td>
+            <td><input type="text"></td>
+            <td><button class="delete-btn" onclick="deleteMedicineRow(this)">🗑</button></td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td><select onchange="fetchMedicineData(this)"><option value="">-- اختر دواء --</option></select></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" readonly></td>
+            <td><input type="number" oninput="updateDR(); updateRFL();"></td>
+            <td><input type="text"></td>
+            <td><button class="delete-btn" onclick="deleteMedicineRow(this)">🗑</button></td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td><select onchange="fetchMedicineData(this)"><option value="">-- اختر دواء --</option></select></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" readonly></td>
+            <td><input type="number" oninput="updateDR(); updateRFL();"></td>
+            <td><input type="text"></td>
+            <td><button class="delete-btn" onclick="deleteMedicineRow(this)">🗑</button></td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td><select onchange="fetchMedicineData(this)"><option value="">-- اختر دواء --</option></select></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" readonly></td>
+            <td><input type="number" oninput="updateDR(); updateRFL();"></td>
+            <td><input type="text"></td>
+            <td><button class="delete-btn" onclick="deleteMedicineRow(this)">🗑</button></td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td><select onchange="fetchMedicineData(this)"><option value="">-- اختر دواء --</option></select></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" readonly></td>
+            <td><input type="number" oninput="updateDR(); updateRFL();"></td>
+            <td><input type="text"></td>
+            <td><button class="delete-btn" onclick="deleteMedicineRow(this)">🗑</button></td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td><select onchange="fetchMedicineData(this)"><option value="">-- اختر دواء --</option></select></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" oninput="calculateFinalDosage(this); updateDR(); updateRFL();"></td>
+            <td><input type="number" readonly></td>
+            <td><input type="number" oninput="updateDR(); updateRFL();"></td>
+            <td><input type="text"></td>
+            <td><button class="delete-btn" onclick="deleteMedicineRow(this)">🗑</button></td>
+        </tr>
+    </tbody>
+</table>
+
+
+<div class="labs-radiology-container">
+    <div class="nursing-labs-notes-row">
+        <div class="nursing-care-container">
+            <label>العناية التمريضية</label>
+            <div class="nursing-care-options">
+                <div class="nursing-care-item">
+                    <label>م.ع.ح</label>
+                    <select id="care1" class="narrow-dropdown nursing-dropdown">
+                        <option value="">-- اختر --</option>
+                        <option value="1 س">1 س</option>
+                        <option value="2 س">2 س</option>
+                        <option value="3 س">3 س</option>
+                        <option value="6 س">6 س</option>
+                        <option value="8 س">8 س</option>
+                        <option value="12 س">12 س</option>
+                        <option value="24 س">24 س</option>
+                        <option value="بأمر الطبيب">بأمر الطبيب</option>
+                        <option value="3 س بعد سماع الطبيب">3 س بعد سماع الطبيب</option>
+                        <option value="6 س بعد سماع الطبيب">6 س بعد سماع الطبيب</option>
+                    </select>
+                </div>
+                <div class="nursing-care-item">
+                    <label>ق. سكر</label>
+                    <select id="care2" class="narrow-dropdown nursing-dropdown">
+                        <option value="">-- اختر --</option>
+                        <option value="1 س">1 س</option>
+                        <option value="2 س">2 س</option>
+                        <option value="3 س">3 س</option>
+                        <option value="6 س">6 س</option>
+                        <option value="8 س">8 س</option>
+                        <option value="12 س">12 س</option>
+                        <option value="24 س">24 س</option>
+                        <option value="بأمر الطبيب">بأمر الطبيب</option>
+                        <option value="3 س بعد سماع الطبيب">3 س بعد سماع الطبيب</option>
+                        <option value="6 س بعد سماع الطبيب">6 س بعد سماع الطبيب</option>
+                    </select>
+                </div>
+                <div class="nursing-care-item">
+                    <label>ق. ضغط</label>
+                    <select id="care3" class="narrow-dropdown nursing-dropdown">
+                        <option value="">-- اختر --</option>
+                        <option value="1 س">1 س</option>
+                        <option value="2 س">2 س</option>
+                        <option value="3 س">3 س</option>
+                        <option value="6 س">6 س</option>
+                        <option value="8 س">8 س</option>
+                        <option value="12 س">12 س</option>
+                        <option value="24 س">24 س</option>
+                        <option value="بأمر الطبيب">بأمر الطبيب</option>
+                        <option value="3 س بعد سماع الطبيب">3 س بعد سماع الطبيب</option>
+                        <option value="6 س بعد سماع الطبيب">6 س بعد سماع الطبيب</option>
+                    </select>
+                </div>
+                <div class="nursing-care-item">
+                    <label>غازات دم</label>
+                    <select id="care4" class="narrow-dropdown nursing-dropdown">
+                        <option value="">-- اختر --</option>
+                        <option value="1 س">1 س</option>
+                        <option value="2 س">2 س</option>
+                        <option value="3 س">3 س</option>
+                        <option value="6 س">6 س</option>
+                        <option value="8 س">8 س</option>
+                        <option value="12 س">12 س</option>
+                        <option value="24 س">24 س</option>
+                        <option value="بأمر الطبيب">بأمر الطبيب</option>
+                        <option value="3 س بعد سماع الطبيب">3 س بعد سماع الطبيب</option>
+                        <option value="6 س بعد سماع الطبيب">6 س بعد سماع الطبيب</option>
+                    </select>
+                </div>
+                <div class="nursing-care-item">
+                    <label>تشفيط</label>
+                    <select id="care5" class="narrow-dropdown nursing-dropdown">
+                        <option value="">-- اختر --</option>
+                        <option value="1 س">1 س</option>
+                        <option value="2 س">2 س</option>
+                        <option value="3 س">3 س</option>
+                        <option value="6 س">6 س</option>
+                        <option value="8 س">8 س</option>
+                        <option value="12 س">12 س</option>
+                        <option value="24 س">24 س</option>
+                        <option value="بأمر الطبيب">بأمر الطبيب</option>
+                        <option value="3 س بعد سماع الطبيب">3 س بعد سماع الطبيب</option>
+                        <option value="6 س بعد سماع الطبيب">6 س بعد سماع الطبيب</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="labs-container">
+            <div class="labs-header">
+                <label>المعامل</label>
+                <select id="labsTiming" class="small-dropdown">
+                    <option value="باكر">باكر</option>
+                    <option value="اليوم">اليوم</option>
+                </select>
+            </div>
+            <div class="labs-dropdowns">
+                <select id="labsList1" class="wide-dropdown">
+                    <option value="">-- اختر --</option>
+                    <option value="CBC , CRP">CBC , CRP</option>
+                    <option value="TSB , DSB">TSB , DSB</option>
+                    <option value="ABO, Rh">ABO, Rh</option>
+                    <option value="S. UREA  . S . CREAT">S. UREA . S . CREAT</option>
+                    <option value="SGOT, SGPT">SGOT, SGPT</option>
+                    <option value="CRP">CRP</option>
+                    <option value="Na . K , Ca">Na . K , Ca</option>
+                    <option value="معامل كاملة">معامل كاملة</option>
+                    <option value="CBC , CRP, TSB , DSB, ABO, Rh, S. UREA . S . CREAT, Na . K , Ca">CBC , CRP, TSB , DSB, ABO, Rh, S. UREA . S . CREAT, Na . K , Ca</option>
+                </select>
+                <select id="labsList2" class="wide-dropdown">
+                    <option value="">-- اختر --</option>
+                    <option value="CBC , CRP">CBC , CRP</option>
+                    <option value="TSB , DSB">TSB , DSB</option>
+                    <option value="ABO, Rh">ABO, Rh</option>
+                    <option value="S. UREA  . S . CREAT">S. UREA . S . CREAT</option>
+                    <option value="SGOT, SGPT">SGOT, SGPT</option>
+                    <option value="CRP">CRP</option>
+                    <option value="Na . K , Ca">Na . K , Ca</option>
+                </select>
+                <select id="labsList3" class="wide-dropdown">
+                    <option value="">-- اختر --</option>
+                    <option value="CBC , CRP">CBC , CRP</option>
+                    <option value="TSB , DSB">TSB , DSB</option>
+                    <option value="ABO, Rh">ABO, Rh</option>
+                    <option value="S. UREA  . S . CREAT">S. UREA . S . CREAT</option>
+                    <option value="SGOT, SGPT">SGOT, SGPT</option>
+                    <option value="CRP">CRP</option>
+                    <option value="Na . K , Ca">Na . K , Ca</option>
+                </select>
+                <select id="labsList4" class="wide-dropdown">
+                    <option value="">-- اختر --</option>
+                    <option value="CBC , CRP">CBC , CRP</option>
+                    <option value="TSB , DSB">TSB , DSB</option>
+                    <option value="ABO, Rh">ABO, Rh</option>
+                    <option value="S. UREA  . S . CREAT">S. UREA . S . CREAT</option>
+                    <option value="SGOT, SGPT">SGOT, SGPT</option>
+                    <option value="CRP">CRP</option>
+                    <option value="Na . K , Ca">Na . K , Ca</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="notes-container">
+            <label for="dailyNotes">Daily Notes</label>
+            <textarea id="dailyNotes" class="wide-textbox" placeholder="أدخل الملاحظات اليومية"></textarea>
+        </div>
+    </div>
+
+    <div class="observations-radiology-physician-row">
+        <div class="observations-container">
+            <label>ملحوظات</label>
+            <select id="observationsList" class="wide-dropdown observations-dropdown">
+                <option value="">اختر</option>
+                <option value="مراعاة التقليب المستمر/ ساعتين وتغطية العين والأعضاء التناسلية">مراعاة التقليب المستمر/ ساعتين وتغطية العين والأعضاء التناسلية</option>
+                <option value="عمل مساج للمثانة كل ساعتين">عمل مساج للمثانة كل ساعتين</option>
+                <option value="تجميع البول ٢٤ ساعة">تجميع البول ٢٤ ساعة</option>
+                <option value="تسليك أنف /٣ س">تسليك أنف /٣ س</option>
+            </select>
+        </div>
+
+        <div class="radiology-container">
+            <label for="radiologyList">الأشعة</label>
+            <select id="radiologyList" class="wide-dropdown">
+                <option value="NO">NO</option>
+                <option value="أشعة على الصدر">أشعة على الصدر</option>
+                <option value="أشعة على الصدر والبطن">أشعة على الصدر والبطن</option>
+                <option value="CXR & cross table">CXR & cross table</option>
+                <option value="أشعة عادية على اليدين والقدمين">أشعة عادية على اليدين والقدمين</option>
+            </select>
+        </div>
+
+        <div class="physician-container">
+            <label for="physician">Physician</label>
+            <input type="text" id="physician" class="wide-textbox" placeholder="أدخل اسم الطبيب">
+        </div>
+    </div>
+</div>
+
+<div class="back-page-title">
+    <div class="title-container">
+        <h2>Examination</h2>
+        <div class="name-field back-fields-row">
+            <div class="back-field-col">
+                <label>الاسم</label>
+                <input type="text" id="childNameBack" readonly>
+            </div>
+            <div class="back-field-col">
+                <label>التاريخ📅</label>
+                <input type="text" id="dateBack" readonly>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="examination-section">
+    <div class="exam-row">
+        <div class="exam-title">General</div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="general1" list="generalOptions1" placeholder="اختر أو اكتب">
+            <datalist id="generalOptions1">
+                <option value="MGC , SVS"></option>
+                <option value="Critical"></option>
+                <option value="G . Edema"></option>
+                <option value="Hydrocephalus"></option>
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="general2" list="generalOptions2" placeholder="اختر أو اكتب">
+            <datalist id="generalOptions2">
+                <option value="MGC , SVS"></option>
+                <option value="Critical"></option>
+                <option value="G . Edema"></option>
+                <option value="Hydrocephalus"></option>
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="general3" list="generalOptions3" placeholder="اختر أو اكتب">
+            <datalist id="generalOptions3">
+                <option value="MGC , SVS"></option>
+                <option value="Critical"></option>
+                <option value="G . Edema"></option>
+                <option value="Hydrocephalus"></option>
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="general4" list="generalOptions4" placeholder="اختر أو اكتب">
+            <datalist id="generalOptions4">
+                <option value="MGC , SVS"></option>
+                <option value="Critical"></option>
+                <option value="G . Edema"></option>
+                <option value="Hydrocephalus"></option>
+            </datalist>
+        </div>
+    </div>
+
+    <div class="exam-row">
+        <div class="exam-title">CNS</div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="cns1" list="cnsOptions1" placeholder="اختر أو اكتب">
+            <datalist id="cnsOptions1">
+                <option value="Conscious"></option>
+                <option value="Active"></option>
+                <option value="Hypoactive"></option>
+                <option value="Mod. Activity"></option>
+                <option value="AF at level"></option>
+
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="cns2" list="cnsOptions2" placeholder="اختر أو اكتب">
+            <datalist id="cnsOptions2">
+                <option value="Conscious"></option>
+                <option value="Active"></option>
+                <option value="Hypoactive"></option>
+                <option value="Mod. Activity"></option>
+                <option value="AF at level"></option>
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="cns3" list="cnsOptions3" placeholder="اختر أو اكتب">
+            <datalist id="cnsOptions3">
+                <option value="Conscious"></option>
+                <option value="Active"></option>
+                <option value="Hypoactive"></option>
+                <option value="Mod. Activity"></option>
+                <option value="AF at level"></option>
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="cns4" list="cnsOptions4" placeholder="اختر أو اكتب">
+            <datalist id="cnsOptions4">
+                <option value="Conscious"></option>
+                <option value="Active"></option>
+                <option value="Hypoactive"></option>
+                <option value="Mod. Activity"></option>
+                <option value="AF at level"></option>
+            </datalist>
+        </div>
+    </div>
+
+    <div class="exam-row">
+        <div class="exam-title">CVS</div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="cvs1" list="cvsOptions1" placeholder="اختر أو اكتب">
+            <datalist id="cvsOptions1">
+                <option value="S1 , S2 , M0"></option>
+                <option value="S1 , S2 , SM"></option>
+                <option value="Av. Perfusion"></option>
+                <option value="CRT < 2 sec"></option>
+                <option value="CRT > 2 sec"></option>
+                <option value="SM"></option>
+
+
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="cvs2" list="cvsOptions2" placeholder="اختر أو اكتب">
+            <datalist id="cvsOptions2">
+                <option value="S1 , S2 , M0"></option>
+                <option value="S1 , S2 , SM"></option>
+                <option value="Av. Perfusion"></option>
+                <option value="CRT < 2 sec"></option>
+                <option value="CRT > 2 sec"></option>
+                <option value="SM"></option>
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="cvs3" list="cvsOptions3" placeholder="اختر أو اكتب">
+            <datalist id="cvsOptions3">
+                <option value="S1 , S2 , M0"></option>
+                <option value="S1 , S2 , SM"></option>
+                <option value="Av. Perfusion"></option>
+                <option value="CRT < 2 sec"></option>
+                <option value="CRT > 2 sec"></option>
+                <option value="SM"></option>
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="cvs4" list="cvsOptions4" placeholder="اختر أو اكتب">
+            <datalist id="cvsOptions4">
+                <option value="S1 , S2 , M0"></option>
+                <option value="S1 , S2 , SM"></option>
+                <option value="Av. Perfusion"></option>
+                <option value="CRT < 2 sec"></option>
+                <option value="CRT > 2 sec"></option>
+                <option value="SM"></option>
+            </datalist>
+        </div>
+    </div>
+
+    <div class="exam-row">
+        <div class="exam-title">CHEST</div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="chest1" list="chestOptions1" placeholder="اختر أو اكتب">
+            <datalist id="chestOptions1">
+                <option value="BEAE , NO RD"></option>
+                <option value="Tachypnea"></option>
+                <option value="Secretion"></option>
+                <option value="Crepitations"></option>
+                <option value="Nasal Tone"></option>
+                <option value="Diminshed A\E"></option>
+                <option value="SCR"></option>
+
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="chest2" list="chestOptions2" placeholder="اختر أو اكتب">
+            <datalist id="chestOptions2">
+                <option value="BEAE , NO RD"></option>
+                <option value="Tachypnea"></option>
+                <option value="Secretion"></option>
+                <option value="Crepitations"></option>
+                <option value="Nasal Tone"></option>
+                <option value="Diminshed A\E"></option>
+                <option value="SCR"></option>
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="chest3" list="chestOptions3" placeholder="اختر أو اكتب">
+            <datalist id="chestOptions3">
+                <option value="BEAE , NO RD"></option>
+                <option value="Tachypnea"></option>
+                <option value="Secretion"></option>
+                <option value="Crepitations"></option>
+                <option value="Nasal Tone"></option>
+                <option value="Diminshed A\E"></option>
+                <option value="SCR"></option>
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="chest4" list="chestOptions4" placeholder="اختر أو اكتب">
+            <datalist id="chestOptions4">
+                <option value="BEAE , NO RD"></option>
+                <option value="Tachypnea"></option>
+                <option value="Secretion"></option>
+                <option value="Crepitations"></option>
+                <option value="Nasal Tone"></option>
+                <option value="Diminshed A\E"></option>
+                <option value="SCR"></option>
+            </datalist>
+        </div>
+    </div>
+
+    <div class="exam-row">
+        <div class="exam-title">ABDOMEN</div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="abdomen1" list="abdomenOptions1" placeholder="اختر أو اكتب">
+            <datalist id="abdomenOptions1">
+                <option value="Lax , Soft"></option>
+                <option value="Distintion"></option>
+                <option value="Pass stool"></option>
+                <option value="Tolerate feeding"></option>
+                <option value="Residual"></option>
+
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="abdomen2" list="abdomenOptions2" placeholder="اختر أو اكتب">
+            <datalist id="abdomenOptions2">
+                <option value="Lax , Soft"></option>
+                <option value="Distintion"></option>
+                <option value="Pass stool"></option>
+                <option value="Tolerate feeding"></option>
+                <option value="Residual"></option>
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="abdomen3" list="abdomenOptions3" placeholder="اختر أو اكتب">
+            <datalist id="abdomenOptions3">
+                <option value="Lax , Soft"></option>
+                <option value="Distintion"></option>
+                <option value="Pass stool"></option>
+                <option value="Tolerate feeding"></option>
+                <option value="Residual"></option>
+            </datalist>
+        </div>
+        
+    </div>
+
+    <div class="exam-row">
+        <div class="exam-title">EXTREMITIES</div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="extremities1" list="extremitiesOptions1" placeholder="اختر أو اكتب">
+            <datalist id="extremitiesOptions1">
+                <option value="Free"></option>
+                <option value="NAD"></option>
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="extremities2" list="extremitiesOptions2" placeholder="اختر أو اكتب">
+            <datalist id="extremitiesOptions2">
+                <option value="Free"></option>
+                <option value="NAD"></option>
+            </datalist>
+        </div>
+        
+    </div>
+
+    <div class="exam-row">
+        <div class="exam-title">OTHERS</div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="others1" list="othersOptions1" placeholder="اختر أو اكتب">
+            <datalist id="othersOptions1">
+                <option value="Free"></option>
+                <option value="NAD"></option>
+            </datalist>
+        </div>
+        <div class="exam-field">
+            <input type="text" class="exam-input" id="others2" list="othersOptions2" placeholder="اختر أو اكتب">
+            <datalist id="othersOptions2">
+                <option value="Free"></option>
+                <option value="NAD"></option>
+            </datalist>
+        </div>
+        
+    </div>
+</div>
+
+ 
+<button onclick="saveMainPageData()">💾 حفظ بيانات المتابعة</button>
+<button class="add-btn" onclick="clearData()" style="background-color: #e74c3c;">🗑️ مسح البيانات</button>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+<script src="database.js"></script>
+<script src="script.js"></script>
+<style>
+.back-fields-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+}
+.back-field-col {
+    flex: 1 1 40%;
+    max-width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+.back-field-col label {
+    font-size: 12pt;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+.back-field-col input {
+    width: 100%;
+    font-size: 14pt;
+    padding: 6px 10px;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    background: #f8f9fa;
+    font-weight: bold;
+}
+</style>
+</body>
+</html>

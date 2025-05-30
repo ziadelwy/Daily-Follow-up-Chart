@@ -1,0 +1,1424 @@
+body {
+    font-family: 'Tajawal', 'Arial', sans-serif;
+    background-color: #f8fafc;
+    direction: rtl;
+    text-align: right;
+    margin: 0;
+    padding: 5mm;
+    color: #1e293b;
+    font-size: 10pt;
+    line-height: 1.5;
+}
+
+:root {
+    --primary-blue: #183c8c;
+    --primary-blue-dark: #183c8c;
+    --primary-blue-darker: #183c8c;
+    --success-green: #059669;
+    --success-green-dark: #047857;
+    --warning-orange: #d97706;
+    --warning-orange-dark: #b45309;
+    --danger-red: #dc2626;
+    --danger-red-dark: #b91c1c;
+    --neutral-gray: #f8fafc;
+    --neutral-gray-dark: #e2e8f0;
+    --text-dark: #1e293b;
+    --text-light: #ffffff;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+    color: var(--text-light);
+    padding: 5mm 10mm;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    margin-bottom: 5mm;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.nursery-title {
+    font-size: 14pt;
+    font-weight: bold;
+    margin-right: 10mm;
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 18pt;
+    font-weight: bold;
+    flex-grow: 1;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.hospital-title {
+    font-size: 14pt;
+    font-weight: bold;
+    margin-left: 10mm;
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.buttons {
+    display: flex;
+    gap: 5mm;
+    align-items: center;
+}
+
+button {
+    background-color: var(--primary-blue);
+    color: var(--text-light);
+    border: none;
+    padding: 3mm 8mm;
+    cursor: pointer;
+    font-size: 10pt;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    margin: 0 2mm;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: var(--primary-blue-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-btn {
+    background-color: var(--success-green);
+}
+
+.add-btn:hover {
+    background-color: var(--success-green-dark);
+}
+
+.back-btn {
+    background-color: var(--danger-red);
+}
+
+.back-btn:hover {
+    background-color: var(--danger-red-dark);
+}
+
+.save-btn {
+    background-color: var(--success-green);
+}
+
+.save-btn:hover {
+    background-color: var(--success-green-dark);
+}
+
+.excel-btn {
+    background-color: var(--warning-orange);
+}
+
+.excel-btn:hover {
+    background-color: var(--warning-orange-dark);
+}
+
+.view-data-btn {
+    background-color: #007bff;
+}
+
+.view-data-btn:hover {
+    background-color: #0056b3;
+}
+
+.small-btn {
+    padding: 1mm 3mm;
+    font-size: 10pt;
+}
+
+@media screen and (max-width: 600px) {
+    .header {
+        flex-direction: column;
+        padding: 3mm;
+    }
+
+    .nursery-title,
+    .hospital-title {
+        margin: 0 0 2mm 0;
+    }
+
+    .buttons {
+        flex-direction: column;
+        gap: 1.5mm;
+    }
+
+    button {
+        width: 100%;
+        margin: 0;
+    }
+
+    .row,
+    .flex-row,
+    .feeding-row {
+        flex-direction: column;
+    }
+
+    .cell {
+        width: 100%;
+        margin: 0 0 1.5mm 0;
+    }
+}
+
+.grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5mm;
+    max-width: 950px;
+    margin: 3mm auto;
+    background-color: var(--text-light);
+    padding: 5mm;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.flex-row {
+    display: flex;
+    gap: 1.5mm;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    max-width: 950px;
+    margin: 3mm auto;
+}
+
+.feeding-row {
+    display: flex;
+    gap: 1.5mm;
+    justify-content: space-between;
+    margin: 0 -0.5mm;
+    max-width: 950px;
+    margin: 3mm auto;
+}
+
+.feeding-row .cell {
+    margin: 0 0.5mm;
+    flex: 1;
+}
+
+.row {
+    display: flex;
+    gap: 1.5mm;
+    justify-content: space-between;
+    margin: 0 -0.5mm;
+}
+
+.row .cell {
+    margin: 0 0.5mm;
+    flex: 1;
+    min-width: 0;
+}
+
+.row:first-child .cell {
+    flex: 1;
+    max-width: 20%;
+}
+
+.row:first-child .cell:nth-child(5) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row:first-child .cell:nth-child(5) label {
+    font-weight: bold;
+    font-size: 9pt;
+    color: white;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    padding: 1mm 2mm;
+    border-radius: 4px;
+    text-align: center;
+    margin-bottom: 1mm;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.row:first-child .cell:nth-child(5) #dateBox {
+    width: 100%;
+    text-align: center;
+    padding: 1mm 2mm;
+    font-size: 9pt;
+    font-weight: bold;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background-color: #f8fafc;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+
+.row:first-child .cell:nth-child(1) { 
+    max-width: 80px;
+}
+
+.row:first-child .cell:nth-child(2) { 
+    max-width: 200px;
+}
+
+.row:first-child .cell:nth-child(3) { 
+    max-width: 80px;
+}
+
+.cell {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3mm;
+    background-color: var(--neutral-gray);
+    border: 1px solid var(--neutral-gray-dark);
+    border-radius: 6px;
+    padding: 1.5mm;
+    transition: all 0.3s ease;
+}
+
+.cell:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.cell label {
+    font-weight: 600;
+    margin-bottom: 1mm;
+    color: var(--text-light);
+    font-size: 9pt;
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+    padding: 1.5mm 2mm;
+    border-radius: 4px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.3px;
+}
+
+.cell input,
+.cell select {
+    padding: 2mm;
+    border: 1px solid var(--neutral-gray-dark);
+    border-radius: 4px;
+    font-size: 10pt;
+    transition: all 0.3s ease;
+    background-color: var(--text-light);
+    color: var(--text-dark);
+}
+
+.cell input:focus,
+.cell select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.cell input[readonly] {
+    background-color: var(--neutral-gray);
+    color: var(--text-dark);
+    cursor: not-allowed;
+}
+
+.cell #referred {
+    background-color: #e9ecef;
+}
+
+.labs-radiology-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5mm;
+    max-width: 950px;
+    margin: 3mm auto;
+    padding: 2.5mm;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.nursing-labs-notes-row,
+.observations-radiology-physician-row {
+    display: flex;
+    gap: 1.5mm;
+    justify-content: space-between;
+}
+
+.nursing-care-container,
+.labs-container,
+.notes-container,
+.observations-container,
+.radiology-container,
+.physician-container,
+.diagnosis-container,
+.problem-container {
+    display: flex;
+    flex-direction: column;
+    padding: 2.5mm;
+}
+
+.nursing-care-container {
+    flex: 1 1 0 !important;
+    min-width: 80px !important;
+}
+
+.labs-container {
+    flex: 1 1 0 !important;
+    min-width: 80px !important;
+}
+
+.notes-container {
+    flex: 3 1 0 !important;
+    min-width: 200px !important;
+}
+
+.observations-container {
+    flex: 2;
+    min-width: 250px;
+}
+
+.radiology-container {
+    flex: 1;
+    min-width: 150px;
+}
+
+.physician-container {
+    flex: 1;
+    min-width: 200px;
+}
+
+.diagnosis-container {
+    flex: 2;
+    min-width: 250px;
+}
+
+.diagnosis-container label {
+    font-weight: bold;
+    margin-bottom: 1mm;
+    font-size: 11pt;
+    color: var(--text-light);
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+    padding: 1mm 2mm;
+    border-radius: 3px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.diagnosis-container input[list] {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 1mm 2mm;
+    border: none;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+.problem-container {
+    flex: 2;
+    min-width: 250px;
+}
+
+.problem-container label {
+    font-weight: bold;
+    margin-bottom: 1mm;
+    font-size: 11pt;
+    color: var(--text-light);
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+    padding: 1mm 2mm;
+    border-radius: 3px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.problem-container input[list],
+.diagnosis-problem-container input[list] {
+    width: 100%;
+    max-width: 100%; 
+    margin: 0 auto;
+    padding: 1mm 2mm;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    
+}
+
+.labs-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5mm;
+    margin-bottom: 1.5mm;
+}
+
+.labs-header label {
+    font-weight: bold;
+    font-size: 11pt;
+    color: var(--text-light);
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+    padding: 1mm 2mm;
+    border-radius: 3px;
+    text-align: center;
+    width: auto;
+    box-sizing: border-box;
+}
+
+.small-dropdown {
+    width: 80px;
+    padding: 1mm 2mm;
+    border: none;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.labs-dropdowns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5mm;
+}
+
+.labs-dropdowns .wide-dropdown {
+    width: 100%;
+    max-width: 220px;
+    padding: 1mm 2mm;
+    border: none;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.radiology-container label,
+.notes-container label,
+.physician-container label,
+.observations-container label,
+.nursing-care-container > label {
+    font-weight: bold;
+    margin-bottom: 1mm;
+    font-size: 11pt;
+    color: var(--text-light);
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+    padding: 1mm 2mm;
+    border-radius: 3px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.radiology-container select,
+.notes-container textarea,
+.physician-container input,
+.observations-container select {
+    width: 100%;
+    padding: 1mm 2mm;
+    border: none;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+.notes-container textarea {
+    height: 20px;
+    resize: vertical;
+}
+
+.nursing-care-container > label {
+    font-size: 7pt !important;
+    padding: 0.2mm 0.5mm !important;
+}
+
+.nursing-care-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5mm;
+}
+
+.nursing-care-item {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 0.5mm;
+    min-height: unset;
+    padding: 0;
+}
+
+.nursing-care-item label {
+    font-size: 6pt !important;
+    padding: 0.2mm 0.5mm !important;
+    min-width: 30px;
+}
+
+.nursing-care-item select {
+    font-size: 7pt !important;
+    padding: 0.2mm 0.5mm !important;
+    height: 6mm !important;
+    min-width: 40px;
+}
+
+.narrow-dropdown {
+    width: 140px;
+    padding: 1mm 2mm;
+    border: none;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.diagnosis-problem-container {
+    display: flex;
+    gap: 1.5mm;
+    margin-bottom: 3mm;
+    max-width: 950px;
+    margin: 3mm auto;
+}
+
+.diagnosis-container,
+.problem-container {
+    flex: 1;
+    background-color: var(--neutral-gray);
+    border: 1px solid var(--neutral-gray-dark);
+    border-radius: 6px;
+    padding: 1.5mm;
+    transition: all 0.3s ease;
+}
+
+.diagnosis-container:hover,
+.problem-container:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.diagnosis-container label,
+.problem-container label {
+    font-weight: 600;
+    margin-bottom: 1mm;
+    color: var(--text-light);
+    font-size: 9pt;
+}
+
+.diagnosis-container input[list],
+.problem-container input[list] {
+    width: 100%;
+    padding: 2mm;
+    border: 1px solid var(--neutral-gray-dark);
+    border-radius: 4px;
+    font-size: 10pt;
+    transition: all 0.3s ease;
+}
+
+.diagnosis-container input[list]:focus,
+.problem-container input[list]:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.labs-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5mm;
+    margin-bottom: 1.5mm;
+}
+
+.labs-header label {
+    font-weight: bold;
+    font-size: 11pt;
+    color: var(--text-light);
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+    padding: 1mm 2mm;
+    border-radius: 3px;
+    text-align: center;
+    width: auto;
+    box-sizing: border-box;
+}
+
+.small-dropdown {
+    width: 80px;
+    padding: 1mm 2mm;
+    border: none;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.labs-dropdowns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5mm;
+}
+
+.labs-dropdowns .wide-dropdown {
+    width: 100%;
+    max-width: 220px;
+    padding: 1mm 2mm;
+    border: none;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.radiology-container select,
+.notes-container textarea,
+.physician-container input,
+.observations-container select {
+    width: 100%;
+    padding: 1mm 2mm;
+    border: none;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+.notes-container textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.nursing-care-container > label {
+    font-size: 7pt !important;
+    padding: 0.2mm 0.5mm !important;
+}
+
+.nursing-care-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5mm;
+}
+
+.nursing-care-item {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 1mm;
+}
+
+.nursing-care-item label {
+    font-weight: bold;
+    font-size: 10pt;
+    color: var(--text-light);
+    background: linear-gradient(135deg, var(--success-green), var(--success-green-dark));
+    padding: 1mm 2mm;
+    border-radius: 3px;
+    text-align: center;
+    min-width: 50px;
+    box-sizing: border-box;
+}
+
+.narrow-dropdown {
+    width: 140px;
+    padding: 1mm 2mm;
+    border: none;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.diagnosis-problem-container {
+    display: flex;
+    gap: 1.5mm;
+    margin-bottom: 3mm;
+}
+
+.diagnosis-container,
+.problem-container {
+    flex: 1;
+}
+
+.wide-textbox {
+    width: 100%;
+    padding: 1mm 2mm;
+    border: none;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+.seven-fields {
+    display: flex;
+    gap: 1.5mm;
+    justify-content: space-between;
+    max-width: 950px;
+    margin: 3mm auto;
+}
+
+.small-cell {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--text-light);
+    border: 1px solid var(--neutral-gray-dark);
+    border-radius: 4px;
+    padding: 2.5mm;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.small-cell label {
+    font-weight: bold;
+    margin-bottom: 1mm;
+    font-size: 9pt;
+    color: var(--text-dark);
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+    padding: 1mm 2mm;
+    border-radius: 3px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.small-cell input {
+    width: 100%;
+    padding: 1mm 2mm;
+    border: none;
+    border-radius: 3px;
+    font-size: 10pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: var(--text-light);
+    box-sizing: border-box;
+    line-height: 1.5;
+}
+
+.custom-table {
+    width: 950px;
+    margin: 3mm auto;
+    border-collapse: collapse;
+    background-color: var(--text-light);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    font-size: 10pt;
+}
+
+.custom-table th,
+.custom-table td {
+    border: 2px solid var(--neutral-gray-dark);
+    padding: 1mm 2mm; 
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.2; 
+}
+
+.custom-table th:nth-child(2),
+.custom-table td:nth-child(2) {
+    width: 150px;
+}
+
+.custom-table th:not(:nth-child(2)),
+.custom-table td:not(:nth-child(2)) {
+    width: 60px;
+}
+
+.custom-table th {
+    background-color: var(--primary-blue);
+    color: var(--text-light);
+}
+
+.custom-table tbody tr {
+    height: auto; 
+    min-height: 20px; 
+}
+
+.custom-table tbody tr:nth-child(odd) {
+    background-color: var(--neutral-gray);
+}
+
+.custom-table tbody tr:nth-child(even) {
+    background-color: var(--text-light);
+}
+
+.custom-table td input,
+.custom-table td select {
+    width: 100%;
+    padding: 0.5mm 1mm; 
+    border: none;
+    border-radius: 3px;
+    font-size: 10pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: var(--text-light);
+    line-height: 1.2; 
+    box-sizing: border-box;
+}
+
+.custom-table2 td:first-child {
+    width: 20px; 
+    padding: 0.5mm 1mm; 
+    text-align: center;
+    font-size: 10pt;
+    font-weight: bold;
+}
+
+.warning-message {
+    color: var(--danger-red);
+    font-size: 0.9em;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 600px) {
+    .flex-row,
+    .feeding-row,
+    .seven-fields,
+    .labs-radiology-container {
+        flex-direction: column;
+        gap: 1mm;
+    }
+
+    .nursing-labs-notes-row,
+    .observations-radiology-physician-row {
+        flex-direction: column;
+        gap: 1mm;
+    }
+
+    .cell,
+    .small-cell,
+    .labs-container,
+    .radiology-container,
+    .notes-container,
+    .nursing-care-container,
+    .observations-container,
+    .physician-container,
+    .diagnosis-container,
+    .problem-container {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .labs-dropdowns .wide-dropdown {
+        max-width: 100%;
+    }
+
+    .narrow-dropdown {
+        width: 140px;
+    }
+
+    .diagnosis-container input[list],
+    .problem-container input[list] {
+        max-width: 100%;
+    }
+
+    .nursing-care-container > label,
+    .diagnosis-container label,
+    .problem-container label {
+        margin-left: 0;
+    }
+
+    .custom-table {
+        width: 100%;
+        font-size: 9pt;
+    }
+
+    .custom-table th,
+    .custom-table td {
+        padding: 0.5mm 1mm; 
+        line-height: 1.2;
+    }
+
+    .custom-table tbody tr {
+        height: auto;
+        min-height: 20px;
+    }
+
+    .custom-table td input,
+    .custom-table td select {
+        padding: 0.5mm 1mm;
+        font-size: 9pt;
+        line-height: 1.2;
+    }
+}
+
+.back-page-title {
+    text-align: center;
+    margin: 3mm auto;
+    max-width: 950px;
+    padding: 2.5mm;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2mm;
+}
+
+.back-page-title h2 {
+    font-size: 14pt;
+    font-weight: bold;
+    color: #000;
+    margin: 0;
+}
+
+.name-field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+}
+
+.name-field label {
+    font-weight: bold;
+    font-size: 11pt;
+    color: #ffffff;
+    background-color: #183c8c;
+    padding: 1mm 2mm;
+    border-radius: 3px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.name-field input {
+    width: 100%;
+    padding: 1mm 2mm;
+    border: none;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+.examination-section {
+    max-width: 950px;
+    margin: 3mm auto;
+    padding: 2.5mm;
+    background-color: #fff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    direction: rtl; 
+}
+
+.exam-row {
+    margin-bottom: 5mm;
+}
+
+.exam-title {
+    background-color: #183c8c;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    padding: 2mm 5mm;
+    border-radius: 3px;
+    width: 100px;
+    text-align: center;
+    font-size: 11pt;
+    margin-right: auto; 
+    margin-left: 0;
+    display: block;
+}
+
+.exam-field {
+    width: 100%; 
+    margin-top: 1mm;
+}
+
+.exam-input {
+    width: 100%;
+    padding: 1mm 2mm;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    font-size: 11pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    box-sizing: border-box;
+}
+
+.medicine-table {
+    width: 950px;
+    margin: 3mm auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    font-size: 10pt;
+}
+
+.medicine-table th,
+.medicine-table td {
+    border: 2px solid #333;
+    padding: 1mm 2mm; 
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.2; 
+}
+
+.medicine-table th:nth-child(2),
+.medicine-table td:nth-child(2) {
+    width: 150px;
+}
+
+.medicine-table th:not(:nth-child(2)),
+.medicine-table td:not(:nth-child(2)) {
+    width: 60px;
+}
+
+.medicine-table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.medicine-table tbody tr {
+    height: auto; 
+    min-height: 20px; 
+}
+
+.medicine-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.medicine-table tbody tr:nth-child(even) {
+    background-color: #f1f3f5;
+}
+
+.medicine-table td input,
+.medicine-table td select {
+    width: 100%;
+    padding: 0.5mm 1mm; 
+    border: none;
+    border-radius: 3px;
+    font-size: 10pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.2; 
+    box-sizing: border-box;
+}
+
+.medicine-table td select {
+    width: 100%;
+    padding: 0.5mm 1mm;
+    border: none;
+    border-radius: 3px;
+    font-size: 10pt;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f8f9fa;
+    line-height: 1.2;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+
+@media print {
+    body {
+        padding: 0;
+        margin: 0;
+        font-size: 8pt;
+        background-color: white;
+        color: black;
+    }
+    .buttons,
+    button {
+        display: none !important;
+    }
+    @page {
+        size: A4 portrait;
+        margin: 5mm;
+    }
+    .header {
+        padding: 1mm 3mm;
+        background-color: #34495e;
+        color: #fff;
+        border-bottom: 2px solid #000;
+        position: static;
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 1mm;
+    }
+    .nursery-title,
+    .hospital-title {
+        font-size: 9pt;
+        font-weight: bold;
+        color: #fff;
+    }
+    .header h1 {
+        font-size: 11pt;
+        font-weight: bold;
+        color: #fff;
+        margin: 0;
+    }
+    .grid-container,
+    .flex-row,
+    .row,
+    .feeding-row,
+    .seven-fields,
+    .labs-radiology-container,
+    .diagnosis-problem-container,
+    .examination-section {
+        gap: 0.5mm !important;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        border: 1px solid #000;
+        background-color: #fff;
+        page-break-inside: avoid;
+    }
+    .cell,
+    .small-cell,
+    .nursing-care-item,
+    .labs-header {
+        margin-bottom: 0.5mm !important;
+        padding: 0.5mm 1mm !important;
+        border-radius: 2px !important;
+    }
+    .cell label {
+        font-size: 7pt;
+        padding: 0.5mm 1mm;
+        margin-bottom: 0.5mm;
+    }
+    .cell input,
+    .cell select {
+        font-size: 8pt;
+        padding: 0.5mm 1mm;
+        min-height: 6mm;
+    }
+    .row,
+    .feeding-row {
+        gap: 0.5mm !important;
+        margin-bottom: 0.5mm !important;
+        min-height: unset;
+    }
+    .row:first-child {
+        background-color: #e6f0ff;
+        border: 2px solid #000;
+        margin: 1mm 0;
+        padding: 0.5mm;
+        min-height: 7mm;
+        display: flex;
+        align-items: stretch;
+    }
+    .row:first-child .cell {
+        border: 1px solid #000;
+        padding: 0.5mm 1mm;
+        min-height: 6mm;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .row:first-child .cell label {
+        font-size: 7pt;
+        padding: 0.5mm;
+        line-height: 1.1;
+    }
+    .row:first-child .cell input,
+    .row:first-child .cell select {
+        font-size: 8pt;
+        padding: 0.5mm 1mm;
+        color: #000;
+        min-height: 6mm;
+    }
+    .notes-container textarea {
+        height: 10mm !important;
+        min-height: 8mm !important;
+        font-size: 8pt;
+        padding: 0.5mm 1mm;
+        margin: 0;
+    }
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #000;
+        font-size: 8pt;
+        page-break-inside: avoid;
+        margin-top: 2mm !important;
+    }
+    .custom-table th,
+    .custom-table td {
+        padding: 0.2mm 0.5mm;
+        line-height: 1;
+    }
+    .custom-table td input,
+    .custom-table td select {
+        padding: 0.2mm 0.5mm;
+        font-size: 8pt;
+        line-height: 1;
+    }
+    .labs-radiology-container {
+        padding: 0.5mm 1mm !important;
+        margin-bottom: 0.5mm !important;
+        min-height: unset !important;
+        page-break-before: auto !important;
+        page-break-inside: avoid !important;
+    }
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    .header,
+    .header h1,
+    .nursery-title,
+    .hospital-title,
+    .cell label,
+    .diagnosis-container label,
+    .labs-header label,
+    .nursing-care-container > label,
+    .back-page-title h2,
+    .exam-title,
+    .custom-table th {
+        color: rgb(255, 255, 255) !important;
+        text-shadow: none !important;
+    }
+    .flex-row {
+        margin-bottom: 2mm !important;
+    }
+    .feeding-row {
+        margin-bottom: 2mm !important;
+    }
+    .seven-fields {
+        margin-bottom: 2mm !important;
+    }
+    .custom-table {
+        margin-top: 2mm !important;
+    }
+    .back-page-title,
+    .examination-section {
+        page-break-before: auto !important;
+        page-break-inside: avoid !important;
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+        min-height: 0 !important;
+    }
+    .back-page-title h2 {
+        font-size: 10pt !important;
+        padding: 0.5mm 0 !important;
+        margin: 0 0 0.5mm 0 !important;
+    }
+    .back-page-title .name-field,
+    .back-page-title .exam-field {
+        margin: 0 !important;
+        padding: 0 !important;
+        min-height: 0 !important;
+    }
+    .back-page-title .name-field label,
+    .back-page-title .exam-field label {
+        font-size: 8pt !important;
+        padding: 0.2mm 0.5mm !important;
+        margin-bottom: 0.5mm !important;
+    }
+    .back-page-title .name-field input,
+    .back-page-title .exam-field input {
+        font-size: 8pt !important;
+        padding: 0.2mm 0.5mm !important;
+        min-height: 5mm !important;
+        height: 5mm !important;
+    }
+    .examination-section {
+        page-break-before: auto !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        padding: 1mm 2mm !important;
+        min-height: 0 !important;
+        border-width: 1px !important;
+    }
+    .examination-section .exam-row {
+        margin-bottom: 0 !important;
+        padding: 0 !important;
+    }
+    .examination-section .exam-title {
+        font-size: 9pt !important;
+        padding: 0.5mm 1mm !important;
+        margin: 0 !important;
+        min-width: 40px !important;
+        height: 7mm !important;
+        line-height: 1.2 !important;
+    }
+    .examination-section .exam-field {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .examination-section .exam-input {
+        font-size: 9pt !important;
+        padding: 0.5mm 1mm !important;
+        min-height: 7mm !important;
+        height: 7mm !important;
+        line-height: 1.2 !important;
+    }
+    .physician-container label,
+    .radiology-container label,
+    .notes-container label,
+    .problem-container label,
+    .labs-header label,
+    .daily-notes-label,
+    .sugar-label,
+    .bp-label,
+    .gases-label,
+    .icu-label,
+    .suction-label,
+    .general-notes-label,
+    .general-label,
+    .cns-label {
+        color: #ffffff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+.seven-fields .cell label {
+    color: white;
+}
