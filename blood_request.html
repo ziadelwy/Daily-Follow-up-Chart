@@ -4,107 +4,146 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>طلب نقل الدم ومكوناته</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-blue: #3182ce; /* أزرق عصري ناعم */
+            --primary-blue-dark: #2b6cb0; /* لون hover */
+            --accent-green: #38a169; /* أخضر للأزرار */
+            --neutral-gray: #edf2f7; /* خلفية فاتحة */
+            --border-color: #e2e8f0; /* حدود ناعمة */
+            --text-dark: #1a202c; /* نص داكن */
+            --text-light: #ffffff; /* نص فاتح */
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: 'Cairo', 'Arial', sans-serif;
-            background: #f6f8fa;
+            font-family: 'Tajawal', sans-serif;
+            background: var(--neutral-gray);
             margin: 0;
-            padding: 0;
+            padding: 15px;
+            color: var(--text-dark);
+            font-size: 14px;
+            line-height: 1.6;
         }
+
         .container {
-            border: 1px solid #e5e7eb;
-            padding: 24px 18px 18px 18px;
+            max-width: 850px;
+            margin: 25px auto;
             background: #fff;
-            max-width: 900px;
-            margin: 32px auto 32px auto;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
         }
-        .header, .section-title {
-            background: #1b47a6;
-            border: none;
-            color: #fff;
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-dark));
+            color: var(--text-light);
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header div {
+            flex: 1;
             text-align: center;
-            font-weight: bold;
-            padding: 10px 0 8px 0;
-            margin-bottom: 14px;
-            border-radius: 5px;
-            font-size: 1.08em;
-            box-shadow: none;
         }
+
+        .section-box {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            background: var(--neutral-gray);
+            color: var(--primary-blue);
+            text-align: right;
+            font-weight: 600;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
         .row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
-            gap: 10px;
+            margin-bottom: 12px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
-        .row label {
-            min-width: 100px;
-            font-weight: bold;
+
+        .field-box {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #f7fafc;
+            padding: 5px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            flex: 1;
+            min-width: 200px;
         }
-        .row input, .row select {
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
-            padding: 6px 8px;
-            font-size: 1em;
-            background: #f8fafc;
-            transition: border 0.2s;
+
+        .field-box label {
+            font-weight: 600;
+            color: var(--primary-blue);
+            min-width: 80px;
         }
-        .row input:focus, .row select:focus {
-            border: 1.5px solid #2563eb;
-            outline: none;
+
+        .field-box input, .field-box select {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 14px;
             background: #fff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            flex: 1;
         }
+
+        .field-box input:focus, .field-box select:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+            outline: none;
+        }
+
         .table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            margin-bottom: 12px;
-            background: #f9fafb;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: none;
-        }
-        .table th {
-            background: #1b47a6;
-            color: #fff;
-            font-weight: bold;
-            padding: 7px 0;
-            border-bottom: 1px solid #e0e7ef;
-            font-size: 1em;
-        }
-        .table td {
-            border-bottom: 1px solid #e5e7eb;
-            padding: 7px 6px;
-            text-align: center;
-            font-size: 1em;
+            margin-bottom: 15px;
             background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
-        .table tr:last-child td {
-            border-bottom: none;
+
+        .table th {
+            background: var(--primary-blue);
+            color: var(--text-light);
+            font-weight: 700;
+            padding: 10px;
+            font-size: 14px;
         }
-        .signature {
-            margin-top: 16px;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 36px;
+
+        .table td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
         }
-        .signature label {
-            margin-left: 8px;
-            font-size: 1em;
-        }
-        .note {
-            margin: 14px 0 18px 0;
-            font-size: 1.08em;
-            color: #2563eb;
-            background: #f1f5f9;
-            border-radius: 4px;
-            padding: 8px 12px;
-            box-shadow: none;
-            font-weight: 500;
-        }
+
         .diagnosis-container input,
         #reasonTransfusion,
         #previousTransfusion,
@@ -113,13 +152,13 @@
         #requestedComponent,
         #numberOfUnits,
         #bloodGroup {
-            background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            border-radius: 4px;
-            padding: 6px 8px;
-            font-size: 1em;
-            margin-top: 2px;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 2px;
+            padding: 8px;
+            font-size: 10px;
         }
+
         .diagnosis-container input:focus,
         #reasonTransfusion:focus,
         #previousTransfusion:focus,
@@ -128,135 +167,186 @@
         #requestedComponent:focus,
         #numberOfUnits:focus,
         #bloodGroup:focus {
-            border: 1.5px solid #2563eb;
-            background: #fff;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
         }
-        @media (max-width: 700px) {
+
+        .note {
+            margin: 12px 0;
+            font-size: 14px;
+            color: var(--primary-blue);
+            background: var(--neutral-gray);
+            border-radius: 6px;
+            padding: 10px;
+            font-weight: 500;
+        }
+
+        .signature {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .add-btn {
+            background: var(--accent-green);
+            color: var(--text-light);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .add-btn::before {
+            content: '🏠';
+        }
+
+        .add-btn:hover {
+            background: #2f855a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media screen and (max-width: 700px) {
             .container {
-                padding: 8px 1vw;
+                padding: 12px;
+                margin: 10px;
             }
+
+            .header {
+                flex-direction: column;
+                gap: 8px;
+                padding: 10px;
+            }
+
             .row {
                 flex-direction: column;
-                gap: 6px;
+                gap: 8px;
             }
+
+            .field-box {
+                min-width: 100%;
+            }
+
             .signature {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 6px;
+                gap: 8px;
+            }
+
+            .add-btn {
+                width: 100%;
             }
         }
-        .diagnosis-container {
-            position: relative;
-        }
-        .diagnosis-container input {
-            width: 100%;
-            padding: 5px;
-            box-sizing: border-box;
-        }
-        .diagnosis-container datalist {
-            position: absolute;
-            z-index: 1000;
-            background: #fff;
-            border: 1px solid #000;
-            width: 100%;
-            max-width: 300px;
-        }
-        .diagnosis-container datalist option {
-            padding: 5px;
-        }
+
         @media print {
-            body, html {
+            @page {
+                size: A4;
+                margin: 8mm;
+            }
+
+            body {
                 background: #fff !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
                 margin: 0;
                 padding: 0;
-                box-shadow: none !important;
+                font-size: 8pt;
+                line-height: 1.2;
+                color: #000;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
+
             .container {
-                box-shadow: none !important;
-                border: 1px solid #e5e7eb !important;
-                margin: 0 !important;
-                padding: 0 0 0 0 !important;
-                width: 100vw !important;
-                max-width: 100vw !important;
-                border-radius: 0 !important;
-                page-break-inside: avoid !important;
+                width: 100%;
+                max-width: 190mm;
+                margin: 0;
+                padding: 4mm;
+                border: none;
+                box-shadow: none;
+                page-break-inside: avoid;
             }
-            .header, .section-title {
-                page-break-after: avoid !important;
-                page-break-before: avoid !important;
-                padding: 4px 0 3px 0 !important;
-                margin-bottom: 4px !important;
-                font-size: 0.95em !important;
-                border-radius: 0 !important;
+
+            .header {
+                padding: 2mm 4mm;
+                margin-bottom: 2mm;
+                font-size: 9pt;
+                border-radius: 0;
+                page-break-after: avoid;
             }
+
             .section-box {
-                padding: 6px 4px 2px 4px !important;
-                margin-bottom: 7px !important;
-                border-radius: 0 !important;
+                padding: 2mm;
+                margin-bottom: 2mm;
+                border: 1px solid #000;
+                border-radius: 0;
+                page-break-inside: avoid;
             }
+
             .field-box {
-                padding: 2px 3px 1px 3px !important;
-                margin-bottom: 2px !important;
-                border-radius: 0 !important;
-                gap: 3px !important;
+                padding: 1.5mm;
+                margin-bottom: 1.5mm;
+                border-radius: 0;
+                gap: 2mm;
             }
+
             .row {
-                margin-bottom: 2px !important;
+                margin-bottom: 1.5mm;
+                gap: 1.5mm;
             }
+
+            .table {
+                margin-bottom: 2mm;
+                font-size: 7pt;
+                border-collapse: collapse;
+            }
+
             .table th, .table td {
-                padding: 2px 2px !important;
-                font-size: 0.93em !important;
+                padding: 1.5mm 2mm;
+                border: 1px solid #000;
             }
+
+            .table tr {
+                height: 6mm; /* تقليل ارتفاع الصفوف */
+            }
+
+            .section-title {
+                padding: 1.5mm 2mm;
+                margin-bottom: 1.5mm;
+                font-size: 8pt;
+                border-radius: 0;
+                page-break-inside: avoid;
+            }
+
             .note {
-                margin: 4px 0 6px 0 !important;
-                font-size: 0.95em !important;
-                padding: 3px 5px !important;
-                border-radius: 0 !important;
+                margin: 2mm 0;
+                padding: 1.5mm 2mm;
+                font-size: 7pt;
+                border-radius: 0;
             }
+
             .signature {
-                margin-top: 6px !important;
-                margin-bottom: 10px !important;
-                gap: 3px !important;
+                margin-top: 2mm;
+                margin-bottom: 3mm;
+                gap: 2mm;
+                font-size: 8pt;
+                page-break-inside: avoid;
             }
-            #fileNo {
-                width: 60px !important;
+
+            .add-btn {
+                display: none !important;
             }
-            @page {
-                size: A4 portrait;
-                margin: 10mm;
+
+            #fileNo, #childName, #birthDate, #entryDate, #childType {
+                width: auto !important;
+                min-width: 50px !important;
             }
-        }
-        .section-box {
-            border: 1.5px solid #d1d5db;
-            border-radius: 8px;
-            background: #f9fafb;
-            padding: 18px 14px 10px 14px;
-            margin-bottom: 22px;
-            box-shadow: 0 1px 4px 0 rgba(0,0,0,0.03);
-        }
-        .field-box {
-            border: 1px solid #e5e7eb;
-            border-radius: 5px;
-            background: #fff;
-            padding: 7px 8px 3px 8px;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .field-box label {
-            font-weight: 500;
-            min-width: 90px;
-            color: #2563eb;
-        }
-        .field-box input, .field-box select {
-            flex: 1;
-            margin: 0;
-        }
-        .row {
-            gap: 0;
         }
     </style>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -266,47 +356,40 @@
     <div class="container">
         <div class="section-box">
             <div class="row">
-                <div class="header" style="width: 30%;">وحدة حضانات الأطفال</div>
-                <div class="header" style="width: 40%;">Blood Request Form<br>طلب نقل الدم و مكوناته</div>
-                <div class="header" style="width: 30%;">مستشفى نبض الحياة</div>
+                <div class="header">وحدة حضانات الأطفال</div>
+                <div class="header">طلب نقل الدم ومكوناته<br>Blood Request Form</div>
+                <div class="header">مستشفى نبض الحياة</div>
             </div>
             <div class="row">
-                <div class="field-box"><label>المستشفي:</label> وحدة حضانات نبض الحياة</div>
-                <button class="add-btn" onclick="window.location.href='dashboard.html'">🏠  Dashboard </button>
-
+                <div class="field-box"><label>المستشفى:</label> وحدة حضانات نبض الحياة</div>
+                <button class="add-btn" onclick="window.location.href='dashboard.html'">Dashboard</button>
                 <div class="field-box"><label>القسم:</label> حضانات</div>
             </div>
             <div class="row">
-                <div class="field-box"><label>رقم الدخول:</label> <input type="text" id="fileNo" style="width:120px;"></div>
-                <div class="field-box"><label>اسم المريض:</label> <input type="text" id="childName" readonly style="width:120px;"></div>
-                <div class="field-box"><label>الجنس:</label> <input type="text" id="childType" readonly style="width:80px;"></div>
+                <div class="field-box"><label>رقم الدخول:</label> <input type="text" id="fileNo"></div>
+                <div class="field-box"><label>اسم المريض:</label> <input type="text" id="childName" readonly></div>
+                <div class="field-box"><label>الجنس:</label> <input type="text" id="childType" readonly></div>
             </div>
             <div class="row">
-                <div class="field-box"><label>تاريخ الميلاد:</label> <input type="text" id="birthDate" readonly style="width:120px;"></div>
-                <div class="field-box"><label>تاريخ الدخول:</label> <input type="text" id="entryDate" readonly style="width:120px;"></div>
+                <div class="field-box"><label>تاريخ الميلاد:</label> <input type="text" id="birthDate" readonly></div>
+                <div class="field-box"><label>تاريخ الدخول:</label> <input type="text" id="entryDate" readonly></div>
             </div>
         </div>
         <div class="section-box">
             <table class="table">
                 <tr>
-                    <th>Diagnosis</th>
+                    <th>التشخيص</th>
                     <td>
                         <div class="diagnosis-container field-box" style="margin:0;">
-                            <input type="text" id="diagnosisInput" list="diagnosisOptions" placeholder="اختر التشخيص أو اكتبه" style="width: 100%; max-width: 300px;">
+                            <input type="text" id="diagnosisInput" list="diagnosisOptions" placeholder="اختر التشخيص أو اكتبه">
                             <datalist id="diagnosisOptions">
                                 <option value="Female, FT , 37 w' , NJ"></option>
                                 <option value="Female, FT , 38 w' , RD"></option>
-                                <option value="Female, FT , 38 w' , RD"></option>
-                                <option value="Female, FT , 38 w' , RD"></option>
                                 <option value="Female, PT , 35 w' , RD"></option>
-                                <option value="Female, PT , 35 w' , RD"></option>
-                                <option value="Female, PT , 33 w' , RD"></option>
                                 <option value="Female, PT , 33 w' , RD"></option>
                                 <option value="Male, FT , 38 w' , RD"></option>
                                 <option value="Male, FT , 37 w' , NJ"></option>
                                 <option value="Male, FT , 37 w' , RD"></option>
-                                <option value="Male, NT , 36 w' , RD"></option>
-                                <option value="Male, NT , 36 w' , RD"></option>
                                 <option value="Male, NT , 36 w' , RD"></option>
                                 <option value="Male, PT , 33 w' , RD"></option>
                                 <option value="Male, PT , 32 w' , RD"></option>
@@ -317,50 +400,54 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Reason For Transfusion</th>
+                    <th>سبب نقل الدم</th>
                     <td>
                         <div class="field-box" style="margin:0;">
-                            <input type="text" id="reasonTransfusion" list="reasonTransfusionOptions" placeholder="اختر السبب أو اكتبه" style="width: 100%; max-width: 300px;">
+                            <input type="text" id="reasonTransfusion" list="reasonTransfusionOptions" placeholder="اختر السبب أو اكتبه">
                             <datalist id="reasonTransfusionOptions">
                                 <option value="Anemia"></option>
-                                <option value="bleeding"></option>
+                                <option value="Bleeding"></option>
                                 <option value="Thrombocytopenia"></option>
                             </datalist>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <th>Previous Transfusion</th>
+                    <th>نقل دم سابق</th>
                     <td>
                         <div class="field-box" style="margin:0;">
-                            <input type="text" id="previousTransfusion" list="yesNoOptions" placeholder="اختر أو اكتب" style="width: 100%; max-width: 200px;">
+                            <input type="text" id="previousTransfusion" list="yesNoOptions" placeholder="اختر أو اكتب">
+                            <datalist id="yesNoOptions">
+                                <option value="Yes"></option>
+                                <option value="No"></option>
+                            </datalist>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <th>Previous Transfusion Reactions</th>
+                    <th>ردود فعل سابقة لنقل الدم</th>
                     <td>
                         <div class="field-box" style="margin:0;">
-                            <input type="text" id="previousTransfusionReactions" list="yesNoOptions" placeholder="اختر أو اكتب" style="width: 100%; max-width: 200px;">
+                            <input type="text" id="previousTransfusionReactions" list="yesNoOptions" placeholder="اختر أو اكتب">
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <th>Previous Pregnancy</th>
+                    <th>حمل سابق</th>
                     <td>
                         <div class="field-box" style="margin:0;">
-                            <input type="text" id="previousPregnancy" list="yesNoOptions" placeholder="اختر أو اكتب" style="width: 100%; max-width: 200px;">
+                            <input type="text" id="previousPregnancy" list="yesNoOptions" placeholder="اختر أو اكتب">
                         </div>
                     </td>
                 </tr>
             </table>
         </div>
         <div class="section-box">
-            <div class="section-title">Components Requested</div>
+            <div class="section-title">المكونات المطلوبة</div>
             <div class="row">
                 <div class="field-box">
-                    Requested Component:
-                    <input type="text" id="requestedComponent" list="componentOptions" placeholder="اختر أو اكتب" style="width: 180px;">
+                    <label>المكون المطلوب:</label>
+                    <input type="text" id="requestedComponent" list="componentOptions" placeholder="اختر أو اكتب">
                     <datalist id="componentOptions">
                         <option value="Fresh frozen plasma"></option>
                         <option value="Packed red cells"></option>
@@ -369,12 +456,12 @@
                     </datalist>
                 </div>
                 <div class="field-box">
-                    Number Of Units:
-                    <input type="number" id="numberOfUnits" min="1" style="width: 80px;">
+                    <label>عدد الوحدات:</label>
+                    <input type="number" id="numberOfUnits" min="1">
                 </div>
                 <div class="field-box">
-                    فصيلة الدم:
-                    <input type="text" id="bloodGroup" list="bloodGroupOptions" placeholder="اختر أو اكتب" style="width: 120px;">
+                    <label>فصيلة الدم:</label>
+                    <input type="text" id="bloodGroup" list="bloodGroupOptions" placeholder="اختر أو اكتب">
                     <datalist id="bloodGroupOptions">
                         <option value="A +ve"></option>
                         <option value="A -ve"></option>
@@ -387,135 +474,125 @@
                     </datalist>
                 </div>
             </div>
-            <div class="note" id="requestNote">مطلوب عدد ___ </div>
+            <div class="note" id="requestNote">مطلوب عدد ___</div>
             <div class="signature">
-                <label>Physician Signature: ________________</label>
-                <label>Date: <input type="text" id="todayDate" readonly style="width:110px;"></label>
+                <label>توقيع الطبيب: ________________</label>
+                <label>التاريخ: <input type="text" id="todayDate" readonly></label>
             </div>
         </div>
         <div class="section-box">
-            <div class="section-title">For Blood Bank us</div>
+            <div class="section-title">لاستخدام بنك الدم</div>
             <div class="row">
-                <div class="field-box">Patient Name: ________________</div>
-                <div class="field-box">Patient Blood Group ABO / Rh: ________________</div>
+                <div class="field-box">اسم المريض: ________________</div>
+                <div class="field-box">فصيلة دم المريض ABO / Rh: ________________</div>
             </div>
         </div>
         <div class="section-box">
-            <div class="section-title">Issued Blood Units</div>
+            <div class="section-title">وحدات الدم الصادرة</div>
             <table class="table">
                 <tr>
-                    <th>Serial no</th>
-                    <th>Barcode</th>
-                    <th>Blood Group</th>
-                    <th>Type Of Component</th>
-                    <th>Tube Line No</th>
-                    <th>Xmatch Result</th>
-                    <th>Expiry date</th>
-                    <th>Test done by</th>
+                    <th>الرقم التسلسلي</th>
+                    <th>الباركود</th>
+                    <th>فصيلة الدم</th>
+                    <th>نوع المكون</th>
+                    <th>رقم أنبوب الخط</th>
+                    <th>نتيجة التوافق</th>
+                    <th>تاريخ الانتهاء</th>
+                    <th>تم الاختبار بواسطة</th>
                 </tr>
-                <tr>
-                    <td colspan="8" style="height: 30px;"></td>
-                </tr>
-                <tr>
-                    <td colspan="8" style="height: 30px;"></td>
-                </tr>
-                <tr>
-                    <td colspan="8" style="height: 30px;"></td>
-                </tr>
+                <tr><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
+                <tr><td colspan="8"></td></tr>
             </table>
         </div>
     </div>
     <script src="database.js"></script>
     <script>
-    let fileNoDebounceTimeout = null;
-    document.getElementById('fileNo').addEventListener('input', function() {
-        clearTimeout(fileNoDebounceTimeout);
-        fileNoDebounceTimeout = setTimeout(async () => {
-            const fileNo = this.value.trim();
-            if (!fileNo) {
-                document.getElementById('childName').value = '';
-                document.getElementById('childType').value = '';
-                document.getElementById('birthDate').value = '';
-                document.getElementById('entryDate').value = '';
-                return;
-            }
-            try {
-                const children = await db.getChildren();
-                console.log('children:', children, 'fileNo:', fileNo);
-                let child = null;
-                for (const [id, c] of Object.entries(children)) {
-                    if (c.fileNo == fileNo) {
-                        child = c;
-                        break;
-                    }
-                }
-                console.log('child found:', child);
-                if (child) {
-                    document.getElementById('childName').value = child.motherName || '';
-                    document.getElementById('childType').value = child.childType || '';
-                    document.getElementById('birthDate').value = child.birthDate || '';
-                    document.getElementById('entryDate').value = child.entryDate || '';
-                } else {
+        let fileNoDebounceTimeout = null;
+        document.getElementById('fileNo').addEventListener('input', function() {
+            clearTimeout(fileNoDebounceTimeout);
+            fileNoDebounceTimeout = setTimeout(async () => {
+                const fileNo = this.value.trim();
+                if (!fileNo) {
                     document.getElementById('childName').value = '';
                     document.getElementById('childType').value = '';
                     document.getElementById('birthDate').value = '';
                     document.getElementById('entryDate').value = '';
+                    return;
                 }
-            } catch (error) {
-                alert('حدث خطأ أثناء جلب بيانات الطفل');
-            }
-        }, 800);
-    });
-
-    async function loadDiagnosis() {
-      try {
-        const diagnosisData = await db.getDiagnosis();
-        const diagnosisList = document.getElementById("diagnosisOptions");
-        if (!diagnosisList) return;
-        Object.values(diagnosisData).forEach(diagnosis => {
-          if (![...diagnosisList.options].some(opt => opt.value === diagnosis.name)) {
-            const option = document.createElement("option");
-            option.value = diagnosis.name;
-            diagnosisList.appendChild(option);
-          }
+                try {
+                    const children = await db.getChildren();
+                    console.log('children:', children, 'fileNo:', fileNo);
+                    let child = null;
+                    for (const [id, c] of Object.entries(children)) {
+                        if (c.fileNo == fileNo) {
+                            child = c;
+                            break;
+                        }
+                    }
+                    console.log('child found:', child);
+                    if (child) {
+                        document.getElementById('childName').value = child.motherName || '';
+                        document.getElementById('childType').value = child.childType || '';
+                        document.getElementById('birthDate').value = child.birthDate || '';
+                        document.getElementById('entryDate').value = child.entryDate || '';
+                    } else {
+                        document.getElementById('childName').value = '';
+                        document.getElementById('childType').value = '';
+                        document.getElementById('birthDate').value = '';
+                        document.getElementById('entryDate').value = '';
+                    }
+                } catch (error) {
+                    alert('حدث خطأ أثناء جلب بيانات الطفل');
+                }
+            }, 800);
         });
-      } catch (error) {
-        console.error('Error loading diagnosis:', error);
-      }
-    }
-    document.addEventListener('DOMContentLoaded', loadDiagnosis);
 
-    function updateRequestNote() {
-      const component = document.getElementById('requestedComponent').value;
-      const units = document.getElementById('numberOfUnits').value;
-      let note = '';
-      if (component === 'Fresh frozen plasma') {
-        note = `مطلوب عدد ${units || '___'} وحدة بلازما بشرية طازجة من نفس الفصيلة`;
-      } else if (component === 'Packed red cells') {
-        note = `مطلوب عدد ${units || '___'} وحدة كرات دم حمراء مكدسة من نفس الفصيلة بعد عمل التوافق مع الام و الطفل`;
-      } else if (component === 'Platelets concentrate') {
-        note = `مطلوب عدد ${units || '___'} وحدة صفائح دم من نفس الفصيلة`;
-      } else if (component === 'Cryopercipitate') {
-        note = `مطلوب عدد ${units || '___'} وحدة كرايو من نفس الفصيلة`;
-      } else {
-        note = 'مطلوب عدد ___ ';
-      }
-      document.getElementById('requestNote').textContent = note;
-    }
-    document.getElementById('requestedComponent').addEventListener('input', updateRequestNote);
-    document.getElementById('numberOfUnits').addEventListener('input', updateRequestNote);
+        async function loadDiagnosis() {
+            try {
+                const diagnosisData = await db.getDiagnosis();
+                const diagnosisList = document.getElementById("diagnosisOptions");
+                if (!diagnosisList) return;
+                Object.values(diagnosisData).forEach(diagnosis => {
+                    if (![...diagnosisList.options].some(opt => opt.value === diagnosis.name)) {
+                        const option = document.createElement("option");
+                        option.value = diagnosis.name;
+                        diagnosisList.appendChild(option);
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading diagnosis:', error);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadDiagnosis);
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const today = new Date();
-      const yyyy = today.getFullYear();
-      const mm = String(today.getMonth() + 1).padStart(2, '0');
-      const dd = String(today.getDate()).padStart(2, '0');
-      document.getElementById('todayDate').value = `${yyyy}-${mm}-${dd}`;
-    });
+        function updateRequestNote() {
+            const component = document.getElementById('requestedComponent').value;
+            const units = document.getElementById('numberOfUnits').value;
+            let note = '';
+            if (component === 'Fresh frozen plasma') {
+                note = `مطلوب عدد ${units || '___'} وحدة بلازما بشرية طازجة من نفس الفصيلة`;
+            } else if (component === 'Packed red cells') {
+                note = `مطلوب عدد ${units || '___'} وحدة كرات دم حمراء مكدسة من نفس الفصيلة بعد عمل التوافق مع الأم والطفل`;
+            } else if (component === 'Platelets concentrate') {
+                note = `مطلوب عدد ${units || '___'} وحدة صفائح دم من نفس الفصيلة`;
+            } else if (component === 'Cryopercipitate') {
+                note = `مطلوب عدد ${units || '___'} وحدة كرايو من نفس الفصيلة`;
+            } else {
+                note = 'مطلوب عدد ___';
+            }
+            document.getElementById('requestNote').textContent = note;
+        }
+        document.getElementById('requestedComponent').addEventListener('input', updateRequestNote);
+        document.getElementById('numberOfUnits').addEventListener('input', updateRequestNote);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('todayDate').value = `${yyyy}-${mm}-${dd}`;
+        });
     </script>
-    <datalist id="yesNoOptions">
-      <option value="Yes"></option>
-      <option value="No"></option>
-    </datalist>
 </body>
-</html> 
+</html>
