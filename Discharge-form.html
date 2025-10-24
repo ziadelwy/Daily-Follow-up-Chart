@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Discharge form</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', 'Tahoma', sans-serif;
+            background: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 21cm;
+            max-width: 21cm;
+            margin: 0 auto;
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 0.5cm;
+            box-shadow: 0 0 10px #eee;
+            font-size: 11px;
+        }
+        
+        @media print {
+            .container {
+                width: 90%;
+                max-width: none;
+                margin: 0;
+                padding: 0.3cm;
+                box-shadow: none;
+                border: none;
+                font-size: 10px;
+            }
+            .no-print {
+                display: none !important;
+            }
+            body {
+                margin: 0;
+                padding: 0;
+                font-size: 10px;
+            }
+            table {
+                font-size: 9px !important;
+                margin-bottom: 3px !important;
+            }
+            th, td {
+                padding: 1px 2px !important;
+                font-size: 9px !important;
+            }
+            input, select {
+                font-size: 8px !important;
+                padding: 1px !important;
+                border: 1px solid #ccc !important;
+            }
+            .title {
+                font-size: 14px !important;
+                padding: 4px 0 !important;
+                margin-bottom: 5px !important;
+            }
+            .header {
+                margin-bottom: 5px !important;
+            }
+            .header .unit, .header .hospital {
+                font-size: 10px !important;
+                padding: 2px 5px !important;
+            }
+            .signature-section {
+                margin-top: 10px !important;
+            }
+            .signature-box {
+                font-size: 9px !important;
+            }
+            .blue-cell {
+                font-size: 9px !important;
+                padding: 1px 2px !important;
+            }
+            .section-title {
+                font-size: 9px !important;
+                padding: 2px 0 !important;
+            }
+            .maternal-input, .maternal-select {
+                font-size: 8px !important;
+                min-width: 30px !important;
+                max-width: 60px !important;
+            }
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .header .unit {
+            border: 1px solid #000;
+            padding: 3px 8px;
+            font-weight: bold;
+            font-size: 11px;
+        }
+        .header .hospital {
+            font-weight: bold;
+            font-size: 13px;
+        }
+        .title {
+            text-align: center;
+            background: #2986d4;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 4px 0;
+            margin-bottom: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 5px;
+            font-size: 10px;
+            page-break-inside: avoid;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 2px 3px;
+            vertical-align: middle;
+            word-wrap: break-word;
+            overflow: hidden;
+            font-size: 10px;
+        }
+        th {
+            background: #2986d4;
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+        }
+        .section-title {
+            background: #e6f0fa;
+            font-weight: bold;
+            text-align: right;
+            padding: 6px 0;
+        }
+        .no-border {
+            border: none !important;
+        }
+        .blue-cell {
+            background: #2986d4;
+            color: #fff;
+            font-weight: bold;
+        }
+        .center {
+            text-align: center;
+        }
+        .left {
+            text-align: left;
+        }
+        .right {
+            text-align: right;
+        }
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        .signature-box {
+            width: 30%;
+            text-align: center;
+            border-top: 1px solid #000;
+            padding-top: 3px;
+            font-size: 10px;
+        }
+        .footer-date {
+            text-align: left;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+        input[type="text"], select {
+            border: 1px solid #fff !important;
+            background: #fff;
+            color: #222;
+            font-size: 9px;
+            padding: 1px;
+            width: 100%;
+            box-sizing: border-box;
+            height: auto;
+        }
+        .maternal-input, .maternal-select {
+            min-width: 40px;
+            max-width: 70px;
+            width: 95%;
+            font-size: 9px;
+            box-sizing: border-box;
+            padding: 1px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="unit">وحدة حضانات الأطفال</div>
+        <div class="title">Discharge summary</div>
+        <div class="hospital">مستشفى نبض الحياة</div>
+    </div>
+    
+    <!-- أزرار التنقل -->
+    <div class="no-print" style="text-align: center; margin-bottom: 20px; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+        <button onclick="window.location.href='dashboard.html'" style="background-color: #27ae60; color: white; border: none; padding: 8px 16px; margin: 0 5px; border-radius: 4px; cursor: pointer; font-size: 14px;">🏠 dashboard</button>
+        <button onclick="window.location.href='index.html'" style="background-color: #2986d4; color: white; border: none; padding: 8px 16px; margin: 0 5px; border-radius: 4px; cursor: pointer; font-size: 14px;">العودة للمتابعة</button>
+    </div>
+    <!-- Hospital & Infant Data -->
+    <table>
+        <tr>
+            <td class="blue-cell" rowspan="3" style="width: 80px; font-size:11px;">Hospital Data</td>
+            <td class="blue-cell" style="width: 70px;">Treating Dr</td>
+            <td style="width: 120px;">
+                <select name="treating_dr" style="width:100%;font-size:10px;">
+                    <option>د/ محمد يوسف مجاهد</option>
+                    <option>د/ محمد الكاشف</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 80px;">Discharge Date</td>
+            <td style="width: 80px;" id="discharge-date"></td>
+            <td class="blue-cell" style="width: 80px;">Discharge Cause</td>
+            <td style="width: 80px;">
+                <select name="improvement" style="width:100%;font-size:10px;">
+                    <option>Improvement</option>
+                    <option>Referral</option>
+                    <option>Died</option>
+                    <option>--</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 60px;">File No</td>
+            <td style="width: 80px;"><input type="text" name="file_no" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+       
+    </table>
+    <table>
+        <tr>
+            <td class="blue-cell" rowspan="3" style="width: 80px; font-size:11px;">Patient Data</td>
+            <td class="blue-cell" style="width: 70px;">Patient Name</td>
+            <td style="width: 120px;"><input type="text" name="patient_name" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 50px;">Gender</td>
+            <td style="width: 50px;"><input type="text" name="gender" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 70px;">Birth Date</td>
+            <td style="width: 80px;"><input type="text" name="birth_date" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 80px;">Age on admission</td>
+            <td style="width: 60px;"><input type="text" name="age_on_admission" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell" style="width: 70px;">Admission Date</td>
+            <td style="width: 120px;"><input type="text" name="admission_date" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 50px;">GA</td>
+            <td style="width: 50px;"><input type="text" name="ga" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 70px;">B. Wt</td>
+            <td style="width: 80px;"><input type="text" name="b_wt" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 80px;">Age on discharge</td>
+            <td style="width: 60px;"><input type="text" name="age_on_discharge" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+    </table>
+    <!-- Maternal Data -->
+    <table>
+        <tr>
+            <td class="blue-cell" rowspan="4" style="width: 80px; font-size:11px;">Maternal Data</td>
+            <td class="blue-cell">Age</td>
+            <td><input type="text" name="age" class="maternal-input" style="width:95%;"></td>
+            <td>
+              <select name="g" class="maternal-select" style="width:95%;">
+                <option selected>G</option>
+                <option>G1</option>
+                <option>G2</option>
+                <option>G3</option>
+                <option>G4</option>
+                <option>G5</option>
+                <option>G6</option>
+                <option>G7</option>
+                <option>G8</option>
+                <option>G9</option>
+              </select>
+            </td>
+            <td>
+                <select name="p" class="maternal-select" style="width:95%;">
+                  <option selected>P</option>
+                  <option>P0</option>
+                  <option>P1</option>
+                  <option>P2</option>
+                  <option>P3</option>
+                  <option>P4</option>
+                  <option>P5</option>
+                  <option>P6</option>
+                  <option>P7</option>
+                  <option>P8</option>
+                  <option>P9</option>
+                </select>
+            </td>
+            <td>
+                <select name="a" class="maternal-select" style="width:95%;">
+                  <option selected>A</option>
+                  <option>A0</option>
+                  <option>A1</option>
+                  <option>A2</option>
+                  <option>A3</option>
+                  <option>A4</option>
+                  <option>A5</option>
+                  <option>A6</option>
+                  <option>A7</option>
+                </select>
+            </td>
+            <td>
+                <select name="l" class="maternal-select" style="width:95%;">
+                  <option selected>L</option>
+                  <option>L0</option>
+                  <option>L1</option>
+                  <option>L2</option>
+                  <option>L3</option>
+                  <option>L4</option>
+                  <option>L5</option>
+                  <option>L6</option>
+                  <option>L7</option>
+                  <option>L8</option>
+                </select>
+            </td>           
+            
+        </tr>
+        <tr>
+            <td class="blue-cell">Blood Gr</td>
+            <td>
+              <select name="blood_gr" class="maternal-select" style="width:95%;">
+                <option value=""selected>-----</option>
+                <option value="A +ve">A +ve</option>
+                <option value="A -ve">A -ve</option>
+                <option value="B +ve">B +ve</option>
+                <option value="B -ve">B -ve</option>
+                <option value="O +ve">O +ve</option>
+                <option value="O -ve">O -ve</option>
+                <option value="AB +ve">AB +ve</option>
+                <option value="AB -ve">AB -ve</option>
+              </select>
+            </td>
+            <td class="blue-cell">Hypertension</td>
+            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
+            <td class="blue-cell">Hypothyroidism</td>
+            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
+            
+        </tr>
+        <tr>
+            <td class="blue-cell">DM/ttt</td>
+            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
+            <td class="blue-cell">TORCH</td>
+            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
+            <td class="blue-cell">U/S</td>
+            <td><input type="text" name="us" class="maternal-input" style="width:95%;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">PROM/AB</td>
+            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
+            <td class="blue-cell">Medical/Surgical problem</td>
+            <td colspan="11"><input type="text" name="medical_surgical_problem" class="maternal-input" style="width:50%;"></td>
+        </tr>
+    </table>
+    <!-- Delivery -->
+    <table>
+
+        <tr>
+            <td class="blue-cell" rowspan="3" style="width: 80px; font-size:11px;">Delivery</td>
+            <td class="blue-cell">Date</td>
+            <td id="delivery-date"></td>
+            
+        </tr>
+        <tr>
+            <td class="blue-cell">Hospital</td>
+            <td id="delivery-hospital"></td>
+            <td class="blue-cell">Resuscitation</td>
+            <td colspan="2">
+              <select name="resuscitation" style="width:100%;font-size:10px;">
+                <option selected>Not Attended</option>
+                <option>              </option>
+              </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="blue-cell">Type</td>
+            <td>
+              <select name="delivery_type" style="width:100%;font-size:10px;">
+                <option value="C S">C S</option>
+                <option value="NAD">NAD</option>
+              </select>
+            </td>
+            
+            <td class="blue-cell">APGAR score</td>
+            <td>
+              <select name="apgar_score" style="width:100%;font-size:10px;">
+                <option selected>Not Attended</option>
+                <option>          </option>
+              </select>
+            </td>
+        </tr>
+    </table>
+    <!-- Diagnosis -->
+    <table>
+        <tr>
+            <td class="blue-cell" rowspan="2" style="width: 80px; font-size:11px;">Diagnosis</td>
+            <td class="blue-cell">Admission diagnosis</td>
+            <td colspan="7"><input type="text" name="admission_diagnosis" list="diagnosisOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل التشخيص يدويًا أو اختر"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">Discharge diagnosis</td>
+            <td colspan="7"><input type="text" name="discharge_diagnosis" list="diagnosisOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل التشخيص يدويًا أو اختر"></td>
+        </tr>
+    </table>
+    <!-- Problem List -->
+    <table>
+        <tr>
+            <td class="blue-cell" rowspan="5" style="width: 80px; font-size:11px;">Problem List</td>
+            <td class="blue-cell">Problem</td>
+            <td class="blue-cell">Date</td>
+            <td class="blue-cell">Intervention</td>
+            <td class="blue-cell">Outcome</td>
+        </tr>
+        <tr>
+            <td><input type="text" name="problem1" list="problemOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل المشكلة يدويًا أو اختر"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="problem2" list="problemOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل المشكلة يدويًا أو اختر"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="problem3" list="problemOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل المشكلة يدويًا أو اختر"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="problem4" list="problemOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل المشكلة يدويًا أو اختر"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <!-- Examination -->
+    <table>
+        <tr>
+            <td class="blue-cell" rowspan="11" style="width: 80px; font-size:11px;">Examination</td>
+            <td class="blue-cell">System</td>
+            <td class="blue-cell">On admission</td>
+            <td class="blue-cell">On Discharge</td>
+        </tr>
+        <tr><td class="blue-cell">General</td><td><input type="text" name="general_on_admission" list="generalOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="general_on_discharge" list="generalOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
+        <tr><td class="blue-cell">Head and neck</td><td><input type="text" name="head_neck_on_admission" list="headNeckOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="head_neck_on_discharge" list="headNeckOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
+        <tr><td class="blue-cell">measurments</td><td><input type="text" name="measurments_on_admission" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل القيمة"></td><td><input type="text" name="measurments_on_discharge" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل القيمة"></td></tr>
+        <tr><td class="blue-cell">CNS</td><td><input type="text" name="cns_on_admission" list="cnsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="cns_on_discharge" list="cnsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
+        <tr><td class="blue-cell">CVS</td><td><input type="text" name="cvs_on_admission" list="cvsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="cvs_on_discharge" list="cvsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
+        <tr><td class="blue-cell">Respiratory</td><td><input type="text" name="respiratory_on_admission" list="respiratoryOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="respiratory_on_discharge" list="respiratoryOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
+        <tr><td class="blue-cell">Abdomen/Genitalia</td><td><input type="text" name="abdomen_on_admission" list="abdomenOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="abdomen_on_discharge" list="abdomenOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
+        <tr><td class="blue-cell">Limbs|Spine</td><td><input type="text" name="limbs_on_admission" list="limbsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="limbs_on_discharge" list="limbsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
+        <tr><td class="blue-cell">Others</td><td><input type="text" name="others_on_admission" list="limbsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="others_on_discharge" list="limbsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
+    </table>
+    <!-- Significant Lab -->
+    <table>
+        <tr>
+            <td class="blue-cell" rowspan="5" style="width: 80px; font-size:11px;">Significant Lab</td>
+            <td class="blue-cell">Parameter</td>
+            <td class="blue-cell">On admission</td>
+            <td class="blue-cell">In patient</td>
+            <td class="blue-cell">On discharge</td>
+            <td class="blue-cell">Parameter</td>
+            <td class="blue-cell">On admission</td>
+            <td class="blue-cell">In patient</td>
+            <td class="blue-cell">On discharge</td>
+        </tr>
+        <tr><td class="blue-cell">HB</td><td><input type="text" name="hb_on_admission" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="hb_in_patient" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="hb_on_discharge" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td class="blue-cell">CRP|Culture</td><td><input type="text" name="crp_on_admission" list="crpOptions" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="crp_in_patient" list="crpOptions" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="crp_on_discharge" list="crpOptions" style="width:98%;font-size:10px;box-sizing:border-box;"></td></tr>
+        <tr><td class="blue-cell">Platelet</td><td><input type="text" name="platelet_on_admission" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="platelet_in_patient" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="platelet_on_discharge" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td class="blue-cell">TSB |DSB</td><td><input type="text" name="tsb_on_admission" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="tsb_in_patient" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="tsb_on_discharge" style="width:98%;font-size:10px;box-sizing:border-box;"></td></tr>
+        <tr><td class="blue-cell">WBCs</td><td><input type="text" name="wbcs_on_admission" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="wbcs_in_patient" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="wbcs_on_discharge" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td class="blue-cell">Na|K|CA</td><td><input type="text" name="na_on_admission" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="na_in_patient" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="na_on_discharge" style="width:98%;font-size:10px;box-sizing:border-box;"></td></tr>
+        <tr><td class="blue-cell">Blood Gr</td><td><select name="blood_gr" class="maternal-select" style="width:95%;">
+          <option value=""selected>----</option>
+          <option value="A +ve">A +ve</option>
+          <option value="A -ve">A -ve</option>
+          <option value="B +ve">B +ve</option>
+          <option value="B -ve">B -ve</option>
+          <option value="O +ve">O +ve</option>
+          <option value="O -ve">O -ve</option>
+          <option value="AB +ve">AB +ve</option>
+          <option value="AB -ve">AB -ve</option>
+        </select></td><td></td><td></td><td class="blue-cell">s.urea|creat</td><td><input type="text" name="s_urea_on_admission" style="width:98%;font-size:15px;box-sizing:border-box;"></td><td><input type="text" name="s_urea_in_patient" style="width:98%;font-size:15px;box-sizing:border-box;"></td><td><input type="text" name="s_urea_on_discharge" style="width:98%;font-size:15px;box-sizing:border-box;"></td></tr>
+    </table>
+    <table>
+        <tr>
+            <td class="blue-cell" rowspan="5" style="width: 80px; font-size:11px;">Imaging</td>
+            <td class="blue-cell" style="width: 80px;">X ray</td>
+            <td><input type="text" name="xray" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell" style="width: 80px;">U/S</td>
+            <td><input type="text" name="us_imaging" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell" style="width: 80px;">Echo</td>
+            <td><input type="text" name="echo" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th rowspan="7" style="width: 80px; font-size:11px;">Medications</th>
+        </tr>
+        <tr>
+            <td class="blue-cell">Drug</td>
+            <td class="blue-cell">Duration</td>
+            <td class="blue-cell">Drug</td>
+            <td class="blue-cell">Duration</td>
+            <td class="blue-cell">Drug</td>
+            <td class="blue-cell">Duration</td>
+        </tr>
+        <tr>
+            <td><input type="text" name="drug1" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="number" name="duration1" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="drug2" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="number" name="duration2" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="drug3" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="number" name="duration3" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="drug4" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="number" name="duration4" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="drug5" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="number" name="duration5" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="drug6" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="number" name="duration6" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="drug7" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="number" name="duration7" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="drug8" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="number" name="duration8" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="drug9" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="number" name="duration9" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="drug10" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="number" name="duration10" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="drug11" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="number" name="duration11" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="drug12" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="number" name="duration12" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th style="width: 80px; font-size:11px;">Resp. support</th>
+            <td><input type="text" list="problemOptions" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th style="width: 80px; font-size:11px;">Others</th>
+            <td class="blue-cell">Phototherapy</td>
+            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option>No</option></select></td>
+            <td class="blue-cell">Exchange transfusion</td>
+            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option>No</option></select></td>
+            <td class="blue-cell">Blood Transfusion</td>
+            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option>No</option></select></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th style="width: 80px; font-size:11px;">Interventions</th>
+            <td class="blue-cell">UVC/UAC</td>
+            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
+            <td class="blue-cell">Central Line</td>
+            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
+            <td class="blue-cell">Chest Tube</td>
+            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
+            <td class="blue-cell">Lumber Puncture</td>
+            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th style="width: 80px; font-size:11px;">Screening</th>
+            <td class="blue-cell">ROP</td>
+            <td><select style="width:100%;font-size:10px;">
+                <option>Needed</option>
+                <option>No</option>
+                <option>Follow up</option>
+            </select></td>
+            <td class="blue-cell">Hearing</td>
+            <td><select style="width:100%;font-size:10px;">
+                <option>Needed</option>
+                <option>No</option>
+                <option>Follow up</option>
+            </select></td>
+            <td class="blue-cell">Hypothyroidism</td>
+            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th rowspan="2" style="width: 80px; font-size:11px;">Vacination</th>
+            <td>التطعيمات حسب جدول وزارة الصحة المصرية</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th rowspan="5" style="width: 80px; font-size:11px;">Discharge medications and feeding</th>
+            <td colspan="6"><input type="text" value="الرضاعة حسب الرغبة من الام او لبن كامل النمو رقم 1 كل 3 ساعات بالفم" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td colspan="6"><input type="text" value="Vi Drop   قطارة اربع نقط بالفم يوميا" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td colspan="6"><input type="text" value="سايميثكون قطاره كل 8 ساعات بعد الرضاعة بالفم" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td colspan="6"><input type="text" value="اوتريفين بيبي سالاين كل 6 ساعات قبل الرضاعة" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td colspan="6"><input type="text" value="" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th rowspan="2" style="width: 80px; font-size:11px;">Instructions</th>
+            <td colspan="6"><input type="text" value="عمل مقياس سمع بالوحده الصحيه" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td colspan="6"><input type="text" value="عمل فحص قاع عين عند وصول الطفل لعمر 21 يوم من ميلاده" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th style="width: 80px; font-size:11px;">Follow up plan</th>
+            <td colspan="6" id="follow-up-plan"></td>
+        </tr>
+    </table>
+    <div class="signature-section">
+        <div class="signature-box">
+            Treating Physician<br>
+            <select name="treating_dr" style="width:100%;font-size:10px;">
+                <option>د/ محمد يوسف مجاهد</option>
+                <option>د/ محمد الكاشف</option>
+            </select>  
+        </div>
+        <div class="signature-box">
+            Signature<br>
+            <input type="text" value="" style="width:100%;font-size:10px;box-sizing:border-box;">
+        </div>
+        <div class="signature-box">
+            Date<br>
+            <span id="signature-date"></span>
+        </div>
+    </div>
+    
+    <!-- أزرار التحكم -->
+    <div class="no-print" style="text-align: center; margin-top: 30px; padding: 20px; border-top: 2px solid #2986d4;">
+        <button onclick="window.print()" style="background-color: #2986d4; color: white; border: none; padding: 10px 20px; margin: 0 10px; border-radius: 5px; cursor: pointer; font-size: 16px;">🖨️ طباعة النموذج</button>
+        <button onclick="clearAllDischargeFields()" style="background-color: #e74c3c; color: white; border: none; padding: 10px 20px; margin: 0 10px; border-radius: 5px; cursor: pointer; font-size: 16px;">🗑️ مسح جميع البيانات</button>
+        <button onclick="window.location.href='index.html'" style="background-color: #27ae60; color: white; border: none; padding: 10px 20px; margin: 0 10px; border-radius: 5px; cursor: pointer; font-size: 16px;">🏠 العودة للصفحة الرئيسية</button>
+    </div>
+</div>
+<script>
+  // عرض تاريخ اليوم تلقائياً في خانة Discharge Date
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  document.getElementById('discharge-date').textContent = `${yyyy}-${mm}-${dd}`;
+  document.getElementById('signature-date').textContent = `${dd}/${mm}/${yyyy}`;
+
+  // حساب اليوم والتاريخ بعد يومين
+  const followUpDate = new Date(today);
+  followUpDate.setDate(today.getDate() + 2);
+  
+  const followUpDay = followUpDate.toLocaleDateString('ar-SA', { weekday: 'long' });
+  const followUpDD = String(followUpDate.getDate()).padStart(2, '0');
+  const followUpMM = String(followUpDate.getMonth() + 1).padStart(2, '0');
+  const followUpYYYY = followUpDate.getFullYear();
+  
+  document.getElementById('follow-up-plan').textContent = 
+    `المتابعة داخل حضانات نبض الحياة يوم ${followUpDay} الموافق ${followUpDD}/${followUpMM}/${followUpYYYY} الساعة 4 عصرا`;
+
+  // إضافة مستمع الأحداث لحقل File No
+  document.addEventListener('DOMContentLoaded', function() {
+    const fileNoInput = document.querySelector('input[name="file_no"]');
+    if (fileNoInput) {
+      // إضافة تأخير 800 مللي ثانية قبل البحث
+      let searchTimeout;
+      fileNoInput.addEventListener('input', function() {
+        // إلغاء البحث السابق إذا كان موجوداً
+        clearTimeout(searchTimeout);
+        
+        // تأخير البحث لمدة 800 مللي ثانية
+        searchTimeout = setTimeout(() => {
+          fetchChildDataForDischarge();
+        }, 800);
+      });
+      
+      console.log('تم إضافة مستمع الأحداث لحقل File No مع تأخير 800 مللي ثانية');
+    } else {
+      console.error('لم يتم العثور على حقل File No');
+    }
+  });
+
+  // دالة جلب بيانات الطفل لصفحة التفريغ
+  async function fetchChildDataForDischarge() {
+    try {
+      const fileNo = document.querySelector('input[name="file_no"]').value.trim();
+      console.log('تم إدخال رقم الملف:', fileNo);
+      
+      if (!fileNo) {
+        clearDischargeFields();
+        return;
+      }
+
+      // إظهار مؤشر التحميل
+      const fileNoInput = document.querySelector('input[name="file_no"]');
+      fileNoInput.style.backgroundColor = '#fff3cd';
+      fileNoInput.placeholder = 'جاري البحث...';
+
+      // التحقق من وجود Firebase
+      if (typeof firebase === 'undefined') {
+        throw new Error('Firebase غير متاح');
+      }
+
+      // استخدام Firebase مباشرة بدلاً من الاستيراد الديناميكي
+      const database = firebase.database();
+      console.log('تم الاتصال بقاعدة البيانات');
+      
+      const snapshot = await database.ref('children').once('value');
+      const children = snapshot.val() || {};
+      console.log('تم جلب بيانات الأطفال:', children);
+      
+      let child = null;
+      for (const [id, c] of Object.entries(children)) {
+        if (c.fileNo == fileNo) {
+          child = c;
+          break;
+        }
+      }
+
+      if (child) {
+        console.log('تم العثور على الطفل:', child);
+        
+        // ملء بيانات الطفل
+        document.querySelector('input[name="patient_name"]').value = child.motherName || "";
+        document.querySelector('input[name="gender"]').value = child.childType || "";
+        document.querySelector('input[name="ga"]').value = child.gestationalAge || "";
+        
+        // تنسيق تاريخ الدخول
+        if (child.entryDate) {
+          const entryDate = new Date(child.entryDate);
+          const formattedEntryDate = entryDate.toLocaleDateString('ar-EG');
+          document.querySelector('input[name="admission_date"]').value = formattedEntryDate;
+          
+          // ملء تاريخ الولادة في قسم Delivery
+          document.getElementById('delivery-date').textContent = formattedEntryDate;
+        }
+
+        // تنسيق تاريخ الميلاد
+        if (child.birthDate) {
+          const birthDate = new Date(child.birthDate);
+          const formattedBirthDate = birthDate.toLocaleDateString('ar-EG');
+          document.querySelector('input[name="birth_date"]').value = formattedBirthDate;
+        }
+
+        // حساب العمر عند الدخول
+        if (child.birthDate && child.entryDate) {
+          const birthDate = new Date(child.birthDate);
+          const entryDate = new Date(child.entryDate);
+          const ageOnAdmission = Math.floor((entryDate - birthDate) / (1000 * 60 * 60 * 24));
+          document.querySelector('input[name="age_on_admission"]').value = ageOnAdmission === 0 ? "1" : ageOnAdmission.toString();
+        }
+
+        // حساب العمر عند التفريغ
+        if (child.birthDate) {
+          const birthDate = new Date(child.birthDate);
+          const today = new Date();
+          const ageOnDischarge = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
+          document.querySelector('input[name="age_on_discharge"]').value = ageOnDischarge.toString();
+        }
+
+        // ملء مكان الولادة في قسم Delivery
+        if (child.birthPlace) {
+          document.getElementById('delivery-hospital').textContent = child.birthPlace;
+        } else {
+          document.getElementById('delivery-hospital').textContent = '';
+        }
+
+        // إعادة تعيين مؤشر التحميل
+        fileNoInput.style.backgroundColor = '#d4edda';
+        fileNoInput.placeholder = 'تم العثور على البيانات';
+
+        console.log('تم جلب بيانات الطفل بنجاح:', child);
+
+      } else {
+        clearDischargeFields();
+        
+        // إعادة تعيين مؤشر التحميل
+        fileNoInput.style.backgroundColor = '#f8d7da';
+        fileNoInput.placeholder = 'لم يتم العثور على بيانات';
+        
+        console.log('لم يتم العثور على طفل برقم الملف:', fileNo);
+      }
+    } catch (error) {
+      console.error("خطأ أثناء جلب بيانات الطفل:", error);
+      alert("حدث خطأ أثناء جلب بيانات الطفل: " + error.message);
+      clearDischargeFields();
+      
+      // إعادة تعيين مؤشر التحميل
+      const fileNoInput = document.querySelector('input[name="file_no"]');
+      fileNoInput.style.backgroundColor = '#f8d7da';
+      fileNoInput.placeholder = 'حدث خطأ في البحث';
+    }
+  }
+
+  // دالة مسح الحقول
+  function clearDischargeFields() {
+    document.querySelector('input[name="patient_name"]').value = "";
+    document.querySelector('input[name="gender"]').value = "";
+    document.querySelector('input[name="birth_date"]').value = "";
+    document.querySelector('input[name="age_on_admission"]').value = "";
+    document.querySelector('input[name="admission_date"]').value = "";
+    document.querySelector('input[name="ga"]').value = "";
+    document.querySelector('input[name="age_on_discharge"]').value = "";
+    
+    // مسح بيانات Delivery
+    document.getElementById('delivery-date').textContent = "";
+    document.getElementById('delivery-hospital').textContent = "";
+    document.querySelector('select[name="delivery_type"]').value = "C S";
+    
+    // إعادة تعيين مؤشر التحميل
+    const fileNoInput = document.querySelector('input[name="file_no"]');
+    if (fileNoInput) {
+      fileNoInput.style.backgroundColor = '';
+      fileNoInput.placeholder = '';
+    }
+  }
+
+  // دالة مسح جميع البيانات في النموذج
+  function clearAllDischargeFields() {
+    if (confirm('هل أنت متأكد من مسح جميع البيانات في النموذج؟')) {
+      // مسح بيانات الطفل
+      clearDischargeFields();
+      
+      // مسح حقل رقم الملف
+      const fileNoInput = document.querySelector('input[name="file_no"]');
+      if (fileNoInput) {
+        fileNoInput.value = "";
+        fileNoInput.style.backgroundColor = '';
+        fileNoInput.placeholder = '';
+      }
+      
+      // مسح بيانات الأم
+      document.querySelector('input[name="age"]').value = "";
+      document.querySelector('select[name="g"]').value = "G";
+      document.querySelector('select[name="p"]').value = "P";
+      document.querySelector('select[name="a"]').value = "A";
+      document.querySelector('select[name="l"]').value = "L";
+      document.querySelector('select[name="blood_gr"]').value = "B +ve";
+      document.querySelector('input[name="us"]').value = "";
+      document.querySelector('input[name="medical_surgical_problem"]').value = "";
+      
+      // مسح التشخيص
+      document.querySelector('input[name="admission_diagnosis"]').value = "";
+      document.querySelector('input[name="discharge_diagnosis"]').value = "";
+      
+      // مسح المشاكل
+      document.querySelectorAll('input[name^="problem"]').forEach(input => {
+        input.value = "";
+      });
+      
+      // مسح الفحص
+      document.querySelectorAll('input[name*="on_admission"], input[name*="on_discharge"]').forEach(input => {
+        input.value = "";
+      });
+      
+      // مسح المعامل
+      document.querySelectorAll('input[name*="on_admission"], input[name*="in_patient"], input[name*="on_discharge"]').forEach(input => {
+        input.value = "";
+      });
+      
+      // مسح الأشعة
+      document.querySelector('input[name="xray"]').value = "";
+      document.querySelector('input[name="us_imaging"]').value = "";
+      document.querySelector('input[name="echo"]').value = "";
+      
+      // مسح الأدوية
+      document.querySelectorAll('input[name^="drug"], input[name^="duration"]').forEach(input => {
+        input.value = "";
+      });
+      
+      // مسح الدعم التنفسي
+      document.querySelector('input[list="problemOptions"]').value = "";
+      
+      // مسح التدخلات
+      document.querySelectorAll('select').forEach(select => {
+        if (select.name && !select.name.includes('treating_dr') && !select.name.includes('g') && 
+            !select.name.includes('p') && !select.name.includes('a') && !select.name.includes('l') && 
+            !select.name.includes('blood_gr')) {
+          select.selectedIndex = 0;
+        }
+      });
+      
+      // مسح التوقيع
+      document.querySelector('input[type="text"]').value = "";
+      
+      alert('تم مسح جميع البيانات بنجاح');
+    }
+  }
+
+  // تهيئة Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyCFZpFHWWor8ioA69BYFYdeEmCedFFeolE",
+    authDomain: "daily-follow-up-chart-76cff.firebaseapp.com",
+    databaseURL: "https://daily-follow-up-chart-76cff-default-rtdb.firebaseio.com",
+    projectId: "daily-follow-up-chart-76cff",
+    storageBucket: "daily-follow-up-chart-76cff.firebasestorage.app",
+    messagingSenderId: "710567352538",
+    appId: "1:710567352538:web:4f9f8f785dbd366009ede3",
+    measurementId: "G-QH0PJZGVTM"
+  };
+
+  // تهيئة Firebase إذا لم يكن مُهيأ بالفعل
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+</script>
+<datalist id="problemOptions">
+  <option value="NJ➡️➡️Phototherapy"></option>
+  <option value="RD➡️➡️MV"></option>
+  <option value="RD➡️➡️MV➡️➡️NIMV"></option>
+  <option value="RD➡️➡️MV➡️➡️NIMV➡️➡️HFNC➡️➡️IO2➡️➡️OFF"></option>
+  <option value="RD➡️➡️MV➡️➡️NIMV➡️➡️NCMV➡️➡️HFNC"></option>
+  <option value="RD➡️➡️NIMV"></option>
+  <option value="RD➡️➡️NIMV➡️➡️MV"></option>
+  <option value="RD➡️➡️NIMV➡️➡️NCMV"></option>
+  <option value="RD➡️➡️NIMV➡️➡️HFNC"></option>
+  <option value="RD➡️➡️HFNC"></option>
+  <option value="RD➡️➡️HFNC➡️➡️HB"></option>
+  <option value="RD➡️➡️HFNC➡️➡️HB➡️➡️IO2➡️➡️OFF"></option>
+  <option value="RD➡️➡️HFNC➡️➡️NIMV➡️➡️MV"></option>
+  <option value="RD➡️➡️-MV➡️➡️HFO"></option>
+  <option value="RD➡️➡️NC"></option>
+  <option value="RD➡️➡️NC➡️➡️IO2➡️➡️OFF"></option>
+</datalist>
+<datalist id="diagnosisOptions">
+  <option value="Female, FT , 37 w' , NJ"></option>
+  <option value="Female, FT , 38 w' , RD"></option>
+  <option value="Female, PT , 35 w' , RD"></option>
+  <option value="Female, PT , 33 w' , RD"></option>
+  <option value="Male, FT , 38 w' , RD"></option>
+  <option value="Male, FT , 37 w' , NJ"></option>
+  <option value="Male, FT , 37 w' , RD"></option>
+  <option value="Male, NT , 36 w' , RD"></option>
+  <option value="Male, PT , 33 w' , RD"></option>
+  <option value="Male, PT , 32 w' , RD"></option>
+  <option value="Male, PT , 34 w' , RD"></option>
+  <option value="Male, PT , 31 w' , RD"></option>
+</datalist>
+<datalist id="generalOptions">
+  <option value="MGC    -    SVS"></option>
+  <option value="MGC"></option>
+  <option value="CRITICAL - CYANOSIS"></option>
+  <option value="BGC"></option>
+
+</datalist>
+<datalist id="headNeckOptions">
+  <option value="NAD"></option>
+  <option value="Hydrocephalus"></option>
+  <option value="Icteric"></option>
+</datalist>
+<datalist id="cnsOptions">
+  <option value="conscious , active"></option>
+  <option value="CONSCIOUS - HYPOACTIVE"></option>
+</datalist>
+<datalist id="cvsOptions">
+  <option value="S1 , S2 + M0"></option>
+  <option value="S1 , S2 + SM"></option>
+</datalist>
+<datalist id="respiratoryOptions">
+  <option value="BEAE , NO RD"></option>
+  <option value="Decreased air entry bilateral , SCR , RD2"></option>
+  <option value="Decreased air entry bilateral , SCR ,GRUNTING, RD3"></option>
+</datalist>
+<datalist id="abdomenOptions">
+  <option value="lax , soft , tolerate oral feeding"></option>
+  <option value="LAX , Soft"></option>
+  <option value="lax soft mild distinsion"></option>
+</datalist>
+<datalist id="limbsOptions">
+  <option value="NAD"></option>
+</datalist>
+<datalist id="crpOptions">
+  <option value="Negative"></option>
+  <option value="Positive"></option>
+</datalist>
+
+</body>
+</html> 
