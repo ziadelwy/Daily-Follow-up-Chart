@@ -9,8 +9,7 @@
     <style>
         body {
             font-family: 'Tajawal', sans-serif;
-            background-color: #f0f4f8;
-            direction: rtl;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);            direction: rtl;
             text-align: right;
             margin: 0;
             padding: 0;
@@ -22,16 +21,17 @@
         }
 
         .dashboard-container {
-            background: white;
-            padding: 15mm;
-            width: 260px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20mm;
+            width: 280px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             text-align: center;
+            backdrop-filter: blur(10px);
         }
 
         .logo-container {
-            margin-bottom: 10mm;
+            margin-bottom: 15mm;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -55,38 +55,128 @@
         .buttons-container {
             display: flex;
             flex-direction: column;
-            gap: 6mm;
+            gap: 8mm;
         }
 
         .dashboard-btn {
-            background-color: #3498db;
             color: white;
             border: none;
-            padding: 5mm 10mm;
+            padding: 6mm 12mm;
             cursor: pointer;
-            font-size: 10pt;
-            border-radius: 4px;
+            font-size: 11pt;
+            border-radius: 8px;
             width: 100%;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 8px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .dashboard-btn:hover::before {
+            left: 100%;
         }
 
         .dashboard-btn:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .dashboard-btn i {
-            font-size: 12pt;
+            font-size: 14pt;
+        }
+
+        /* Primary Action - Patient Monitoring */
+        .btn-primary {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #357abd 0%, #2c5aa0 100%);
+        }
+
+        /* Add New Patient */
+        .btn-success {
+            background: linear-gradient(135deg, #5cb85c 0%, #4cae4c 100%);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #4cae4c 0%, #449d44 100%);
+        }
+
+        /* Emergency/Blood Request */
+        .btn-danger {
+            background: linear-gradient(135deg, #d9534f 0%, #c9302c 100%);
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #c9302c 0%, #ac2925 100%);
+        }
+
+        /* Discharge Form */
+        .btn-discharge {
+            background: linear-gradient(135deg, #5bc0de 0%, #46b8da 100%);
+        }
+
+        .btn-discharge:hover {
+            background: linear-gradient(135deg, #46b8da 0%, #31b0d5 100%);
+        }
+
+        /* Medication Management */
+        .btn-warning {
+            background: linear-gradient(135deg, #f0ad4e 0%, #ec971f 100%);
+        }
+
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #ec971f 0%, #d58512 100%);
+        }
+
+        /* Data Viewing */
+        .btn-info {
+            background: linear-gradient(135deg, #5bc0de 0%, #46b8da 100%);
+        }
+
+        .btn-info:hover {
+            background: linear-gradient(135deg, #46b8da 0%, #31b0d5 100%);
+        }
+
+        /* Inventory Management */
+        .btn-secondary {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #7f8c8d 0%, #6c7b7d 100%);
+        }
+
+        /* Reports and Analytics */
+        .btn-dark {
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+        }
+
+        .btn-dark:hover {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
         }
 
         @media screen and (max-width: 400px) {
             .dashboard-container {
                 width: 90%;
-                padding: 12mm;
+                padding: 15mm;
             }
 
             .logo {
@@ -98,16 +188,14 @@
             }
 
             .dashboard-btn {
-                padding: 4mm 8mm;
-                font-size: 9pt;
+                padding: 5mm 10mm;
+                font-size: 10pt;
             }
 
             .dashboard-btn i {
-                font-size: 10pt;
+                font-size: 12pt;
             }
         }
-
-        
     </style>
 </head>
 <body>
@@ -117,26 +205,29 @@
             <h1>وَمَنْ أَحْيَاهَا فَكَأَنَّمَا أَحْيَا النَّاسَ جَمِيعًا</h1>
         </div>
         <div class="buttons-container">
-            <button class="dashboard-btn" onclick="window.location.href='index.html'">
-                <i class="fas fa-heartbeat"></i> المتابعة
+            <button class="dashboard-btn btn-primary" onclick="window.location.href='index.html'">
+                <i class="fas fa-heartbeat"></i>  Daily Follow-up Chart
             </button>
-            <button class="dashboard-btn" onclick="window.location.href='add_child.html'">
-                <i class="fas fa-baby"></i> إضافة طفل جديد
+            <button class="dashboard-btn btn-success" onclick="window.location.href='add_child.html'">
+                <i class="fas fa-baby"></i> Add a new child
             </button>
-            <button class="dashboard-btn" onclick="window.location.href='blood_request.html'">
-                <i class="fas fa-heartbeat"></i> طلب نقل دم
+            <button class="dashboard-btn btn-danger" onclick="window.location.href='blood_request.html'">
+                <i class="fas fa-tint"></i> Blood request
             </button>
-            <button class="dashboard-btn" onclick="window.location.href='add_drug.html'">
-                <i class="fas fa-capsules"></i> إضافة دواء جديد
+            <button class="dashboard-btn btn-discharge" onclick="window.location.href='Discharge-form.html'">
+                <i class="fas fa-file-medical"></i> Discharge summary
             </button>
-            <button class="dashboard-btn" onclick="window.location.href='children_data.html'">
-                <i class="fas fa-users"></i> عرض بيانات الأطفال
+            <button class="dashboard-btn btn-warning" onclick="window.location.href='add_drug.html'">
+                <i class="fas fa-capsules"></i> Add a new drug
             </button>
-            <button class="dashboard-btn" onclick="window.location.href='drug_data.html'">
-                <i class="fas fa-warehouse"></i> عرض الأدوية المخزنة
+            <button class="dashboard-btn btn-info" onclick="window.location.href='children_data.html'">
+                <i class="fas fa-users"></i> All children's data
             </button>
-            <button class="dashboard-btn" onclick="window.location.href='followup_data.html'">
-                <i class="fas fa-clipboard-check"></i> عرض بيانات المتابعة
+            <button class="dashboard-btn btn-secondary" onclick="window.location.href='drug_data.html'">
+                <i class="fas fa-warehouse"></i> All medicines's data
+            </button>
+            <button class="dashboard-btn btn-dark" onclick="window.location.href='followup_data.html'">
+                <i class="fas fa-clipboard-check"></i> Follow-up Chart History
             </button>
         </div>
     </div>
