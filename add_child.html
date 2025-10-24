@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إضافة طفل جديد</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -12,268 +12,581 @@
     <script src="database.js"></script>
     <script src="script.js"></script>
     <style>
-        body {
-            font-family: 'Tajawal', 'Arial', sans-serif;
-            background-color: #f5f7fa;
-            direction: rtl;
-            text-align: right;
+        * {
             margin: 0;
-            padding: 5mm;
-            color: #333;
-            font-size: 10pt;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #34495e;
-            color: white;
-            padding: 5mm 10mm;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 5mm;
-            width: 100%;
+            padding: 0;
             box-sizing: border-box;
         }
 
-        .nursery-title {
-            font-size: 14pt;
-            font-weight: bold;
-            margin-right: 10mm;
-            white-space: nowrap;
+        body {
+            font-family: 'Tajawal', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            direction: rtl;
+            text-align: right;
+            color: #2c3e50;
+            font-size: 14px;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 12px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.8s;
+        }
+
+        .header:hover::before {
+            left: 100%;
         }
 
         .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #2c3e50;
             margin: 0;
-            font-size: 18pt;
-            font-weight: bold;
-            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
             text-align: center;
         }
 
-        .hospital-title {
-            font-size: 14pt;
-            font-weight: bold;
-            margin-left: 10mm;
-            white-space: nowrap;
+        .header h1 i {
+            color: #3498db;
+            font-size: 18px;
+            animation: pulse 2s infinite;
         }
 
-        .buttons {
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .header-buttons {
             display: flex;
-            gap: 5mm;
-            align-items: center;
+            flex-direction: row;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
-        button {
-            background-color: #1e90ff;
-            color: white;
+        .btn {
+            padding: 8px 14px;
             border: none;
-            padding: 3mm 8mm;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 10pt;
-            border-radius: 6px;
-            transition: background-color 0.3s;
-            margin: 0 2mm;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            text-decoration: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            min-width: 90px;
         }
 
-        button:hover {
-            background-color: #1c86ee;
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
         }
 
-        .add-btn {
-            background-color: #28a745;
+        .btn:hover::before {
+            left: 100%;
         }
 
-        .add-btn:hover {
-            background-color: #218838;
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
         }
 
-        .back-btn {
-            background-color: #e74c3c;
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2980b9 0%, #1f5f8b 100%);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
         }
 
-        .back-btn:hover {
-            background-color: #c0392b;
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
         }
 
-        .save-btn {
-            background-color: #2ecc71;
+        .btn-success:hover {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
         }
 
-        .save-btn:hover {
-            background-color: #27ae60;
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
         }
 
-        .excel-btn {
-            background-color: #f39c12;
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
         }
 
-        .excel-btn:hover {
-            background-color: #e67e22;
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
         }
 
-        .view-data-btn {
-            background-color: #007bff;
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4);
         }
 
-        .view-data-btn:hover {
-            background-color: #0056b3;
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
-        .small-btn {
-            padding: 1mm 3mm;
-            font-size: 10pt;
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12, #e74c3c);
+            border-radius: 16px 16px 0 0;
         }
 
         .form-container {
-            background: white;
-            padding: 3mm;
-            width: 300px;
-            margin: 5mm auto;
-            border-radius: 8px;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .form-section {
+            margin-bottom: 16px;
+        }
+
+        .form-section h2 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            position: relative;
+            padding-bottom: 4px;
+            text-align: center;
+        }
+
+        .form-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 1px;
+        }
+
+        .form-section h2 i {
+            color: #3498db;
+            font-size: 15px;
+        }
+
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+            position: relative;
+            width: 100%;
         }
 
         .form-group label {
-            font-weight: bold;
             display: block;
-            margin: 2mm 0 0.5mm;
-            font-size: 10pt;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 4px;
+            font-size: 11px;
+            position: relative;
+        }
+
+        .form-group label::before {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 3px;
+            background: #3498db;
+            border-radius: 50%;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 1.5mm;
-            margin-bottom: 2mm;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 9pt;
+            padding: 6px 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            background: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #2c3e50;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-group input::placeholder {
+            color: #95a5a6;
         }
 
         .birth-place-container {
             display: flex;
-            gap: 2mm;
-            margin-bottom: 2mm;
+            flex-direction: row;
+            gap: 5px;
+            align-items: end;
+        }
+
+        .birth-place-container select {
+            flex: 2;
         }
 
         .birth-place-container input {
-            flex-grow: 1;
+            flex: 2;
         }
 
-        .button-group {
+        .birth-place-container button {
+            flex: 1;
+            padding: 6px;
+            border-radius: 6px;
+            font-size: 11px;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 35px;
+        }
+
+        .birth-place-container button:hover {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+        }
+
+        .action-buttons {
             display: flex;
-            justify-content: space-between;
-            margin-top: 3mm;
+            flex-direction: row;
+            gap: 8px;
+            margin-top: 16px;
+            justify-content: center;
             flex-wrap: wrap;
-            gap: 2mm;
         }
 
-        @media screen and (max-width: 600px) {
+        .secondary-buttons {
+            display: flex;
+            flex-direction: row;
+            gap: 8px;
+            margin-top: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 8px;
+                max-width: 100%;
+            }
+
             .header {
+                padding: 12px 16px;
+                margin-bottom: 12px;
+            }
+
+            .header h1 {
+                font-size: 18px;
+            }
+
+            .header h1 i {
+                font-size: 16px;
+            }
+
+            .header-buttons {
                 flex-direction: column;
-                padding: 3mm;
+                gap: 6px;
             }
 
-            .nursery-title {
-                margin-right: 0;
-                margin-bottom: 2mm;
+            .main-content {
+                padding: 16px;
+                margin-bottom: 12px;
             }
 
-            .hospital-title {
-                margin-left: 0;
-                margin-bottom: 2mm;
+            .form-grid {
+                grid-template-columns: 1fr;
             }
 
-            .buttons {
+            .birth-place-container {
                 flex-direction: column;
-                gap: 1.5mm;
+                gap: 5px;
             }
 
-            button {
-                width: 100%;
-                margin: 0;
+            .action-buttons,
+            .secondary-buttons {
+                flex-direction: column;
+                gap: 6px;
             }
 
-            .form-container {
+            .btn {
                 width: 100%;
-                margin: 5mm 0;
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 6px;
+            }
+
+            .header {
+                padding: 10px 12px;
+            }
+
+            .header h1 {
+                font-size: 16px;
+            }
+
+            .header h1 i {
+                font-size: 14px;
+            }
+
+            .main-content {
+                padding: 12px;
+            }
+
+            .form-group input,
+            .form-group select {
+                font-size: 10px;
+                padding: 5px 8px;
+            }
+
+            .btn {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+
+            .birth-place-container button {
+                font-size: 10px;
+                padding: 5px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .header h1 {
+                font-size: 14px;
+            }
+
+            .header h1 i {
+                font-size: 12px;
+            }
+
+            .form-group input,
+            .form-group select {
+                font-size: 9px;
+                padding: 4px 6px;
+            }
+
+            .btn {
+                padding: 5px 8px;
+                font-size: 9px;
+            }
+
+            .birth-place-container button {
+                font-size: 9px;
+                padding: 4px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>إضافة بيانات الطفل</h1>
-        <button class="back-btn" onclick="window.location.href='index.html'">⬅ العودة للمتابعة</button>
-        <button class="add-btn" onclick="window.location.href='dashboard.html'">🏠  Dashboard </button>
-    </div>
-
-    <div class="form-container">
-        <div class="form-group">
-            <label>رقم الملف (الرقم التسلسلي)</label>
-            <input type="text" id="fileNo" placeholder="أدخل رقم الملف">
-        </div>
-
-        <div class="form-group">
-            <label>اسم الأم</label>
-            <input type="text" id="motherName" placeholder="أدخل اسم الأم">
-        </div>
-
-        <div class="form-group">
-            <label>نوع الطفل</label>
-            <select id="childType">
-                <option value="ابن">ابن</option>
-                <option value="بنت">بنت</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>تاريخ الميلاد</label>
-            <input type="date" id="birthDate">
-        </div>
-
-        <div class="form-group">
-            <label>تاريخ الدخول</label>
-            <input type="date" id="entryDate">
-        </div>
-
-        <div class="form-group">
-            <label>العمر الرحمي (بالأسابيع)</label>
-            <input type="number" id="gestationalAge" placeholder="أدخل العمر الرحمي">
-        </div>
-
-        <div class="form-group">
-            <label>مكان الولادة</label>
-            <div class="birth-place-container">
-                <select id="birthPlace"></select>
-                <input type="text" id="newBirthPlace" placeholder="إضافة مكان جديد">
-                <button class="add-btn small-btn" onclick="addBirthPlace()">➕</button>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-baby"></i> إضافة طفل جديد</h1>
+            <div class="header-buttons">
+                
+                <button class="btn btn-primary" onclick="window.location.href='dashboard.html'">
+                    <i class="fas fa-home"></i> Dashboard
+                </button>
+                <button class="btn btn-danger" onclick="window.location.href='index.html'">
+                    <i class="fas fa-arrow-right"></i> العودة للمتابعة
+                </button>
             </div>
         </div>
 
-        <div class="button-group">
-            <button class="save-btn" onclick="saveChildData()">💾 حفظ البيانات</button>
+        <div class="main-content">
+            <div class="form-container">
+                <div class="form-section">
+                    <h2><i class="fas fa-user"></i> بيانات الطفل الأساسية</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>رقم الملف (الرقم التسلسلي)</label>
+                            <input type="text" id="fileNo" placeholder="أدخل رقم الملف">
+                        </div>
+
+                        <div class="form-group">
+                            <label>اسم الأم</label>
+                            <input type="text" id="motherName" placeholder="أدخل اسم الأم">
+                        </div>
+
+                        <div class="form-group">
+                            <label>نوع الطفل</label>
+                            <select id="childType">
+                                <option value="ابن">ابن</option>
+                                <option value="بنت">بنت</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>تاريخ الميلاد</label>
+                            <input type="date" id="birthDate">
+                        </div>
+
+                        <div class="form-group">
+                            <label>تاريخ الدخول</label>
+                            <input type="date" id="entryDate">
+                        </div>
+
+                        <div class="form-group">
+                            <label>العمر الرحمي (بالأسابيع)</label>
+                            <input type="number" id="gestationalAge" placeholder="أدخل العمر الرحمي">
+                        </div>
+
+                        <div class="form-group">
+                            <label>مكان الولادة</label>
+                            <div class="birth-place-container">
+                                <select id="birthPlace"></select>
+                                <input type="text" id="newBirthPlace" placeholder="إضافة مكان جديد">
+                                <button class="btn btn-success" onclick="addBirthPlace()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-success" onclick="saveChildData()">
+                        <i class="fas fa-save"></i> حفظ البيانات
+                    </button>
+                    <button class="btn btn-primary" onclick="window.location.href='children_data.html'">
+                        <i class="fas fa-users"></i> عرض بيانات الأطفال
+                    </button>
+                </div>
+
+                <div class="secondary-buttons">
+                    <button class="btn btn-warning" onclick="document.getElementById('importExcelInput').click()">
+                        <i class="fas fa-file-excel"></i> استيراد من Excel
+                    </button>
+                    
+                    <button class="btn btn-warning" onclick="downloadChildrenTemplate()">
+                        <i class="fas fa-file-download"></i> تحميل القالب Excel
+                    </button>
+                </div>
+
+                <input type="file" id="importExcelInput" accept=".xlsx, .xls" style="display:none" onchange="importFromExcel(event)">
+            </div>
         </div>
     </div>
 
-    <button class="view-data-btn" onclick="window.location.href='children_data.html'">📋 عرض بيانات الأطفال</button>
-    <button class="excel-btn" onclick="document.getElementById('importExcelInput').click()">⬆️ استيراد من Excel</button>
-
-    <button class="excel-btn" onclick="exportToExcel()">📥 حفظ البيانات في Excel</button>
-    <button class="excel-btn" onclick="downloadChildrenTemplate()">📋 تحميل القالب Excel</button>
-    <input type="file" id="importExcelInput" accept=".xlsx, .xls" style="display:none" onchange="importFromExcel(event)">
     <script>
-    function downloadChildrenTemplate() {
-        const headers = [
-            "fileNo", "motherName", "childType", "birthDate", "entryDate", "gestationalAge", "birthPlaceId", "birthPlace", "createdAt"
-        ];
-        const worksheet = XLSX.utils.aoa_to_sheet([headers]);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Children Data");
-        XLSX.writeFile(workbook, "children_template.xlsx");
-    }
+        function downloadChildrenTemplate() {
+            const headers = [
+                "fileNo", "motherName", "childType", "birthDate", "entryDate", "gestationalAge", "birthPlaceId", "birthPlace", "createdAt"
+            ];
+            const worksheet = XLSX.utils.aoa_to_sheet([headers]);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Children Data");
+            XLSX.writeFile(workbook, "children_template.xlsx");
+        }
     </script>
 </body>
 </html>
