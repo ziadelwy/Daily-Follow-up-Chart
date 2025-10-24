@@ -1,13 +1,13 @@
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCFZpFHWWor8ioA69BYFYdeEmCedFFeolE",
-    authDomain: "daily-follow-up-chart-76cff.firebaseapp.com",
-    databaseURL: "https://daily-follow-up-chart-76cff-default-rtdb.firebaseio.com",
-    projectId: "daily-follow-up-chart-76cff",
-    storageBucket: "daily-follow-up-chart-76cff.firebasestorage.app",
-    messagingSenderId: "710567352538",
-    appId: "1:710567352538:web:4f9f8f785dbd366009ede3",
-    measurementId: "G-QH0PJZGVTM"
+    apiKey: "AIzaSyBCnGstVO756i6gm_kJER8kwBlLsUf4tdI",
+    authDomain: "zamzam-ef804.firebaseapp.com",
+    databaseURL: "https://zamzam-ef804-default-rtdb.firebaseio.com",
+    projectId: "zamzam-ef804",
+    storageBucket: "zamzam-ef804.firebasestorage.app",
+    messagingSenderId: "411153577585",
+    appId: "1:411153577585:web:908e7e809e569321a94dd0",
+    measurementId: "G-46BHRGQFPR"
 };
 
 // Initialize Firebase
