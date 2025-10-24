@@ -154,11 +154,29 @@ if (window.location.pathname.includes("children_data.html")) {
         try {
             const childrenData = await db.getChildren();
             allChildrenData = Object.entries(childrenData).map(([id, child]) => ({ id, ...child }));
+            
+            // Update statistics
+            updateChildrenStatistics(allChildrenData);
+            
             renderChildrenTable();
         } catch (error) {
             console.error('Error loading children data:', error);
         }
     };
+
+    function updateChildrenStatistics(children) {
+        const total = children.length;
+        const males = children.filter(child => child.childType === 'ابن').length;
+        const females = children.filter(child => child.childType === 'بنت').length;
+
+        const totalElement = document.getElementById('totalChildren');
+        const maleElement = document.getElementById('maleChildren');
+        const femaleElement = document.getElementById('femaleChildren');
+
+        if (totalElement) totalElement.textContent = total;
+        if (maleElement) maleElement.textContent = males;
+        if (femaleElement) femaleElement.textContent = females;
+    }
 
     function renderChildrenTable() {
         const tableBody = document.querySelector("#childrenTable tbody");
@@ -652,7 +670,7 @@ function addSession() {
     const select = document.getElementById("sessionsList");
     const defaultOptions = Array.from(select.options)
         .filter(option => ["", "OFF", "م.ملح /6 س - ديكسا /12 س", "م.ملح /6 س", "م.ملح مستمرة - ديكسا /12س", 
-                          "م.ملح /3 س - اتروفنت /6س - ديكسا /12 س", "م.ملح /3 س - اتروفنت /6س - ديكسا /12 س - ادرينالين/12س"]
+                          "م.ملح /3 س - اتروفنت /6س - ديكسا /12 س - ادرينالين/12س"]
                           .includes(option.value))
         .map(option => option.value);
 
