@@ -2,6 +2,8 @@
 # Daily Follow-up Chart Application
 
 تطبيق لعرض ومتابعة البيانات اليومية باستخدام Firebase.
+https://daily-follow-up-chart-2wpr.vercel.app/dashboard.html
+
 
 ## المتطلبات
 - Node.js >= 14.0.0
