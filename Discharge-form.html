@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="index.css">
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="database.js"></script>
+    
+    
+    
     <style>
         body {
             font-family: 'Arial', 'Tahoma', sans-serif;
@@ -192,6 +196,12 @@
             padding: 1px;
         }
     </style>
+
+
+
+
+
+
 </head>
 <body>
 <div class="container">
@@ -247,570 +257,526 @@
         </tr>
         <tr>
             <td class="blue-cell" style="width: 70px;">Admission Date</td>
-            <td style="width: 120px;"><input type="text" name="admission_date" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
-            <td class="blue-cell" style="width: 50px;">GA</td>
+            <td style="width: 80px;"><input type="text" name="admission_date" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 70px;">GA</td>
             <td style="width: 50px;"><input type="text" name="ga" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
-            <td class="blue-cell" style="width: 70px;">B. Wt</td>
-            <td style="width: 80px;"><input type="text" name="b_wt" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 70px;">B WT</td>
+            <td style="width: 60px;"><input type="text" name="b_wt" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
             <td class="blue-cell" style="width: 80px;">Age on discharge</td>
             <td style="width: 60px;"><input type="text" name="age_on_discharge" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
     </table>
-    <!-- Maternal Data -->
     <table>
         <tr>
-            <td class="blue-cell" rowspan="4" style="width: 80px; font-size:11px;">Maternal Data</td>
-            <td class="blue-cell">Age</td>
-            <td><input type="text" name="age" class="maternal-input" style="width:95%;"></td>
-            <td>
-              <select name="g" class="maternal-select" style="width:95%;">
-                <option selected>G</option>
-                <option>G1</option>
-                <option>G2</option>
-                <option>G3</option>
-                <option>G4</option>
-                <option>G5</option>
-                <option>G6</option>
-                <option>G7</option>
-                <option>G8</option>
-                <option>G9</option>
-              </select>
-            </td>
-            <td>
-                <select name="p" class="maternal-select" style="width:95%;">
-                  <option selected>P</option>
-                  <option>P0</option>
-                  <option>P1</option>
-                  <option>P2</option>
-                  <option>P3</option>
-                  <option>P4</option>
-                  <option>P5</option>
-                  <option>P6</option>
-                  <option>P7</option>
-                  <option>P8</option>
-                  <option>P9</option>
+            <td class="blue-cell" rowspan="3" style="width: 80px; font-size:11px;">Maternal Data</td>
+            <td class="blue-cell" style="width: 70px;">Age</td>
+            <td style="width: 50px;"><input type="text" name="age" class="maternal-input" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 70px;">Gravida</td>
+            <td style="width: 50px;">
+                <select name="g" class="maternal-select" style="width:100%;font-size:10px;">
+                    <option>G</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
                 </select>
             </td>
-            <td>
-                <select name="a" class="maternal-select" style="width:95%;">
-                  <option selected>A</option>
-                  <option>A0</option>
-                  <option>A1</option>
-                  <option>A2</option>
-                  <option>A3</option>
-                  <option>A4</option>
-                  <option>A5</option>
-                  <option>A6</option>
-                  <option>A7</option>
+            <td class="blue-cell" style="width: 70px;">Para</td>
+            <td style="width: 50px;">
+                <select name="p" class="maternal-select" style="width:100%;font-size:10px;">
+                    <option>P</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
                 </select>
             </td>
-            <td>
-                <select name="l" class="maternal-select" style="width:95%;">
-                  <option selected>L</option>
-                  <option>L0</option>
-                  <option>L1</option>
-                  <option>L2</option>
-                  <option>L3</option>
-                  <option>L4</option>
-                  <option>L5</option>
-                  <option>L6</option>
-                  <option>L7</option>
-                  <option>L8</option>
+            <td class="blue-cell" style="width: 70px;">Abortion</td>
+            <td style="width: 50px;">
+                <select name="a" class="maternal-select" style="width:100%;font-size:10px;">
+                    <option>A</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
                 </select>
-            </td>           
-            
-        </tr>
-        <tr>
-            <td class="blue-cell">Blood Gr</td>
-            <td>
-              <select name="blood_gr" class="maternal-select" style="width:95%;">
-                <option value=""selected>-----</option>
-                <option value="A +ve">A +ve</option>
-                <option value="A -ve">A -ve</option>
-                <option value="B +ve">B +ve</option>
-                <option value="B -ve">B -ve</option>
-                <option value="O +ve">O +ve</option>
-                <option value="O -ve">O -ve</option>
-                <option value="AB +ve">AB +ve</option>
-                <option value="AB -ve">AB -ve</option>
-              </select>
             </td>
-            <td class="blue-cell">Hypertension</td>
-            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
-            <td class="blue-cell">Hypothyroidism</td>
-            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
-            
+            <td class="blue-cell" style="width: 70px;">Living</td>
+            <td style="width: 50px;">
+                <select name="l" class="maternal-select" style="width:100%;font-size:10px;">
+                    <option>L</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                </select>
+            </td>
         </tr>
         <tr>
-            <td class="blue-cell">DM/ttt</td>
-            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
-            <td class="blue-cell">TORCH</td>
-            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
-            <td class="blue-cell">U/S</td>
-            <td><input type="text" name="us" class="maternal-input" style="width:95%;"></td>
+            <td class="blue-cell" style="width: 70px;">Blood Gr</td>
+            <td style="width: 50px;">
+                <select name="blood_gr" class="maternal-select" style="width:100%;font-size:10px;">
+                    <option>B +ve</option>
+                    <option>A +ve</option>
+                    <option>A -ve</option>
+                    <option>B -ve</option>
+                    <option>O +ve</option>
+                    <option>O -ve</option>
+                    <option>AB +ve</option>
+                    <option>AB -ve</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 70px;">PROM</td>
+            <td style="width: 50px;">
+                <select name="prom" class="maternal-select" style="width:100%;font-size:10px;">
+                    <option>NO</option>
+                    <option>Yes</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 70px;">TORCH</td>
+            <td style="width: 50px;">
+                <select name="torch" class="maternal-select" style="width:100%;font-size:10px;">
+                    <option>NO</option>
+                    <option>Yes</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 70px;">Hypertension</td>
+            <td style="width: 50px;">
+                <select name="hypertension" class="maternal-select" style="width:100%;font-size:10px;">
+                    <option>NO</option>
+                    <option>Yes</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 70px;">DM</td>
+            <td style="width: 50px;">
+                <select name="dm" class="maternal-select" style="width:100%;font-size:10px;">
+                    <option>NO</option>
+                    <option>Yes</option>
+                </select>
+            </td>
         </tr>
         <tr>
-            <td class="blue-cell">PROM/AB</td>
-            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
-            <td class="blue-cell">Medical/Surgical problem</td>
-            <td colspan="11"><input type="text" name="medical_surgical_problem" class="maternal-input" style="width:50%;"></td>
+            <td class="blue-cell" style="width: 70px;">Thyroid</td>
+            <td style="width: 50px;">
+                <select name="thyroid" class="maternal-select" style="width:100%;font-size:10px;">
+                    <option>NO</option>
+                    <option>Yes</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 70px;">U/S</td>
+            <td colspan="3" style="width: 150px;"><input type="text" name="us" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 70px;">Medical/Surgical problem</td>
+            <td colspan="3" style="width: 150px;"><input type="text" name="medical_surgical_problem" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
     </table>
-    <!-- Delivery -->
     <table>
-
         <tr>
             <td class="blue-cell" rowspan="3" style="width: 80px; font-size:11px;">Delivery</td>
-            <td class="blue-cell">Date</td>
-            <td id="delivery-date"></td>
-            
-        </tr>
-        <tr>
-            <td class="blue-cell">Hospital</td>
-            <td id="delivery-hospital"></td>
-            <td class="blue-cell">Resuscitation</td>
-            <td colspan="2">
-              <select name="resuscitation" style="width:100%;font-size:10px;">
-                <option selected>Not Attended</option>
-                <option>              </option>
-              </select>
+            <td class="blue-cell" style="width: 70px;">Date</td>
+            <td style="width: 80px;" id="delivery-date"></td>
+            <td class="blue-cell" style="width: 70px;">Type</td>
+            <td style="width: 80px;">
+                <select name="delivery_type" style="width:100%;font-size:10px;">
+                    <option>C S</option>
+                    <option>N V D</option>
+                </select>
             </td>
-        </tr>
-        <tr>
-            <td class="blue-cell">Type</td>
-            <td>
-              <select name="delivery_type" style="width:100%;font-size:10px;">
-                <option value="C S">C S</option>
-                <option value="NAD">NAD</option>
-              </select>
-            </td>
-            
-            <td class="blue-cell">APGAR score</td>
-            <td>
-              <select name="apgar_score" style="width:100%;font-size:10px;">
-                <option selected>Not Attended</option>
-                <option>          </option>
-              </select>
+            <td class="blue-cell" style="width: 70px;">Hospital</td>
+            <td style="width: 120px;" id="delivery-hospital"></td>
+            <td class="blue-cell" style="width: 70px;">APGAR Score</td>
+            <td style="width: 50px;"><input type="text" name="apgar_score" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 70px;">Resuscitation</td>
+            <td style="width: 50px;">
+                <select name="resuscitation" style="width:100%;font-size:10px;">
+                    <option>Not Attended</option>
+                    <option>Attended</option>
+                </select>
             </td>
         </tr>
     </table>
-    <!-- Diagnosis -->
     <table>
         <tr>
             <td class="blue-cell" rowspan="2" style="width: 80px; font-size:11px;">Diagnosis</td>
-            <td class="blue-cell">Admission diagnosis</td>
-            <td colspan="7"><input type="text" name="admission_diagnosis" list="diagnosisOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل التشخيص يدويًا أو اختر"></td>
+            <td class="blue-cell" style="width: 70px;">Admission Diagnosis</td>
+            <td colspan="5"><input type="text" name="admission_diagnosis" list="diagnosisOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
         <tr>
-            <td class="blue-cell">Discharge diagnosis</td>
-            <td colspan="7"><input type="text" name="discharge_diagnosis" list="diagnosisOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل التشخيص يدويًا أو اختر"></td>
-        </tr>
-    </table>
-    <!-- Problem List -->
-    <table>
-        <tr>
-            <td class="blue-cell" rowspan="5" style="width: 80px; font-size:11px;">Problem List</td>
-            <td class="blue-cell">Problem</td>
-            <td class="blue-cell">Date</td>
-            <td class="blue-cell">Intervention</td>
-            <td class="blue-cell">Outcome</td>
-        </tr>
-        <tr>
-            <td><input type="text" name="problem1" list="problemOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل المشكلة يدويًا أو اختر"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><input type="text" name="problem2" list="problemOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل المشكلة يدويًا أو اختر"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><input type="text" name="problem3" list="problemOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل المشكلة يدويًا أو اختر"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><input type="text" name="problem4" list="problemOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل المشكلة يدويًا أو اختر"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </table>
-    <!-- Examination -->
-    <table>
-        <tr>
-            <td class="blue-cell" rowspan="11" style="width: 80px; font-size:11px;">Examination</td>
-            <td class="blue-cell">System</td>
-            <td class="blue-cell">On admission</td>
-            <td class="blue-cell">On Discharge</td>
-        </tr>
-        <tr><td class="blue-cell">General</td><td><input type="text" name="general_on_admission" list="generalOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="general_on_discharge" list="generalOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
-        <tr><td class="blue-cell">Head and neck</td><td><input type="text" name="head_neck_on_admission" list="headNeckOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="head_neck_on_discharge" list="headNeckOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
-        <tr><td class="blue-cell">measurments</td><td><input type="text" name="measurments_on_admission" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل القيمة"></td><td><input type="text" name="measurments_on_discharge" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل القيمة"></td></tr>
-        <tr><td class="blue-cell">CNS</td><td><input type="text" name="cns_on_admission" list="cnsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="cns_on_discharge" list="cnsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
-        <tr><td class="blue-cell">CVS</td><td><input type="text" name="cvs_on_admission" list="cvsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="cvs_on_discharge" list="cvsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
-        <tr><td class="blue-cell">Respiratory</td><td><input type="text" name="respiratory_on_admission" list="respiratoryOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="respiratory_on_discharge" list="respiratoryOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
-        <tr><td class="blue-cell">Abdomen/Genitalia</td><td><input type="text" name="abdomen_on_admission" list="abdomenOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="abdomen_on_discharge" list="abdomenOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
-        <tr><td class="blue-cell">Limbs|Spine</td><td><input type="text" name="limbs_on_admission" list="limbsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="limbs_on_discharge" list="limbsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
-        <tr><td class="blue-cell">Others</td><td><input type="text" name="others_on_admission" list="limbsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td><td><input type="text" name="others_on_discharge" list="limbsOptions" style="width:98%;font-size:10px;box-sizing:border-box;" placeholder="أدخل أو اختر"></td></tr>
-    </table>
-    <!-- Significant Lab -->
-    <table>
-        <tr>
-            <td class="blue-cell" rowspan="5" style="width: 80px; font-size:11px;">Significant Lab</td>
-            <td class="blue-cell">Parameter</td>
-            <td class="blue-cell">On admission</td>
-            <td class="blue-cell">In patient</td>
-            <td class="blue-cell">On discharge</td>
-            <td class="blue-cell">Parameter</td>
-            <td class="blue-cell">On admission</td>
-            <td class="blue-cell">In patient</td>
-            <td class="blue-cell">On discharge</td>
-        </tr>
-        <tr><td class="blue-cell">HB</td><td><input type="text" name="hb_on_admission" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="hb_in_patient" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="hb_on_discharge" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td class="blue-cell">CRP|Culture</td><td><input type="text" name="crp_on_admission" list="crpOptions" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="crp_in_patient" list="crpOptions" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="crp_on_discharge" list="crpOptions" style="width:98%;font-size:10px;box-sizing:border-box;"></td></tr>
-        <tr><td class="blue-cell">Platelet</td><td><input type="text" name="platelet_on_admission" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="platelet_in_patient" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="platelet_on_discharge" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td class="blue-cell">TSB |DSB</td><td><input type="text" name="tsb_on_admission" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="tsb_in_patient" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="tsb_on_discharge" style="width:98%;font-size:10px;box-sizing:border-box;"></td></tr>
-        <tr><td class="blue-cell">WBCs</td><td><input type="text" name="wbcs_on_admission" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="wbcs_in_patient" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="wbcs_on_discharge" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td class="blue-cell">Na|K|CA</td><td><input type="text" name="na_on_admission" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="na_in_patient" style="width:98%;font-size:10px;box-sizing:border-box;"></td><td><input type="text" name="na_on_discharge" style="width:98%;font-size:10px;box-sizing:border-box;"></td></tr>
-        <tr><td class="blue-cell">Blood Gr</td><td><select name="blood_gr" class="maternal-select" style="width:95%;">
-          <option value=""selected>----</option>
-          <option value="A +ve">A +ve</option>
-          <option value="A -ve">A -ve</option>
-          <option value="B +ve">B +ve</option>
-          <option value="B -ve">B -ve</option>
-          <option value="O +ve">O +ve</option>
-          <option value="O -ve">O -ve</option>
-          <option value="AB +ve">AB +ve</option>
-          <option value="AB -ve">AB -ve</option>
-        </select></td><td></td><td></td><td class="blue-cell">s.urea|creat</td><td><input type="text" name="s_urea_on_admission" style="width:98%;font-size:15px;box-sizing:border-box;"></td><td><input type="text" name="s_urea_in_patient" style="width:98%;font-size:15px;box-sizing:border-box;"></td><td><input type="text" name="s_urea_on_discharge" style="width:98%;font-size:15px;box-sizing:border-box;"></td></tr>
-    </table>
-    <table>
-        <tr>
-            <td class="blue-cell" rowspan="5" style="width: 80px; font-size:11px;">Imaging</td>
-            <td class="blue-cell" style="width: 80px;">X ray</td>
-            <td><input type="text" name="xray" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-        </tr>
-        <tr>
-            <td class="blue-cell" style="width: 80px;">U/S</td>
-            <td><input type="text" name="us_imaging" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-        </tr>
-        <tr>
-            <td class="blue-cell" style="width: 80px;">Echo</td>
-            <td><input type="text" name="echo" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 70px;">Discharge Diagnosis</td>
+            <td colspan="5"><input type="text" name="discharge_diagnosis" list="diagnosisOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
     </table>
     <table>
         <tr>
-            <th rowspan="7" style="width: 80px; font-size:11px;">Medications</th>
+            <td class="blue-cell" rowspan="5" style="width: 80px; font-size:11px;">Problems</td>
+            <td class="blue-cell" style="width: 70px;">Problem 1</td>
+            <td colspan="5"><input type="text" name="problem1" list="problemOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
         <tr>
-            <td class="blue-cell">Drug</td>
-            <td class="blue-cell">Duration</td>
-            <td class="blue-cell">Drug</td>
-            <td class="blue-cell">Duration</td>
-            <td class="blue-cell">Drug</td>
-            <td class="blue-cell">Duration</td>
+            <td class="blue-cell" style="width: 70px;">Problem 2</td>
+            <td colspan="5"><input type="text" name="problem2" list="problemOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
         <tr>
-            <td><input type="text" name="drug1" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="number" name="duration1" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="text" name="drug2" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="number" name="duration2" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="text" name="drug3" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="number" name="duration3" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 70px;">Problem 3</td>
+            <td colspan="5"><input type="text" name="problem3" list="problemOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
         <tr>
-            <td><input type="text" name="drug4" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="number" name="duration4" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="text" name="drug5" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="number" name="duration5" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="text" name="drug6" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="number" name="duration6" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 70px;">Problem 4</td>
+            <td colspan="5"><input type="text" name="problem4" list="problemOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
         <tr>
-            <td><input type="text" name="drug7" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="number" name="duration7" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="text" name="drug8" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="number" name="duration8" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="text" name="drug9" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="number" name="duration9" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-        </tr>
-        <tr>
-            <td><input type="text" name="drug10" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="number" name="duration10" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="text" name="drug11" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="number" name="duration11" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="text" name="drug12" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
-            <td><input type="number" name="duration12" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 70px;">Problem 5</td>
+            <td colspan="5"><input type="text" name="problem5" list="problemOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
     </table>
     <table>
         <tr>
-            <th style="width: 80px; font-size:11px;">Resp. support</th>
-            <td><input type="text" list="problemOptions" style="width:98%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" rowspan="7" style="width: 80px; font-size:11px;">Examination</td>
+            <td class="blue-cell" style="width: 70px;">Parameter</td>
+            <td class="blue-cell" style="width: 100px;">On admission</td>
+            <td class="blue-cell" style="width: 100px;">On discharge</td>
+        </tr>
+        <tr>
+            <td class="blue-cell">General</td>
+            <td><input type="text" name="general_on_admission" list="generalOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="general_on_discharge" list="generalOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">Head & Neck</td>
+            <td><input type="text" name="head_neck_on_admission" list="headNeckOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="head_neck_on_discharge" list="headNeckOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">CNS</td>
+            <td><input type="text" name="cns_on_admission" list="cnsOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="cns_on_discharge" list="cnsOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">CVS</td>
+            <td><input type="text" name="cvs_on_admission" list="cvsOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="cvs_on_discharge" list="cvsOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">Respiratory</td>
+            <td><input type="text" name="respiratory_on_admission" list="respiratoryOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="respiratory_on_discharge" list="respiratoryOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">Abdomen</td>
+            <td><input type="text" name="abdomen_on_admission" list="abdomenOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="abdomen_on_discharge" list="abdomenOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">Limbs/Spine</td>
+            <td><input type="text" name="limbs_spine_on_admission" list="limbsOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="limbs_spine_on_discharge" list="limbsOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
     </table>
     <table>
         <tr>
-            <th style="width: 80px; font-size:11px;">Others</th>
-            <td class="blue-cell">Phototherapy</td>
-            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option>No</option></select></td>
-            <td class="blue-cell">Exchange transfusion</td>
-            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option>No</option></select></td>
-            <td class="blue-cell">Blood Transfusion</td>
-            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option>No</option></select></td>
+            <td class="blue-cell" rowspan="10" style="width: 80px; font-size:11px;">Significant Lab</td>
+            <td class="blue-cell" style="width: 70px;">Parameter</td>
+            <td class="blue-cell" style="width: 100px;">On admission</td>
+            <td class="blue-cell" style="width: 100px;">In patient</td>
+            <td class="blue-cell" style="width: 100px;">On discharge</td>
+        </tr>
+        <tr>
+            <td class="blue-cell">HB</td>
+            <td><input type="text" name="hb_on_admission" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="hb_in_patient" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="hb_on_discharge" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">Platelet</td>
+            <td><input type="text" name="platelet_on_admission" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="platelet_in_patient" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="platelet_on_discharge" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">TLC</td>
+            <td><input type="text" name="tlc_on_admission" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="tlc_in_patient" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="tlc_on_discharge" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">N</td>
+            <td><input type="text" name="n_on_admission" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="n_in_patient" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="n_on_discharge" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">CRP</td>
+            <td><input type="text" name="crp_on_admission" list="crpOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="crp_in_patient" list="crpOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="crp_on_discharge" list="crpOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">TSB</td>
+            <td><input type="text" name="tsb_on_admission" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="tsb_in_patient" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="tsb_on_discharge" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">Blood C/S</td>
+            <td><input type="text" name="blood_cs_on_admission" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="blood_cs_in_patient" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="blood_cs_on_discharge" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">Na/K/CA</td>
+            <td><input type="text" name="nakca_on_admission" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="nakca_in_patient" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="nakca_on_discharge" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell">Others</td>
+            <td><input type="text" name="others_on_admission" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="others_in_patient" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="others_on_discharge" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
     </table>
     <table>
         <tr>
-            <th style="width: 80px; font-size:11px;">Interventions</th>
-            <td class="blue-cell">UVC/UAC</td>
-            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
-            <td class="blue-cell">Central Line</td>
-            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
-            <td class="blue-cell">Chest Tube</td>
-            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
-            <td class="blue-cell">Lumber Puncture</td>
-            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
+            <td class="blue-cell" rowspan="3" style="width: 80px; font-size:11px;">Imaging</td>
+            <td class="blue-cell" style="width: 70px;">X-ray</td>
+            <td colspan="5"><input type="text" name="xray" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell" style="width: 70px;">U/S</td>
+            <td colspan="5"><input type="text" name="us_imaging" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td class="blue-cell" style="width: 70px;">Echo</td>
+            <td colspan="5"><input type="text" name="echo" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
     </table>
     <table>
         <tr>
-            <th style="width: 80px; font-size:11px;">Screening</th>
-            <td class="blue-cell">ROP</td>
-            <td><select style="width:100%;font-size:10px;">
-                <option>Needed</option>
-                <option>No</option>
-                <option>Follow up</option>
-            </select></td>
-            <td class="blue-cell">Hearing</td>
-            <td><select style="width:100%;font-size:10px;">
-                <option>Needed</option>
-                <option>No</option>
-                <option>Follow up</option>
-            </select></td>
-            <td class="blue-cell">Hypothyroidism</td>
-            <td><select style="width:100%;font-size:10px;"><option>Yes</option><option selected>No</option></select></td>
+            <td class="blue-cell" rowspan="6" style="width: 80px; font-size:11px;">Medications</td>
+            <td class="blue-cell" style="width: 150px;">Drug</td>
+            <td class="blue-cell" style="width: 150px;">Duration</td>
+            <td class="blue-cell" style="width: 150px;">Drug</td>
+            <td class="blue-cell" style="width: 150px;">Duration</td>
+        </tr>
+        <tr>
+            <td><input type="text" name="drug1" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="duration1" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="drug2" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="duration2" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="drug3" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="duration3" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="drug4" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="duration4" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="drug5" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="duration5" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="drug6" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="duration6" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="drug7" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="duration7" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="drug8" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="duration8" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="drug9" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="duration9" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="drug10" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td><input type="text" name="duration10" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
     </table>
     <table>
         <tr>
-            <th rowspan="2" style="width: 80px; font-size:11px;">Vacination</th>
-            <td>التطعيمات حسب جدول وزارة الصحة المصرية</td>
+            <td class="blue-cell" rowspan="3" style="width: 80px; font-size:11px;">Respiratory Support</td>
+            <td colspan="5"><input type="text" list="problemOptions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
     </table>
     <table>
         <tr>
-            <th rowspan="5" style="width: 80px; font-size:11px;">Discharge medications and feeding</th>
-            <td colspan="6"><input type="text" value="الرضاعة حسب الرغبة من الام او لبن كامل النمو رقم 1 كل 3 ساعات بالفم" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" rowspan="3" style="width: 80px; font-size:11px;">Interventions</td>
+            <td class="blue-cell" style="width: 70px;">Phototherapy</td>
+            <td style="width: 50px;">
+                <select name="phototherapy" style="width:100%;font-size:10px;">
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 70px;">Blood Exchange</td>
+            <td style="width: 50px;">
+                <select name="blood_exchange" style="width:100%;font-size:10px;">
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 70px;">Blood Transfusion</td>
+            <td style="width: 50px;">
+                <select name="blood_transfusion" style="width:100%;font-size:10px;">
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 70px;">Platelet Transfusion</td>
+            <td style="width: 50px;">
+                <select name="platelet_transfusion" style="width:100%;font-size:10px;">
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </td>
         </tr>
         <tr>
-            <td colspan="6"><input type="text" value="Vi Drop   قطارة اربع نقط بالفم يوميا" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
-        </tr>
-        <tr>
-            <td colspan="6"><input type="text" value="سايميثكون قطاره كل 8 ساعات بعد الرضاعة بالفم" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
-        </tr>
-        <tr>
-            <td colspan="6"><input type="text" value="اوتريفين بيبي سالاين كل 6 ساعات قبل الرضاعة" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
-        </tr>
-        <tr>
-            <td colspan="6"><input type="text" value="" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" style="width: 70px;">Plasma Transfusion</td>
+            <td style="width: 50px;">
+                <select name="plasma_transfusion" style="width:100%;font-size:10px;">
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 70px;">Cryo Transfusion</td>
+            <td style="width: 50px;">
+                <select name="cryo_transfusion" style="width:100%;font-size:10px;">
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 70px;">Lumbar Puncture</td>
+            <td style="width: 50px;">
+                <select name="lumbar_puncture" style="width:100%;font-size:10px;">
+                    <option>No</option>
+                    <option>Yes</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 70px;">Others</td>
+            <td style="width: 100px;"><input type="text" name="others_interventions" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
         </tr>
     </table>
     <table>
         <tr>
-            <th rowspan="2" style="width: 80px; font-size:11px;">Instructions</th>
-            <td colspan="6"><input type="text" value="عمل مقياس سمع بالوحده الصحيه" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
-        </tr>
-        <tr>
-            <td colspan="6"><input type="text" value="عمل فحص قاع عين عند وصول الطفل لعمر 21 يوم من ميلاده" style="width:100%;font-size:10px;box-sizing:border-box;"></td>
+            <td class="blue-cell" rowspan="3" style="width: 80px; font-size:11px;">Outcome</td>
+            <td class="blue-cell" style="width: 70px;">Discharge Cause</td>
+            <td style="width: 120px;">
+                <select name="outcome" style="width:100%;font-size:10px;">
+                    <option>Improvement</option>
+                    <option>Referral</option>
+                    <option>Died</option>
+                </select>
+            </td>
+            <td class="blue-cell" style="width: 70px;">Date</td>
+            <td style="width: 80px;" id="outcome_date"></td>
         </tr>
     </table>
     <table>
         <tr>
-            <th style="width: 80px; font-size:11px;">Follow up plan</th>
-            <td colspan="6" id="follow-up-plan"></td>
+            <td class="blue-cell" rowspan="3" style="width: 80px; font-size:11px;">Follow up</td>
+            <td colspan="5" id="follow-up-plan"></td>
         </tr>
     </table>
     <div class="signature-section">
-        <div class="signature-box">
-            Treating Physician<br>
-            <select name="treating_dr" style="width:100%;font-size:10px;">
-                <option>د/ محمد يوسف مجاهد</option>
-                <option>د/ محمد الكاشف</option>
-            </select>  
-        </div>
-        <div class="signature-box">
-            Signature<br>
-            <input type="text" value="" style="width:100%;font-size:10px;box-sizing:border-box;">
-        </div>
-        <div class="signature-box">
-            Date<br>
-            <span id="signature-date"></span>
-        </div>
+        <div class="signature-box">التوقيع</div>
+        <div class="signature-box">الاسم</div>
+        <div class="signature-box">التاريخ</div>
     </div>
-    
-    <!-- أزرار التحكم -->
-    <div class="no-print" style="text-align: center; margin-top: 30px; padding: 20px; border-top: 2px solid #2986d4;">
-        <button onclick="window.print()" style="background-color: #2986d4; color: white; border: none; padding: 10px 20px; margin: 0 10px; border-radius: 5px; cursor: pointer; font-size: 16px;">🖨️ طباعة النموذج</button>
-        <button onclick="clearAllDischargeFields()" style="background-color: #e74c3c; color: white; border: none; padding: 10px 20px; margin: 0 10px; border-radius: 5px; cursor: pointer; font-size: 16px;">🗑️ مسح جميع البيانات</button>
-        <button onclick="window.location.href='index.html'" style="background-color: #27ae60; color: white; border: none; padding: 10px 20px; margin: 0 10px; border-radius: 5px; cursor: pointer; font-size: 16px;">🏠 العودة للصفحة الرئيسية</button>
-    </div>
+    <div class="footer-date" id="signature-date"></div>
 </div>
+
 <script>
-  // عرض تاريخ اليوم تلقائياً في خانة Discharge Date
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const dd = String(today.getDate()).padStart(2, '0');
-  document.getElementById('discharge-date').textContent = `${yyyy}-${mm}-${dd}`;
-  document.getElementById('signature-date').textContent = `${dd}/${mm}/${yyyy}`;
-
-  // حساب اليوم والتاريخ بعد يومين
-  const followUpDate = new Date(today);
-  followUpDate.setDate(today.getDate() + 2);
-  
-  const followUpDay = followUpDate.toLocaleDateString('ar-SA', { weekday: 'long' });
-  const followUpDD = String(followUpDate.getDate()).padStart(2, '0');
-  const followUpMM = String(followUpDate.getMonth() + 1).padStart(2, '0');
-  const followUpYYYY = followUpDate.getFullYear();
-  
-  document.getElementById('follow-up-plan').textContent = 
-    `المتابعة داخل حضانات زمزم يوم ${followUpDay} الموافق ${followUpDD}/${followUpMM}/${followUpYYYY} الساعة 4 عصرا`;
-
-  // إضافة مستمع الأحداث لحقل File No
-  document.addEventListener('DOMContentLoaded', function() {
-    const fileNoInput = document.querySelector('input[name="file_no"]');
-    if (fileNoInput) {
-      // إضافة تأخير 800 مللي ثانية قبل البحث
-      let searchTimeout;
-      fileNoInput.addEventListener('input', function() {
-        // إلغاء البحث السابق إذا كان موجوداً
-        clearTimeout(searchTimeout);
-        
-        // تأخير البحث لمدة 800 مللي ثانية
-        searchTimeout = setTimeout(() => {
-          fetchChildDataForDischarge();
-        }, 800);
-      });
-      
-      console.log('تم إضافة مستمع الأحداث لحقل File No مع تأخير 800 مللي ثانية');
-    } else {
-      console.error('لم يتم العثور على حقل File No');
-    }
-  });
-
-  // دالة جلب بيانات الطفل لصفحة التفريغ
+  // دالة جلب بيانات الطفل
   async function fetchChildDataForDischarge() {
+    const fileNo = document.querySelector('input[name="file_no"]').value.trim();
+    const fileNoInput = document.querySelector('input[name="file_no"]');
+
+    if (!fileNo) {
+      clearDischargeFields();
+      return;
+    }
+
+    fileNoInput.style.backgroundColor = '#fff3cd';
+    fileNoInput.placeholder = 'جاري البحث...';
+
     try {
-      const fileNo = document.querySelector('input[name="file_no"]').value.trim();
-      console.log('تم إدخال رقم الملف:', fileNo);
-      
-      if (!fileNo) {
-        clearDischargeFields();
-        return;
-      }
+      const children = await db.getChildren();
+      console.log('تم جلب الأطفال:', children);
 
-      // إظهار مؤشر التحميل
-      const fileNoInput = document.querySelector('input[name="file_no"]');
-      fileNoInput.style.backgroundColor = '#fff3cd';
-      fileNoInput.placeholder = 'جاري البحث...';
-
-      // التحقق من وجود Firebase
-      if (typeof firebase === 'undefined') {
-        throw new Error('Firebase غير متاح');
-      }
-
-      // استخدام Firebase مباشرة بدلاً من الاستيراد الديناميكي
-      const database = firebase.database();
-      console.log('تم الاتصال بقاعدة البيانات');
-      
-      const snapshot = await database.ref('children').once('value');
-      const children = snapshot.val() || {};
-      console.log('تم جلب بيانات الأطفال:', children);
-      
       let child = null;
       for (const [id, c] of Object.entries(children)) {
-        if (c.fileNo == fileNo) {
+        if (c.fileNo != null && String(c.fileNo).trim() === String(fileNo).trim()) {
           child = c;
+          child.id = id;
           break;
         }
       }
 
-      if (child) {
-        console.log('تم العثور على الطفل:', child);
-        
-        // ملء بيانات الطفل
-        document.querySelector('input[name="patient_name"]').value = child.motherName || "";
-        document.querySelector('input[name="gender"]').value = child.childType || "";
-        document.querySelector('input[name="ga"]').value = child.gestationalAge || "";
-        
-        // تنسيق تاريخ الدخول
-        if (child.entryDate) {
-          const entryDate = new Date(child.entryDate);
-          const formattedEntryDate = entryDate.toLocaleDateString('ar-EG');
-          document.querySelector('input[name="admission_date"]').value = formattedEntryDate;
-          
-          // ملء تاريخ الولادة في قسم Delivery
-          document.getElementById('delivery-date').textContent = formattedEntryDate;
-        }
-
-        // تنسيق تاريخ الميلاد
-        if (child.birthDate) {
-          const birthDate = new Date(child.birthDate);
-          const formattedBirthDate = birthDate.toLocaleDateString('ar-EG');
-          document.querySelector('input[name="birth_date"]').value = formattedBirthDate;
-        }
-
-        // حساب العمر عند الدخول
-        if (child.birthDate && child.entryDate) {
-          const birthDate = new Date(child.birthDate);
-          const entryDate = new Date(child.entryDate);
-          const ageOnAdmission = Math.floor((entryDate - birthDate) / (1000 * 60 * 60 * 24));
-          document.querySelector('input[name="age_on_admission"]').value = ageOnAdmission === 0 ? "1" : ageOnAdmission.toString();
-        }
-
-        // حساب العمر عند التفريغ
-        if (child.birthDate) {
-          const birthDate = new Date(child.birthDate);
-          const today = new Date();
-          const ageOnDischarge = Math.floor((today - birthDate) / (1000 * 60 * 60 * 24));
-          document.querySelector('input[name="age_on_discharge"]').value = ageOnDischarge.toString();
-        }
-
-        // ملء مكان الولادة في قسم Delivery
-        if (child.birthPlace) {
-          document.getElementById('delivery-hospital').textContent = child.birthPlace;
-        } else {
-          document.getElementById('delivery-hospital').textContent = '';
-        }
-
-        // إعادة تعيين مؤشر التحميل
-        fileNoInput.style.backgroundColor = '#d4edda';
-        fileNoInput.placeholder = 'تم العثور على البيانات';
-
-        console.log('تم جلب بيانات الطفل بنجاح:', child);
-
-      } else {
-        clearDischargeFields();
-        
-        // إعادة تعيين مؤشر التحميل
-        fileNoInput.style.backgroundColor = '#f8d7da';
-        fileNoInput.placeholder = 'لم يتم العثور على بيانات';
-        
-        console.log('لم يتم العثور على طفل برقم الملف:', fileNo);
+      if (!child) {
+        throw new Error('رقم الملف غير موجود في قاعدة البيانات');
       }
+
+      // ملء البيانات
+      document.querySelector('input[name="patient_name"]').value = child.motherName || '';
+      document.querySelector('input[name="gender"]').value = child.childType || '';
+      document.querySelector('input[name="ga"]').value = child.gestationalAge || '';
+      document.querySelector('input[name="b_wt"]').value = child.birthWeight || '';
+
+      // التواريخ
+      if (child.birthDate) {
+        const bd = new Date(child.birthDate);
+        document.querySelector('input[name="birth_date"]').value = bd.toLocaleDateString('ar-EG');
+      }
+      if (child.entryDate) {
+        const ed = new Date(child.entryDate);
+        const formatted = ed.toLocaleDateString('ar-EG');
+        document.querySelector('input[name="admission_date"]').value = formatted;
+        document.getElementById('delivery-date').textContent = formatted;
+      }
+      if (child.birthPlace) {
+        document.getElementById('delivery-hospital').textContent = child.birthPlace;
+      }
+
+      // العمر عند الدخول والخروج
+      if (child.birthDate) {
+        const birth = new Date(child.birthDate);
+        const admission = child.entryDate ? new Date(child.entryDate) : null;
+        const today = new Date();
+
+        if (admission) {
+          const ageAdm = Math.floor((admission - birth) / (1000 * 60 * 60 * 24));
+          document.querySelector('input[name="age_on_admission"]').value = ageAdm === 0 ? '1' : ageAdm;
+        }
+        const ageDis = Math.floor((today - birth) / (1000 * 60 * 60 * 24));
+        document.querySelector('input[name="age_on_discharge"]').value = ageDis;
+      }
+
+      fileNoInput.style.backgroundColor = '#d4edda';
+      fileNoInput.placeholder = 'تم العثور على الطفل';
+      console.log('تم جلب بيانات الطفل بنجاح:', child);
+
     } catch (error) {
-      console.error("خطأ أثناء جلب بيانات الطفل:", error);
-      alert("حدث خطأ أثناء جلب بيانات الطفل: " + error.message);
+      console.error('خطأ في جلب البيانات:', error);
       clearDischargeFields();
-      
-      // إعادة تعيين مؤشر التحميل
-      const fileNoInput = document.querySelector('input[name="file_no"]');
       fileNoInput.style.backgroundColor = '#f8d7da';
-      fileNoInput.placeholder = 'حدث خطأ في البحث';
+      fileNoInput.placeholder = 'غير موجود';
+      alert('خطأ: ' + error.message);
     }
   }
 
@@ -823,6 +789,7 @@
     document.querySelector('input[name="admission_date"]').value = "";
     document.querySelector('input[name="ga"]').value = "";
     document.querySelector('input[name="age_on_discharge"]').value = "";
+    document.querySelector('input[name="b_wt"]').value = "";
     
     // مسح بيانات Delivery
     document.getElementById('delivery-date').textContent = "";
@@ -903,28 +870,50 @@
       });
       
       // مسح التوقيع
-      document.querySelector('input[type="text"]').value = "";
+      document.querySelectorAll('input[type="text"]').forEach(input => {
+        if (!input.name || !input.name.includes('file_no')) {
+          input.value = "";
+        }
+      });
       
       alert('تم مسح جميع البيانات بنجاح');
     }
   }
 
-  // تهيئة Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyCFZpFHWWor8ioA69BYFYdeEmCedFFeolE",
-    authDomain: "daily-follow-up-chart-76cff.firebaseapp.com",
-    databaseURL: "https://daily-follow-up-chart-76cff-default-rtdb.firebaseio.com",
-    projectId: "daily-follow-up-chart-76cff",
-    storageBucket: "daily-follow-up-chart-76cff.firebasestorage.app",
-    messagingSenderId: "710567352538",
-    appId: "1:710567352538:web:4f9f8f785dbd366009ede3",
-    measurementId: "G-QH0PJZGVTM"
-  };
+  // إعدادات التاريخ
+  function setupDates() {
+    const today = new Date('2025-10-31');
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    
+    document.getElementById('discharge-date').textContent = `${yyyy}-${mm}-${dd}`;
+    document.getElementById('outcome_date').textContent = `${yyyy}-${mm}-${dd}`;
+    document.getElementById('signature-date').textContent = `${dd}/${mm}/${yyyy}`;
 
-  // تهيئة Firebase إذا لم يكن مُهيأ بالفعل
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
+    const followUpDate = new Date(today);
+    followUpDate.setDate(today.getDate() + 2);
+    const followUpDay = followUpDate.toLocaleDateString('ar-SA', { weekday: 'long' });
+    const fdd = String(followUpDate.getDate()).padStart(2, '0');
+    const fmm = String(followUpDate.getMonth() + 1).padStart(2, '0');
+    const fyyy = followUpDate.getFullYear();
+
+    document.getElementById('follow-up-plan').textContent = 
+      `المتابعة داخل حضانات زمزم يوم ${followUpDay} الموافق ${fdd}/${fmm}/${fyyy} الساعة 4 عصرا`;
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    setupDates();
+
+    const fileNoInput = document.querySelector('input[name="file_no"]');
+    if (fileNoInput) {
+      let searchTimeout;
+      fileNoInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(fetchChildDataForDischarge, 800);
+      });
+    }
+  });
 </script>
 <datalist id="problemOptions">
   <option value="NJ➡️➡️Phototherapy"></option>
@@ -997,4 +986,4 @@
 </datalist>
 
 </body>
-</html> 
+</html>
