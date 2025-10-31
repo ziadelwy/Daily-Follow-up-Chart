@@ -1,6 +1,6 @@
 body {
     font-family: 'Tajawal', 'Arial', sans-serif;
-    background-color: #f8fafc;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);            direction: rtl;
     direction: rtl;
     text-align: right;
     margin: 0;
